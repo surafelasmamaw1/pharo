@@ -14,6 +14,7 @@ import {
   X,
   Moon,
   Sun,
+  Briefcase,
 } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
@@ -26,7 +27,8 @@ const navItems = [
   { name: "Academics",    href: "#academics",     id: "academics",     icon: BookOpen },
   { name: "Student Life", href: "#student-life",  id: "student-life",  icon: Users },
   { name: "News & Events",href: "#news-events",   id: "news-events",   icon: CalendarDays },
-  { name: "Admissions",   href: "#admissions",    id: "admissions",    icon: ClipboardList },
+  { name: "Admissions",   href: "/admissions",    id: "admissions",    icon: ClipboardList },
+  { name: "Vacancy",      href: "#vacancy",       id: "vacancy",       icon: Briefcase },
   { name: "Contact",      href: "#contact",       id: "contact",       icon: Mail },
 ];
 

@@ -12,10 +12,13 @@ import {
   Palette,
   ArrowRight,
   X,
+  BookOpen,
 } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
+
+type SubjectGroup = { label: string; subjects: string[] };
 
 type Program = {
   icon: LucideIcon;
@@ -24,11 +27,21 @@ type Program = {
   band: string;
   description: string;
   detail: string;
+  subjectGroups: SubjectGroup[];
   accent: string;
   accentBg: string;
   glow: string;
   borderGlow: string;
 };
+
+const coreSubjects = [
+  "First Language",
+  "Federal Language",
+  "English",
+  "Mathematics",
+  "Performing & Visual Arts",
+  "Health & Physical Education",
+];
 
 const programs: Program[] = [
   {
@@ -39,7 +52,13 @@ const programs: Program[] = [
     description:
       "A joyful, play-based foundation where curiosity is nurtured, social-emotional skills bloom, and young learners begin their educational journey with confidence.",
     detail:
-      "Our Early Years programme is designed around the natural curiosity of young children. Through guided play, storytelling, creative arts, and collaborative activities, children develop foundational literacy, numeracy, and social skills in a warm and nurturing environment. Every child is known by name, supported as an individual, and celebrated for their unique gifts.",
+      "Our Early Years programme is designed around the natural curiosity of young children. Through guided play, storytelling, creative arts, and collaborative activities, children develop foundational literacy, numeracy, and social skills in a warm and nurturing environment.",
+    subjectGroups: [
+      {
+        label: "Core Subjects",
+        subjects: coreSubjects,
+      },
+    ],
     accent: "bg-gold text-white",
     accentBg: "from-gold/20 to-amber-500/10 border-gold/25",
     glow: "hover:shadow-[0_0_32px_rgba(184,137,60,0.2)] hover:bg-gold/5 hover:border-gold/40",
@@ -53,49 +72,116 @@ const programs: Program[] = [
     description:
       "Strong foundational skills in literacy and numeracy, paired with rich explorations across disciplines — building capable, independent learners.",
     detail:
-      "Primary education at Pharo Foundation builds the academic and personal foundations that last a lifetime. Students develop strong reading, writing, and mathematical reasoning alongside science, social studies, arts, and physical education. Teachers foster curiosity, critical thinking, and a love of learning at every stage — preparing students to meet the demands of secondary school and beyond.",
+      "Primary education at Pharo Foundation builds the academic and personal foundations that last a lifetime. Students develop strong reading, writing, and mathematical reasoning alongside science, social studies, arts, and physical education.",
+    subjectGroups: [
+      {
+        label: "Core Subjects",
+        subjects: coreSubjects,
+      },
+      {
+        label: "Additional Subjects",
+        subjects: ["Environmental Science", "Moral Education"],
+      },
+    ],
     accent: "bg-scholarly text-white",
     accentBg: "from-scholarly/20 to-scholarly-light/10 border-scholarly/25",
     glow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.2)] hover:bg-scholarly/5 hover:border-scholarly/40",
     borderGlow: "dark:hover:border-scholarly/40",
   },
   {
-    icon: GraduationCap,
+    icon: BookOpen,
     iconBg: "bg-scholarly-light",
-    name: "Secondary Education",
-    band: "Grades 7 – 12",
+    name: "Middle School",
+    band: "Grades 7 – 8",
     description:
-      "A rigorous college-preparatory pathway with depth, choice, and challenge — preparing students for university, career, and leadership.",
+      "A broadening curriculum introducing the sciences, social studies, and technology — preparing students for the demands of secondary education.",
     detail:
-      "Our secondary programme offers a rigorous, breadth-and-depth curriculum designed to prepare students for university admission and lifelong success. Students choose from a range of electives and advanced courses, guided by expert faculty who know them as individuals. Leadership, research, and community engagement are embedded throughout — ensuring graduates leave equipped not only with knowledge, but with character.",
+      "Middle school at Pharo Foundation bridges primary learning with the rigour of secondary education. Students engage with a wider range of disciplines, developing analytical thinking, digital literacy, and career awareness.",
+    subjectGroups: [
+      {
+        label: "Core Subjects",
+        subjects: coreSubjects,
+      },
+      {
+        label: "Additional Subjects",
+        subjects: [
+          "General Science",
+          "Social Studies",
+          "Citizenship Education",
+          "Information Technology",
+          "Career & Technical Education",
+        ],
+      },
+    ],
     accent: "bg-scholarly-light text-white",
     accentBg: "from-scholarly-light/20 to-blue-500/10 border-scholarly-light/25",
     glow: "hover:shadow-[0_0_32px_rgba(45,79,122,0.2)] hover:bg-scholarly-light/5 hover:border-scholarly-light/40",
     borderGlow: "dark:hover:border-scholarly-light/40",
   },
   {
-    icon: Atom,
+    icon: GraduationCap,
     iconBg: "bg-success",
-    name: "STEM & Technology",
-    band: "All divisions · Integrated",
+    name: "Secondary Education",
+    band: "Grades 9 – 12",
     description:
-      "Hands-on science, engineering, robotics, coding, and digital literacy — equipping students with tools for tomorrow's world of invention.",
+      "A rigorous college-preparatory pathway with depth, choice, and challenge — preparing students for university, career, and leadership.",
     detail:
-      "STEM at Pharo Foundation is hands-on, project-based, and deeply integrated across year groups. Students engage in real engineering challenges, build and programme robots, write code, analyse data, and explore the natural world through scientific inquiry. Our technology labs and maker spaces are designed to spark innovation and build the problem-solving skills students will use for life.",
+      "Our secondary programme offers a rigorous, breadth-and-depth curriculum designed to prepare students for university admission and lifelong success. Students are guided by expert faculty across core and specialist subjects.",
+    subjectGroups: [
+      {
+        label: "Core Subjects",
+        subjects: coreSubjects,
+      },
+      {
+        label: "Compulsory Secondary Subjects",
+        subjects: [
+          "Physics",
+          "Chemistry",
+          "Biology",
+          "Geography",
+          "History",
+          "Citizenship Education",
+          "Economics",
+          "Information Technology",
+          "Health & Physical Education",
+        ],
+      },
+    ],
     accent: "bg-success text-white",
     accentBg: "from-success/20 to-emerald-500/10 border-success/25",
     glow: "hover:shadow-[0_0_32px_rgba(46,125,87,0.2)] hover:bg-success/5 hover:border-success/40",
     borderGlow: "dark:hover:border-success/40",
   },
   {
-    icon: LanguagesIcon,
+    icon: Atom,
     iconBg: "bg-accent",
-    name: "Languages",
-    band: "Beginner to advanced",
+    name: "Health Science Stream",
+    band: "Grades 11 – 12",
     description:
-      "A rich language curriculum that opens doors to global citizenship, cross-cultural understanding, and multilingual communication skills.",
+      "A specialised natural science track equipping students with the knowledge and skills for careers in health, medicine, and life sciences.",
     detail:
-      "Language learning at Pharo Foundation goes far beyond grammar and vocabulary. Our programmes immerse students in living languages — through conversation, literature, culture, and real-world application. Students develop confidence and fluency that opens doors to higher education, global careers, and meaningful cross-cultural connections throughout their lives.",
+      "The Health Science Stream at Pharo Foundation offers both general science subjects and four field-based specialisations — giving students real-world preparation for careers in healthcare and the life sciences.",
+    subjectGroups: [
+      {
+        label: "General Subjects",
+        subjects: [
+          "Physics",
+          "Chemistry",
+          "Biology",
+          "Information Technology",
+          "Agriculture",
+        ],
+      },
+      {
+        label: "Field-Based Subjects",
+        subjects: [
+          "Personal, Community Health & Patient Care",
+          "Nutrition & Dietetics",
+          "Child Care & Well-being",
+          "Reproductive Health",
+        ],
+      },
+    ],
     accent: "bg-accent text-white",
     accentBg: "from-accent/20 to-gold/10 border-accent/25",
     glow: "hover:shadow-[0_0_32px_rgba(166,110,63,0.2)] hover:bg-accent/5 hover:border-accent/40",
@@ -105,11 +191,24 @@ const programs: Program[] = [
     icon: Palette,
     iconBg: "bg-purple-500",
     name: "Arts & Humanities",
-    band: "Studio, performance & humanities",
+    band: "All levels · Integrated",
     description:
       "Visual arts, music, theatre, dance, history, literature, and philosophy — cultivating creative expression, empathy, and cultural perspective.",
     detail:
-      "The arts and humanities are at the heart of a Pharo Foundation education. Students explore visual art, music, theatre, and dance — performing, creating, and critiquing with growing sophistication. Alongside the studio, they study history, literature, and philosophy, developing the empathy, perspective, and communication skills that define truly educated citizens of the world.",
+      "The arts and humanities are at the heart of a Pharo Foundation education. Students explore visual art, music, theatre, and dance alongside history, literature, and philosophy — developing the empathy and communication skills that define truly educated citizens.",
+    subjectGroups: [
+      {
+        label: "Subjects",
+        subjects: [
+          "Performing & Visual Arts",
+          "History",
+          "Geography",
+          "Social Studies",
+          "Moral Education",
+          "Citizenship Education",
+        ],
+      },
+    ],
     accent: "bg-purple-500 text-white",
     accentBg: "from-purple-500/20 to-pink-500/10 border-purple-500/25",
     glow: "hover:shadow-[0_0_32px_rgba(120,40,200,0.2)] hover:bg-purple-500/5 hover:border-purple-400/40",
@@ -169,7 +268,7 @@ function ProgramModal({ program, onClose }: { program: Program; onClose: () => v
             </div>
 
             {/* Body */}
-            <div className="p-7 md:p-8 overflow-y-auto space-y-5">
+            <div className="p-7 md:p-8 overflow-y-auto space-y-6">
               <div>
                 <h3 className="font-semibold text-foreground text-base mb-2">Overview</h3>
                 <p className="text-muted leading-relaxed text-sm md:text-base">{program.description}</p>
@@ -178,6 +277,23 @@ function ProgramModal({ program, onClose }: { program: Program; onClose: () => v
                 <h3 className="font-semibold text-foreground text-base mb-2">Programme Details</h3>
                 <p className="text-muted leading-relaxed text-sm md:text-base">{program.detail}</p>
               </div>
+
+              {/* Subject groups */}
+              {program.subjectGroups.map((group) => (
+                <div key={group.label}>
+                  <h3 className="font-semibold text-foreground text-base mb-3">{group.label}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {group.subjects.map((s) => (
+                      <span
+                        key={s}
+                        className="px-3 py-1.5 rounded-full border border-border bg-foreground/[0.04] text-foreground text-xs font-medium"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
 
               <div className="pt-4 border-t border-border/60 flex items-center justify-between gap-4">
                 <span className="text-xs text-muted">{program.band}</span>
@@ -256,16 +372,30 @@ export default function Skills() {
                     <div className="text-xs md:text-sm font-semibold tracking-wide text-scholarly dark:text-scholarly-light mb-4">
                       {p.band}
                     </div>
-                    <p className="text-muted leading-relaxed text-sm md:text-base mb-6">
+                    <p className="text-muted leading-relaxed text-sm md:text-base mb-5">
                       {p.description}
                     </p>
+
+                    {/* Preview top subjects */}
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {p.subjectGroups[0].subjects.slice(0, 3).map((s) => (
+                        <span key={s} className="px-2.5 py-1 rounded-full border border-border bg-foreground/[0.03] text-foreground text-[11px] font-medium">
+                          {s}
+                        </span>
+                      ))}
+                      {p.subjectGroups.reduce((acc, g) => acc + g.subjects.length, 0) > 3 && (
+                        <span className="px-2.5 py-1 rounded-full border border-border bg-foreground/[0.03] text-muted text-[11px] font-medium">
+                          +{p.subjectGroups.reduce((acc, g) => acc + g.subjects.length, 0) - 3} more
+                        </span>
+                      )}
+                    </div>
 
                     <div className="mt-auto">
                       <button
                         onClick={() => setSelected(p)}
                         className="inline-flex items-center gap-2 text-sm font-bold text-scholarly dark:text-scholarly-light group-hover:gap-3 transition-all hover:underline underline-offset-4"
                       >
-                        Learn More
+                        View Subjects
                         <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
                       </button>
                     </div>
@@ -277,7 +407,6 @@ export default function Skills() {
         </motion.div>
       </Container>
 
-      {/* Modal */}
       {selected && (
         <ProgramModal program={selected} onClose={() => setSelected(null)} />
       )}
