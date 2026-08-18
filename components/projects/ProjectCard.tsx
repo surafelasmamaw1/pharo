@@ -133,9 +133,9 @@ export default function ProjectCard({
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 pointer-events-none"
             >
-              <div className="relative w-full max-w-xl bg-background rounded-[28px] border border-border shadow-2xl overflow-hidden pointer-events-auto max-h-[90vh] flex flex-col">
+              <div className="relative w-full max-w-3xl bg-background rounded-[28px] border border-border shadow-2xl overflow-hidden pointer-events-auto max-h-[90vh] flex flex-col">
                 {/* Modal image header */}
-                <div className={`relative aspect-[16/7] bg-gradient-to-br ${imageStyle} flex-shrink-0`}>
+                <div className={`relative aspect-[16/9] bg-gradient-to-br ${imageStyle} flex-shrink-0`}>
                   {project.image && (
                     <Image
                       src={project.image}
@@ -174,11 +174,11 @@ export default function ProjectCard({
                 </div>
 
                 {/* Modal body */}
-                <div className="p-7 md:p-8 overflow-y-auto">
-                  <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4 leading-tight">
+                <div className="p-8 md:p-10 overflow-y-auto">
+                  <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-5 leading-tight">
                     {project.title}
                   </h2>
-                  <p className="text-muted leading-relaxed text-base md:text-[17px]">
+                  <p className="text-muted leading-relaxed text-base md:text-lg">
                     {project.description}
                   </p>
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { m } from "framer-motion";
-import Image from "next/image";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
   School as Classrooms,
@@ -11,6 +11,7 @@ import {
   Dumbbell,
   Palette as CreativeIcon,
   ArrowRight,
+  X,
 } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
@@ -99,13 +100,15 @@ const facilities: Facility[] = [
 ];
 
 export default function Facilities() {
+  const [selected, setSelected] = useState<Facility | null>(null);
+
   return (
     <section
       id="facilities"
       className="py-section-sm md:py-section-md bg-foreground/[0.025] dark:bg-white/[0.02] relative overflow-hidden"
     >
       <Container>
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -120,105 +123,145 @@ export default function Facilities() {
             </p>
           </div>
 
-          {/* Responsive bento-style image grid */}
+          {/* Bento grid */}
           <div className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-12 gap-5 md:gap-6 auto-rows-[220px] md:auto-rows-[260px]">
             {facilities.map((f, idx) => {
               const Icon = f.icon;
-              // Assign span widths per category
               const colSpan =
                 f.order === "wide"
                   ? "sm:col-span-6 lg:col-span-8"
-                  : f.order === "tall"
-                  ? "sm:col-span-3 lg:col-span-4"
                   : "sm:col-span-3 lg:col-span-4";
               const rowSpan =
-                f.order === "tall"
-                  ? "row-span-2 md:row-span-2"
-                  : f.order === "wide"
-                  ? "row-span-1 md:row-span-1"
-                  : "row-span-1 md:row-span-1";
+                f.order === "tall" ? "row-span-2" : "row-span-1";
 
               return (
-                <m.article
+                <motion.article
                   key={f.title}
                   initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.55, delay: idx * 0.08 }}
-                  whileHover={{ y: -6, scale: 1.012 }}
-                  className={`group relative overflow-hidden rounded-[24px] border border-border shadow-sm transition-all duration-300 hover:shadow-[0_0_36px_rgba(30,58,95,0.18)] dark:hover:border-scholarly/40 ${colSpan} ${rowSpan}`}
+                  whileHover={{ y: -4, scale: 1.012 }}
+                  onClick={() => setSelected(f)}
+                  className={`group relative overflow-hidden rounded-[24px] border border-border shadow-sm cursor-pointer transition-all duration-300 hover:shadow-[0_0_36px_rgba(30,58,95,0.22)] ${colSpan} ${rowSpan}`}
                 >
-                  {/* Image layer — real photo if available, gradient fallback */}
+                  {/* Background — photo or gradient */}
                   <div className={`absolute inset-0 ${f.gradient}`}>
                     {f.image && (
-                      <Image
+                      <img
                         src={f.image}
                         alt={f.title}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover"
+                        className="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
                       />
                     )}
-                    {/* Soft grainy overlay for depth */}
-                    <div className="absolute inset-0 opacity-[0.12] dark:opacity-[0.18] mix-blend-overlay"
-                      style={{
-                        backgroundImage:
-                          "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.85), transparent 55%), radial-gradient(circle at 70% 80%, rgba(0,0,0,0.25), transparent 55%)",
-                      }}
-                    />
-                    {/* Decorative oversized icon (background visual) — only when no photo */}
                     {!f.image && (
-                      <div className="absolute -right-6 -bottom-10 opacity-30">
-                        <Icon
-                          className="w-[180px] h-[180px] md:w-[240px] md:h-[240px] text-white/60"
-                          strokeWidth={1}
-                        />
+                      <div className="absolute -right-6 -bottom-10 opacity-20">
+                        <Icon className="w-[180px] h-[180px] md:w-[240px] md:h-[240px] text-white" strokeWidth={1} />
                       </div>
                     )}
                   </div>
 
-                  {/* Darkening overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-scholarly/95 via-scholarly/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Subtle dark overlay — deepens on hover */}
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300" />
 
                   {/* Top tag */}
                   <div className="absolute top-5 left-5 z-10">
-                    <span
-                      className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase ${f.tagColor} shadow-sm`}
-                    >
+                    <span className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase ${f.tagColor} shadow-sm`}>
                       {f.tag}
                     </span>
                   </div>
 
-                  {/* Learn More — visible on hover */}
-                  <div className="absolute top-5 right-5 z-10 translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                    <span className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/95 text-scholarly text-xs font-bold shadow-md border border-white/60 backdrop-blur">
+                  {/* View Details — appears on hover, centered */}
+                  <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-scholarly text-sm font-bold shadow-lg">
                       View Details
-                      <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.2} />
+                      <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
                     </span>
                   </div>
-
-                  {/* Content anchor bottom */}
-                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-7 z-10 text-white">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/15 backdrop-blur border border-white/25 flex items-center justify-center flex-shrink-0 group-hover:bg-white/25 transition-colors">
-                        <Icon className="w-6 h-6 md:w-7 md:h-7 text-white" strokeWidth={1.8} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h3 className="font-serif text-xl md:text-2xl font-bold leading-tight mb-2">
-                          {f.title}
-                        </h3>
-                        <p className="text-white/85 text-sm md:text-[15px] leading-relaxed line-clamp-3">
-                          {f.caption}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </m.article>
+                </motion.article>
               );
             })}
           </div>
-        </m.div>
+        </motion.div>
       </Container>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {selected && (
+          <>
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22 }}
+              className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+              onClick={() => setSelected(null)}
+            />
+            <motion.div
+              key="modal"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 pointer-events-none"
+            >
+              <div className="relative w-full max-w-lg bg-background rounded-[28px] border border-border shadow-2xl overflow-hidden pointer-events-auto">
+
+                {/* Photo / gradient header */}
+                <div className={`relative aspect-[16/7] ${selected.gradient} overflow-hidden`}>
+                  {selected.image && (
+                    <img
+                      src={selected.image}
+                      alt={selected.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  {/* Close */}
+                  <button
+                    onClick={() => setSelected(null)}
+                    className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white hover:bg-white/35 transition-colors"
+                    aria-label="Close"
+                  >
+                    <X className="w-4 h-4" strokeWidth={2} />
+                  </button>
+                  {/* Tag in header */}
+                  <div className="absolute top-4 left-4">
+                    <span className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase ${selected.tagColor} shadow-sm`}>
+                      {selected.tag}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Body */}
+                <div className="p-7 md:p-8">
+                  <div className="flex items-center gap-4 mb-5">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-md flex-shrink-0 ${selected.tagColor}`}>
+                      {(() => { const Icon = selected.icon; return <Icon className="w-7 h-7 text-white" strokeWidth={1.8} />; })()}
+                    </div>
+                    <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground leading-tight">
+                      {selected.title}
+                    </h2>
+                  </div>
+                  <p className="text-muted leading-relaxed text-base md:text-[17px]">
+                    {selected.caption}
+                  </p>
+                  <div className="mt-6 pt-5 border-t border-border/60 flex justify-end">
+                    <button
+                      onClick={() => setSelected(null)}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-scholarly text-white text-sm font-semibold hover:bg-scholarly-light transition-colors"
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

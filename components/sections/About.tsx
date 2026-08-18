@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
-import { Target, Eye, ArrowRight, Landmark, X, BookOpen, Users, Award } from "lucide-react";
+import { Target, Eye, ArrowRight, BookOpen, Users, Award, X } from "lucide-react";
 
 export default function About() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,18 +30,17 @@ export default function About() {
               className="lg:col-span-5"
             >
               <div className="relative">
-                <div className="relative aspect-[4/3] md:aspect-[5/4] rounded-[28px] overflow-hidden border border-border shadow-lg bg-gradient-to-br from-scholarly-pale via-gold-pale to-scholarly-pale group">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(30,58,95,0.18),transparent_60%),radial-gradient(circle_at_80%_80%,rgba(184,137,60,0.2),transparent_55%)]" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative">
-                      <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-scholarly/10 flex items-center justify-center border border-white/40 backdrop-blur-sm shadow-inner">
-                        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/50 dark:bg-white/5 flex items-center justify-center border border-white/50">
-                          <Landmark className="w-12 h-12 md:w-16 md:h-16 text-scholarly" strokeWidth={1.4} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-7 bg-gradient-to-t from-scholarly/90 via-scholarly/50 to-transparent text-white">
+                <div className="relative aspect-[4/3] md:aspect-[5/4] rounded-[28px] overflow-hidden border border-border shadow-lg group">
+                  {/* Real photo */}
+                  <img
+                    src="/about-photo.png"
+                    alt="Pharo Foundation"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  {/* Overlay for caption legibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-7 text-white">
                     <div className="text-[10px] font-bold tracking-[0.22em] uppercase text-gold mb-1.5">
                       Pharo Foundation
                     </div>
@@ -50,6 +49,7 @@ export default function About() {
                     </div>
                   </div>
                 </div>
+
                 <div className="absolute -z-10 -top-4 -left-4 w-24 h-24 rounded-3xl bg-gold-pale dark:bg-gold-pale/60 -rotate-6" />
                 <div className="absolute -z-10 -bottom-4 -right-4 w-24 h-24 rounded-3xl bg-scholarly-pale dark:bg-scholarly-pale/60 rotate-6" />
               </div>
