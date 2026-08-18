@@ -1,6 +1,6 @@
 import Container from "../ui/Container";
+import Image from "next/image";
 import {
-  Sparkles,
   Mail,
   Phone,
   MapPin,
@@ -27,11 +27,51 @@ const infoLinks = [
 ];
 
 const socialLinks = [
-  { name: "Facebook", href: "#", Icon: Facebook },
-  { name: "Twitter", href: "#", Icon: Twitter },
-  { name: "Instagram", href: "#", Icon: Instagram },
-  { name: "LinkedIn", href: "#", Icon: Linkedin },
-  { name: "YouTube", href: "#", Icon: Youtube },
+  {
+    name: "Facebook",
+    href: "#",
+    Icon: Facebook,
+    hoverText: "hover:text-[#1877F2]",
+    hoverBorder: "hover:border-[#1877F2]/40",
+    hoverBg: "hover:bg-[#1877F2]/8",
+    hoverShadow: "hover:shadow-[0_0_16px_rgba(24,119,242,0.25)]",
+  },
+  {
+    name: "Twitter",
+    href: "#",
+    Icon: Twitter,
+    hoverText: "hover:text-[#1DA1F2]",
+    hoverBorder: "hover:border-[#1DA1F2]/40",
+    hoverBg: "hover:bg-[#1DA1F2]/8",
+    hoverShadow: "hover:shadow-[0_0_16px_rgba(29,161,242,0.25)]",
+  },
+  {
+    name: "Instagram",
+    href: "#",
+    Icon: Instagram,
+    hoverText: "hover:text-[#E1306C]",
+    hoverBorder: "hover:border-[#E1306C]/40",
+    hoverBg: "hover:bg-[#E1306C]/8",
+    hoverShadow: "hover:shadow-[0_0_16px_rgba(225,48,108,0.25)]",
+  },
+  {
+    name: "LinkedIn",
+    href: "#",
+    Icon: Linkedin,
+    hoverText: "hover:text-[#0A66C2]",
+    hoverBorder: "hover:border-[#0A66C2]/40",
+    hoverBg: "hover:bg-[#0A66C2]/8",
+    hoverShadow: "hover:shadow-[0_0_16px_rgba(10,102,194,0.25)]",
+  },
+  {
+    name: "YouTube",
+    href: "#",
+    Icon: Youtube,
+    hoverText: "hover:text-[#FF0000]",
+    hoverBorder: "hover:border-[#FF0000]/40",
+    hoverBg: "hover:bg-[#FF0000]/8",
+    hoverShadow: "hover:shadow-[0_0_16px_rgba(255,0,0,0.22)]",
+  },
 ];
 
 export default function Footer() {
@@ -46,8 +86,8 @@ export default function Footer() {
               className="inline-flex items-center gap-2.5 mb-5"
               aria-label="Pharo Foundation — Home"
             >
-              <div className="flex items-center justify-center w-11 h-11 rounded-full border border-border bg-scholarly shadow-sm transition-colors">
-                <Sparkles className="w-5 h-5 text-gold" strokeWidth={2} />
+              <div className="flex items-center justify-center w-11 h-11 rounded-full overflow-hidden border border-border bg-white shadow-sm flex-shrink-0">
+                <Image src="/pharo-logo.png" alt="Pharo Foundation" width={44} height={44} className="w-full h-full object-contain" />
               </div>
               <div className="flex flex-col leading-tight">
                 <span className="font-serif text-xl font-bold tracking-tight text-foreground">
@@ -58,18 +98,30 @@ export default function Footer() {
                 </span>
               </div>
             </Link>
-            <p className="text-muted leading-relaxed max-w-md text-sm md:text-base mb-6">
+            <p className="text-muted leading-relaxed max-w-md text-sm md:text-base mb-7">
               [PLACEHOLDER — Short institutional tagline] A community dedicated
               to academic excellence, character formation, and the joyful
               pursuit of learning.
             </p>
-            {/* Apply Now CTA */}
-            <Link
-              href="#admissions"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-full font-semibold bg-scholarly text-white hover:bg-scholarly-light transition-colors text-sm shadow-sm"
-            >
-              Apply Now
-            </Link>
+
+            {/* Social icons — brand color on hover */}
+            <div>
+              <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted mb-3">
+                Follow Us
+              </p>
+              <div className="flex items-center gap-2.5">
+                {socialLinks.map(({ name, href, Icon, hoverText, hoverBorder, hoverBg, hoverShadow }) => (
+                  <Link
+                    key={name}
+                    href={href}
+                    aria-label={name}
+                    className={`w-10 h-10 rounded-full border border-border bg-background flex items-center justify-center text-muted transition-all duration-200 ${hoverText} ${hoverBorder} ${hoverBg} ${hoverShadow}`}
+                  >
+                    <Icon className="w-[18px] h-[18px]" strokeWidth={1.8} />
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* School */}
@@ -118,7 +170,7 @@ export default function Footer() {
             <ul className="space-y-3.5">
               <li className="flex items-start gap-2.5">
                 <MapPin
-                  className="w-4.5 h-4.5 text-scholarly mt-0.5 flex-shrink-0"
+                  className="w-4 h-4 text-scholarly mt-0.5 flex-shrink-0"
                   strokeWidth={1.8}
                 />
                 <span className="text-muted text-sm md:text-base leading-relaxed">
@@ -127,7 +179,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Mail
-                  className="w-4.5 h-4.5 text-scholarly mt-0.5 flex-shrink-0"
+                  className="w-4 h-4 text-scholarly mt-0.5 flex-shrink-0"
                   strokeWidth={1.8}
                 />
                 <a
@@ -139,7 +191,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-2.5">
                 <Phone
-                  className="w-4.5 h-4.5 text-scholarly mt-0.5 flex-shrink-0"
+                  className="w-4 h-4 text-scholarly mt-0.5 flex-shrink-0"
                   strokeWidth={1.8}
                 />
                 <a
@@ -150,25 +202,6 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-
-            {/* Social */}
-            <div className="mt-7">
-              <h5 className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted mb-4">
-                Social
-              </h5>
-              <div className="flex flex-wrap items-center gap-2.5">
-                {socialLinks.map(({ name, href, Icon }) => (
-                  <Link
-                    key={name}
-                    href={href}
-                    aria-label={name}
-                    className="w-9 h-9 rounded-full border border-border bg-background flex items-center justify-center text-muted hover:text-scholarly hover:border-scholarly/30 hover:shadow-[0_0_14px_rgba(30,58,95,0.16)] transition-all"
-                  >
-                    <Icon className="w-4 h-4" strokeWidth={1.8} />
-                  </Link>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 
@@ -178,22 +211,13 @@ export default function Footer() {
             © {new Date().getFullYear()} Pharo Foundation. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
-            <Link
-              href="#"
-              className="text-muted hover:text-scholarly transition-colors"
-            >
+            <Link href="#" className="text-muted hover:text-scholarly transition-colors">
               Privacy Policy
             </Link>
-            <Link
-              href="#"
-              className="text-muted hover:text-scholarly transition-colors"
-            >
+            <Link href="#" className="text-muted hover:text-scholarly transition-colors">
               Terms of Use
             </Link>
-            <Link
-              href="#contact"
-              className="text-muted hover:text-scholarly transition-colors"
-            >
+            <Link href="#contact" className="text-muted hover:text-scholarly transition-colors">
               Contact
             </Link>
           </div>

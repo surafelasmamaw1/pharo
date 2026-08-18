@@ -38,8 +38,8 @@ const activities: Activity[] = [
       "[PLACEHOLDER] Competitive and recreational athletic programs that build teamwork, resilience, fitness, and school spirit through every season.",
     examples: ["Team Sports", "Individual Events", "PE Classes", "Tournaments"],
     accent: "from-accent/25 via-orange-500/15 to-gold/10",
-    iconBg: "bg-gradient-to-br from-accent/30 to-gold/20 text-white",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(166,110,63,0.18)]",
+    iconBg: "bg-accent",
+    shadowGlow: "hover:shadow-[0_0_32px_rgba(166,110,63,0.25)] hover:bg-accent/5 hover:border-accent/40",
     borderGlow: "dark:hover:border-accent/40",
   },
   {
@@ -51,8 +51,8 @@ const activities: Activity[] = [
       "[PLACEHOLDER] A wide range of student clubs and organizations — so every student can pursue passions, find community, and take initiative.",
     examples: ["Student Council", "Debate Club", "Robotics", "Model UN"],
     accent: "from-scholarly/25 via-scholarly-light/15 to-blue-500/10",
-    iconBg: "bg-gradient-to-br from-scholarly/30 to-scholarly-light/20 text-white",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.18)]",
+    iconBg: "bg-scholarly",
+    shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.25)] hover:bg-scholarly/5 hover:border-scholarly/40",
     borderGlow: "dark:hover:border-scholarly/40",
   },
   {
@@ -64,8 +64,8 @@ const activities: Activity[] = [
       "[PLACEHOLDER] Rich programs in visual arts, music, dance, and theatre — giving every student space to explore, create, perform, and grow.",
     examples: ["Visual Arts", "Choir & Band", "Theatre", "Dance"],
     accent: "from-purple-500/25 via-pink-500/15 to-rose-500/10",
-    iconBg: "bg-gradient-to-br from-purple-500/30 to-pink-500/20 text-white",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(120,40,200,0.16)]",
+    iconBg: "bg-purple-500",
+    shadowGlow: "hover:shadow-[0_0_32px_rgba(120,40,200,0.22)] hover:bg-purple-500/5 hover:border-purple-400/40",
     borderGlow: "dark:hover:border-purple-400/40",
   },
   {
@@ -77,8 +77,8 @@ const activities: Activity[] = [
       "[PLACEHOLDER] Tech-focused activities that build creative confidence with digital tools — from coding and robotics to design and film.",
     examples: ["Coding Clubs", "Robotics", "Digital Design", "Media"],
     accent: "from-scholarly-light/25 via-cyan-500/15 to-sky-500/10",
-    iconBg: "bg-gradient-to-br from-scholarly-light/30 to-blue-500/20 text-white",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(45,79,122,0.18)]",
+    iconBg: "bg-scholarly-light",
+    shadowGlow: "hover:shadow-[0_0_32px_rgba(45,79,122,0.25)] hover:bg-scholarly-light/5 hover:border-scholarly-light/40",
     borderGlow: "dark:hover:border-scholarly-light/40",
   },
   {
@@ -90,8 +90,8 @@ const activities: Activity[] = [
       "[PLACEHOLDER] Academic, artistic, and athletic competitions that invite students to stretch themselves, represent our school, and celebrate achievement.",
     examples: ["Academic Olympiads", "Sports Fixtures", "Arts Festivals", "Debate"],
     accent: "from-gold/25 via-amber-500/15 to-yellow-500/10",
-    iconBg: "bg-gradient-to-br from-gold/30 to-amber-500/20 text-white",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(184,137,60,0.18)]",
+    iconBg: "bg-gold",
+    shadowGlow: "hover:shadow-[0_0_32px_rgba(184,137,60,0.25)] hover:bg-gold/5 hover:border-gold/40",
     borderGlow: "dark:hover:border-gold/40",
   },
   {
@@ -103,8 +103,8 @@ const activities: Activity[] = [
       "[PLACEHOLDER] Formal and informal student leadership programs that prepare young people to lead with integrity, empathy, and confidence.",
     examples: ["Prefects", "House Captains", "Mentorship", "Events"],
     accent: "from-scholarly/25 via-scholarly-light/15 to-emerald-500/10",
-    iconBg: "bg-gradient-to-br from-scholarly/30 to-success/20 text-white",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.18)]",
+    iconBg: "bg-scholarly",
+    shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.25)] hover:bg-scholarly/5 hover:border-scholarly/40",
     borderGlow: "dark:hover:border-scholarly/40",
   },
   {
@@ -116,8 +116,8 @@ const activities: Activity[] = [
       "[PLACEHOLDER] Meaningful service learning and community engagement that connects students to local and global challenges with compassion.",
     examples: ["Community Service", "Charity Drives", "Global Projects", "Partnerships"],
     accent: "from-success/25 via-emerald-500/15 to-teal-500/10",
-    iconBg: "bg-gradient-to-br from-success/30 to-emerald-500/20 text-white",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(46,125,87,0.18)]",
+    iconBg: "bg-success",
+    shadowGlow: "hover:shadow-[0_0_32px_rgba(46,125,87,0.25)] hover:bg-success/5 hover:border-success/40",
     borderGlow: "dark:hover:border-success/40",
   },
 ];
@@ -164,7 +164,7 @@ export default function StudentLife() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.55, delay: idx * 0.07 }}
                   whileHover={{ y: -6, scale: 1.018 }}
-                  className={`group relative flex flex-col p-7 md:p-8 rounded-[24px] border border-border bg-background overflow-hidden shadow-sm transition-all duration-300 ${a.shadowGlow} dark:hover:bg-white/5 ${a.borderGlow} ${
+                  className={`group relative flex flex-col p-7 md:p-8 rounded-[24px] border border-border bg-background overflow-hidden shadow-sm transition-all duration-300 ${a.shadowGlow} ${
                     isLastWide ? "lg:col-span-2" : ""
                   }`}
                 >
@@ -175,10 +175,10 @@ export default function StudentLife() {
                     {/* Icon + tag row */}
                     <div className="flex items-start justify-between gap-4 mb-6">
                       <div
-                        className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl ${a.iconBg} flex items-center justify-center shadow-sm border border-white/10`}
+                        className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl ${a.iconBg} flex items-center justify-center shadow-md flex-shrink-0`}
                       >
                         <Icon
-                          className="w-7 h-7 md:w-8 md:h-8 text-white dark:text-white"
+                          className="w-7 h-7 md:w-8 md:h-8 text-white"
                           strokeWidth={1.8}
                         />
                       </div>

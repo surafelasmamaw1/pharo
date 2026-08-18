@@ -6,7 +6,6 @@ import {
   ClipboardList as ApplyIcon,
   UsersRound as ConnectIcon,
   GraduationCap as JoinIcon,
-  ArrowRight,
   Phone,
 } from "lucide-react";
 import Container from "../ui/Container";
@@ -32,7 +31,7 @@ const steps: Step[] = [
     description:
       "Learn about the school and academic programs. Discover the community, the curriculum, and the promise of a Pharo Foundation education.",
     accent: "bg-scholarly text-white",
-    iconBg: "from-scholarly/30 to-scholarly-light/15 text-white",
+    iconBg: "bg-scholarly",
     glow: "hover:shadow-[0_0_36px_rgba(30,58,95,0.2)]",
     borderGlow: "dark:hover:border-scholarly/50",
   },
@@ -43,7 +42,7 @@ const steps: Step[] = [
     description:
       "Submit the required application information. Our admissions materials are designed to help us understand your child and your family.",
     accent: "bg-gold text-white",
-    iconBg: "from-gold/30 to-amber-500/15 text-white",
+    iconBg: "bg-gold",
     glow: "hover:shadow-[0_0_36px_rgba(184,137,60,0.2)]",
     borderGlow: "dark:hover:border-gold/50",
   },
@@ -54,7 +53,7 @@ const steps: Step[] = [
     description:
       "The admissions team guides families through the next steps — campus visits, conversations, and any additional reviews or assessments.",
     accent: "bg-scholarly-light text-white",
-    iconBg: "from-scholarly-light/30 to-cyan-500/15 text-white",
+    iconBg: "bg-scholarly-light",
     glow: "hover:shadow-[0_0_36px_rgba(45,79,122,0.2)]",
     borderGlow: "dark:hover:border-scholarly-light/50",
   },
@@ -65,7 +64,7 @@ const steps: Step[] = [
     description:
       "Begin your journey as part of the Pharo Foundation community. Enroll, attend orientation, and step into a place where your child can thrive.",
     accent: "bg-success text-white",
-    iconBg: "from-success/30 to-emerald-500/15 text-white",
+    iconBg: "bg-success",
     glow: "hover:shadow-[0_0_36px_rgba(46,125,87,0.2)]",
     borderGlow: "dark:hover:border-success/50",
   },
@@ -132,7 +131,7 @@ export default function Resume() {
 
                     {/* Icon node — sits on the line visually on md+ */}
                     <div
-                      className={`relative mb-6 w-16 h-16 md:w-[72px] md:h-[72px] rounded-2xl bg-gradient-to-br ${s.iconBg} flex items-center justify-center border border-white/10 shadow-md`}
+                      className={`relative mb-6 w-16 h-16 md:w-[72px] md:h-[72px] rounded-2xl ${s.iconBg} flex items-center justify-center shadow-md`}
                     >
                       <Icon
                         className="w-8 h-8 md:w-9 md:h-9 text-white"
@@ -180,14 +179,6 @@ export default function Resume() {
                 >
                   <Phone className="w-4.5 h-4.5" />
                   Contact Admissions
-                </Button>
-                <Button
-                  href="#contact"
-                  variant="outline"
-                  size="lg"
-                  className="!bg-gold !text-white !border-gold hover:!bg-amber-600"
-                >
-                  Apply Now <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
             </div>
