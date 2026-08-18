@@ -35,7 +35,7 @@ const activities: Activity[] = [
     tag: "Athletics",
     tagColor: "bg-accent/10 text-accent border-accent/20",
     description:
-      "[PLACEHOLDER] Competitive and recreational athletic programs that build teamwork, resilience, fitness, and school spirit through every season.",
+      "Competitive and recreational athletic programs that build teamwork, resilience, fitness, and school spirit through every season.",
     examples: ["Team Sports", "Individual Events", "PE Classes", "Tournaments"],
     accent: "from-accent/25 via-orange-500/15 to-gold/10",
     iconBg: "bg-accent",
@@ -48,7 +48,7 @@ const activities: Activity[] = [
     tag: "Student Led",
     tagColor: "bg-scholarly/10 text-scholarly border-scholarly/20",
     description:
-      "[PLACEHOLDER] A wide range of student clubs and organizations — so every student can pursue passions, find community, and take initiative.",
+      "A wide range of student clubs and organisations — so every student can pursue passions, find community, and take initiative.",
     examples: ["Student Council", "Debate Club", "Robotics", "Model UN"],
     accent: "from-scholarly/25 via-scholarly-light/15 to-blue-500/10",
     iconBg: "bg-scholarly",
@@ -61,7 +61,7 @@ const activities: Activity[] = [
     tag: "Creative",
     tagColor: "bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20",
     description:
-      "[PLACEHOLDER] Rich programs in visual arts, music, dance, and theatre — giving every student space to explore, create, perform, and grow.",
+      "Rich programs in visual arts, music, dance, and theatre — giving every student space to explore, create, perform, and grow.",
     examples: ["Visual Arts", "Choir & Band", "Theatre", "Dance"],
     accent: "from-purple-500/25 via-pink-500/15 to-rose-500/10",
     iconBg: "bg-purple-500",
@@ -74,7 +74,7 @@ const activities: Activity[] = [
     tag: "Digital",
     tagColor: "bg-scholarly-light/10 text-scholarly-light border-scholarly-light/20",
     description:
-      "[PLACEHOLDER] Tech-focused activities that build creative confidence with digital tools — from coding and robotics to design and film.",
+      "Tech-focused activities that build creative confidence with digital tools — from coding and robotics to design and film.",
     examples: ["Coding Clubs", "Robotics", "Digital Design", "Media"],
     accent: "from-scholarly-light/25 via-cyan-500/15 to-sky-500/10",
     iconBg: "bg-scholarly-light",
@@ -87,7 +87,7 @@ const activities: Activity[] = [
     tag: "Excellence",
     tagColor: "bg-gold/10 text-gold border-gold/20",
     description:
-      "[PLACEHOLDER] Academic, artistic, and athletic competitions that invite students to stretch themselves, represent our school, and celebrate achievement.",
+      "Academic, artistic, and athletic competitions that invite students to stretch themselves, represent our school, and celebrate achievement.",
     examples: ["Academic Olympiads", "Sports Fixtures", "Arts Festivals", "Debate"],
     accent: "from-gold/25 via-amber-500/15 to-yellow-500/10",
     iconBg: "bg-gold",
@@ -100,7 +100,7 @@ const activities: Activity[] = [
     tag: "Character",
     tagColor: "bg-scholarly/10 text-scholarly border-scholarly/20",
     description:
-      "[PLACEHOLDER] Formal and informal student leadership programs that prepare young people to lead with integrity, empathy, and confidence.",
+      "Formal and informal student leadership programs that prepare young people to lead with integrity, empathy, and confidence.",
     examples: ["Prefects", "House Captains", "Mentorship", "Events"],
     accent: "from-scholarly/25 via-scholarly-light/15 to-emerald-500/10",
     iconBg: "bg-scholarly",
@@ -113,7 +113,7 @@ const activities: Activity[] = [
     tag: "Service",
     tagColor: "bg-success/10 text-success border-success/20",
     description:
-      "[PLACEHOLDER] Meaningful service learning and community engagement that connects students to local and global challenges with compassion.",
+      "Meaningful service learning and community engagement that connects students to local and global challenges with compassion.",
     examples: ["Community Service", "Charity Drives", "Global Projects", "Partnerships"],
     accent: "from-success/25 via-emerald-500/15 to-teal-500/10",
     iconBg: "bg-success",

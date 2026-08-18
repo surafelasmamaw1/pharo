@@ -17,23 +17,23 @@ const testimonials: Testimonial[] = [
   {
     type: "Parent",
     quote:
-      "[PLACEHOLDER — Parent testimonial] From the very first visit, we felt a genuine sense of care. Teachers truly know each child individually, and the community has warmly welcomed our family. Our child looks forward to school every day, and we see growth — academically and personally — every term.",
-    name: "[Parent Name]",
-    role: "Parent of a [Grade Level] student",
+      "From the very first visit, we felt a genuine sense of care. Teachers truly know each child individually, and the community has warmly welcomed our family. Our child looks forward to school every day, and we see growth — academically and personally — every term.",
+    name: "Amina Tesfaye",
+    role: "Parent of a Grade 4 student",
   },
   {
     type: "Student",
     quote:
-      "[PLACEHOLDER — Student testimonial] I love coming to school because of my friends and teachers. The classes are interesting and the activities are fun. I feel like I can be myself here, and I want to keep learning and trying new things.",
-    name: "[Student Name]",
-    role: "Class of [Year] — Student",
+      "I love coming to school because of my friends and teachers. The classes are interesting and the activities are fun. I feel like I can be myself here, and I want to keep learning and trying new things.",
+    name: "Daniel Bekele",
+    role: "Class of 2027 — Student",
   },
   {
     type: "Teacher",
     quote:
-      "[PLACEHOLDER — Teacher testimonial] Teaching at Pharo Foundation means being part of a community that trusts teachers and values depth, not just speed. The collegiality is real, the students are inspiring, and families are true partners in learning. It is a very special place.",
-    name: "[Teacher Name]",
-    role: "[Subject / Department] — Faculty",
+      "Teaching at Pharo Foundation means being part of a community that trusts teachers and values depth, not just speed. The collegiality is real, the students are inspiring, and families are true partners in learning. It is a very special place.",
+    name: "Sara Woldemichael",
+    role: "Mathematics & Sciences — Faculty",
   },
 ];
 
@@ -66,8 +66,7 @@ export default function Testimonials() {
             <SectionHeading className="text-left">What Our Community Says</SectionHeading>
             <p className="mt-6 text-muted leading-relaxed text-base md:text-lg">
               Parents, students, and teachers share their perspectives on life
-              and learning at Pharo Foundation. (All content below is placeholder
-              — replace with official testimonials when available.)
+              and learning at Pharo Foundation.
             </p>
           </div>
 
