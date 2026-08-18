@@ -110,55 +110,60 @@ export default function Hero() {
           >
             <div className="relative">
               {/* Main image placeholder card */}
-              <div className="relative aspect-[4/5] md:aspect-[5/6] rounded-[28px] overflow-hidden border border-border shadow-xl bg-gradient-to-br from-scholarly via-scholarly-light to-scholarly group">
-                {/* To replace with actual school image:
-                  <Image src="/school-campus.jpg" alt="Pharo Foundation campus" fill className="object-cover" priority />
-                */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_55%),radial-gradient(circle_at_80%_90%,rgba(212,167,94,0.22),transparent_55%)]" />
+              <div className="relative aspect-[4/5] md:aspect-[5/6] rounded-[28px] overflow-hidden border border-border shadow-xl group">
+                {/* Real school photo */}
+                <img
+                  src="/pharo-school.png"
+                  alt="Pharo Foundation campus"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                {/* Overlay for text legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/45" />
+
                 <div className="absolute inset-0 flex flex-col justify-end p-7 md:p-9 text-white">
-                  <div className="mb-4 inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full bg-white/15 backdrop-blur border border-white/20">
+                  <div className="mb-4 inline-flex items-center gap-2 self-start px-4 py-2 rounded-full bg-scholarly border-0 shadow-md">
                     <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase">
-                      [School Campus Photo]
+                    <span className="text-[10px] font-extrabold tracking-[0.2em] uppercase text-white">
+                      OUR CAMPUS
                     </span>
                   </div>
-                  <h3 className="font-serif text-2xl md:text-3xl font-bold leading-tight mb-2">
+                  <h3 className="font-serif text-2xl md:text-3xl font-bold leading-tight mb-2 drop-shadow-lg">
                     A Campus Designed for Learning
                   </h3>
-                  <p className="text-white/80 text-sm md:text-base leading-relaxed">
-                    Replace this placeholder with an official photograph of the
-                    Pharo Foundation campus, main building, or student life.
+                  <p className="text-white/90 text-sm md:text-base leading-relaxed drop-shadow">
+                    Featuring state-of-the-art science labs, expansive athletic fields,
+                    and collaborative spaces built to inspire academic excellence.
                   </p>
                 </div>
 
-                {/* Floating badge — top right */}
+                {/* EST. Badge — top right */}
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.7 }}
-                  className="absolute top-6 right-6 px-4 py-2.5 rounded-2xl bg-white/95 text-foreground shadow-lg border border-white/60 backdrop-blur"
+                  className="absolute top-5 right-5 px-4 py-2.5 rounded-2xl bg-white shadow-xl border-0 z-10"
                 >
-                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-scholarly mb-0.5">
+                  <div className="text-[10px] font-extrabold tracking-[0.2em] uppercase text-scholarly mb-0.5">
                     Est.
                   </div>
-                  <div className="font-serif text-xl font-bold leading-none">[Year]</div>
+                  <div className="font-serif text-xl font-bold leading-none text-gray-900">2011</div>
                 </motion.div>
 
-                {/* Floating info — bottom-left overlay */}
+                {/* Programs pill — top left */}
                 <motion.div
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
-                  className="hidden sm:flex absolute left-6 bottom-[52%] items-center gap-3 px-4 py-3 rounded-2xl bg-white/95 text-foreground shadow-lg border border-white/60 backdrop-blur max-w-[230px]"
+                  className="hidden sm:flex absolute left-5 top-5 items-center gap-3 px-4 py-3 rounded-2xl bg-white shadow-xl border-0 z-10 max-w-[220px]"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-gold-pale flex items-center justify-center flex-shrink-0">
-                    <GraduationCap className="w-5 h-5 text-gold" strokeWidth={1.8} />
+                  <div className="w-10 h-10 rounded-xl bg-scholarly flex items-center justify-center flex-shrink-0">
+                    <GraduationCap className="w-5 h-5 text-white" strokeWidth={1.8} />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[10px] font-bold tracking-[0.18em] uppercase text-gold">
-                      [Programs]
+                    <div className="text-[10px] font-extrabold tracking-[0.18em] uppercase text-scholarly">
+                      Programs
                     </div>
-                    <div className="text-sm font-bold truncate">Early Years → Secondary</div>
+                    <div className="text-sm font-bold truncate text-gray-900">Early Years → High School</div>
                   </div>
                 </motion.div>
               </div>

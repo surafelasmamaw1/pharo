@@ -60,7 +60,7 @@ export default function ProjectCard({
             />
           )}
           {/* Overlay — always present to ensure text contrast */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/50" />
           <div
             className="absolute inset-0 opacity-[0.12] mix-blend-overlay"
             style={{
@@ -75,8 +75,8 @@ export default function ProjectCard({
               <TagIcon className="w-3 h-3" strokeWidth={2.2} />
               {project.category}
             </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 text-foreground text-[11px] font-bold shadow-sm border border-white/60 backdrop-blur">
-              <CalendarDays className="w-3.5 h-3.5 text-scholarly" strokeWidth={1.8} />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-scholarly text-[11px] font-extrabold shadow-lg border-2 border-scholarly/20 whitespace-nowrap">
+              <CalendarDays className="w-3.5 h-3.5 text-scholarly flex-shrink-0" strokeWidth={2} />
               {project.date}
             </span>
           </div>
@@ -154,8 +154,8 @@ export default function ProjectCard({
                       <TagIcon className="w-3 h-3" strokeWidth={2.2} />
                       {project.category}
                     </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 text-foreground text-[11px] font-bold shadow-sm border border-white/60">
-                      <CalendarDays className="w-3.5 h-3.5 text-scholarly" strokeWidth={1.8} />
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-foreground text-[11px] font-bold shadow-md border border-white/80 whitespace-nowrap">
+                      <CalendarDays className="w-3.5 h-3.5 text-scholarly flex-shrink-0" strokeWidth={1.8} />
                       {project.date}
                     </span>
                   </div>

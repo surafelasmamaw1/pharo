@@ -6,11 +6,9 @@ import {
   ClipboardList as ApplyIcon,
   UsersRound as ConnectIcon,
   GraduationCap as JoinIcon,
-  Phone,
 } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
-import Button from "../ui/Button";
 
 type Step = {
   num: string;
@@ -152,37 +150,6 @@ export default function Resume() {
           </div>
 
           {/* CTA row */}
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mt-14 md:mt-16 p-7 md:p-10 rounded-[28px] border border-border bg-gradient-to-br from-scholarly via-scholarly-light to-scholarly text-white overflow-hidden relative"
-          >
-            <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.35),transparent_55%),radial-gradient(circle_at_80%_90%,rgba(212,167,94,0.45),transparent_55%)]" />
-            <div className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-7 lg:gap-10">
-              <div className="max-w-2xl text-left">
-                <h3 className="font-serif text-2xl md:text-3xl lg:text-[34px] font-bold leading-tight mb-3">
-                  Ready to begin the conversation?
-                </h3>
-                <p className="text-white/85 text-base md:text-lg leading-relaxed">
-                  Our admissions team is available to answer questions, schedule a
-                  personal tour, and guide your family at every step.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 lg:flex-shrink-0">
-                <Button
-                  href="#contact"
-                  variant="outline"
-                  size="lg"
-                  className="!bg-white !text-scholarly !border-white hover:!bg-gold-pale"
-                >
-                  <Phone className="w-4.5 h-4.5" />
-                  Contact Admissions
-                </Button>
-              </div>
-            </div>
-          </motion.div>
         </motion.div>
       </Container>
     </section>

@@ -22,6 +22,7 @@ type Facility = {
   gradient: string;
   tagColor: string;
   order: "tall" | "wide" | "standard";
+  image?: string;
 };
 
 const facilities: Facility[] = [
@@ -30,18 +31,19 @@ const facilities: Facility[] = [
     title: "Classrooms",
     tag: "Learning Spaces",
     caption:
-      "[PLACEHOLDER] Bright, modern, purpose-built classrooms designed for engagement, collaboration, and focused teaching.",
+      "Bright, modern, purpose-built classrooms designed for engagement, collaboration, and focused teaching.",
     gradient:
       "bg-gradient-to-br from-scholarly via-scholarly-light to-scholarly-pale dark:from-scholarly dark:via-scholarly-light dark:to-scholarly-pale",
     tagColor: "bg-scholarly text-white",
     order: "tall",
+    image: "/classrooms.png",
   },
   {
     icon: FlaskConical,
     title: "Laboratories",
     tag: "Sciences",
     caption:
-      "[PLACEHOLDER] Fully equipped labs for biology, chemistry, physics, and STEAM exploration — enabling hands-on discovery.",
+      "Fully equipped labs for biology, chemistry, physics, and STEAM exploration — enabling hands-on discovery.",
     gradient:
       "bg-gradient-to-br from-success via-emerald-600 to-emerald-200 dark:from-success dark:via-emerald-700 dark:to-emerald-950",
     tagColor: "bg-success text-white",
@@ -52,29 +54,31 @@ const facilities: Facility[] = [
     title: "Library",
     tag: "Knowledge Hub",
     caption:
-      "[PLACEHOLDER] Extensive print and digital collections, comfortable reading spaces, and expert librarian guidance for research and reading.",
+      "Extensive print and digital collections, comfortable reading spaces, and expert librarian guidance for research and reading.",
     gradient:
       "bg-gradient-to-br from-gold via-accent to-gold-pale dark:from-gold dark:via-accent dark:to-amber-950",
     tagColor: "bg-gold text-white",
     order: "wide",
+    image: "/library.png",
   },
   {
     icon: Monitor,
     title: "Computer Labs",
     tag: "Technology",
     caption:
-      "[PLACEHOLDER] Modern computing facilities with up-to-date hardware and software supporting coding, design, research, and creation.",
+      "Modern computing facilities with up-to-date hardware and software supporting coding, design, research, and creation.",
     gradient:
       "bg-gradient-to-br from-scholarly-light via-blue-600 to-sky-300 dark:from-scholarly-light dark:via-blue-700 dark:to-blue-950",
     tagColor: "bg-scholarly-light text-white",
     order: "standard",
+    image: "/computer-labs.png",
   },
   {
     icon: Dumbbell,
     title: "Sports Facilities",
     tag: "Athletics & Wellbeing",
     caption:
-      "[PLACEHOLDER] Gymnasium, playing fields, courts, and fitness areas supporting team sports, physical education, and lifelong wellness.",
+      "Gymnasium, playing fields, courts, and fitness areas supporting team sports, physical education, and lifelong wellness.",
     gradient:
       "bg-gradient-to-br from-accent via-orange-500 to-amber-200 dark:from-accent dark:via-orange-700 dark:to-amber-950",
     tagColor: "bg-accent text-white",
@@ -85,7 +89,7 @@ const facilities: Facility[] = [
     title: "Creative Spaces",
     tag: "Arts & Design",
     caption:
-      "[PLACEHOLDER] Purpose-built studios for visual arts, music, dance, theatre, and digital media — where creativity comes to life.",
+      "Purpose-built studios for visual arts, music, dance, theatre, and digital media — where creativity comes to life.",
     gradient:
       "bg-gradient-to-br from-purple-600 via-pink-500 to-rose-300 dark:from-purple-700 dark:via-pink-700 dark:to-rose-950",
     tagColor: "bg-scholarly text-white",
@@ -143,8 +147,16 @@ export default function Facilities() {
                   whileHover={{ y: -6, scale: 1.012 }}
                   className={`group relative overflow-hidden rounded-[24px] border border-border shadow-sm transition-all duration-300 hover:shadow-[0_0_36px_rgba(30,58,95,0.18)] dark:hover:border-scholarly/40 ${colSpan} ${rowSpan}`}
                 >
-                  {/* Image layer — replaceable photo. Currently stylised gradient placeholder. */}
+                  {/* Image layer — real photo if available, gradient fallback */}
                   <div className={`absolute inset-0 ${f.gradient}`}>
+                    {f.image && (
+                      <img
+                        src={f.image}
+                        alt={f.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    )}
                     {/* Soft grainy overlay for depth */}
                     <div className="absolute inset-0 opacity-[0.12] dark:opacity-[0.18] mix-blend-overlay"
                       style={{
@@ -152,13 +164,15 @@ export default function Facilities() {
                           "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.85), transparent 55%), radial-gradient(circle at 70% 80%, rgba(0,0,0,0.25), transparent 55%)",
                       }}
                     />
-                    {/* Decorative oversized icon (background visual) */}
-                    <div className="absolute -right-6 -bottom-10 opacity-30">
-                      <Icon
-                        className="w-[180px] h-[180px] md:w-[240px] md:h-[240px] text-white/60"
-                        strokeWidth={1}
-                      />
-                    </div>
+                    {/* Decorative oversized icon (background visual) — only when no photo */}
+                    {!f.image && (
+                      <div className="absolute -right-6 -bottom-10 opacity-30">
+                        <Icon
+                          className="w-[180px] h-[180px] md:w-[240px] md:h-[240px] text-white/60"
+                          strokeWidth={1}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {/* Darkening overlay on hover */}

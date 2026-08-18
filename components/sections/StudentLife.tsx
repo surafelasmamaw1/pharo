@@ -212,14 +212,13 @@ export default function StudentLife() {
           </div>
 
           {/* Signature student experiences strip */}
-          <div className="mt-14 md:mt-16 pt-10 md:pt-12 border-t border-border/60 flex flex-col md:flex-row md:items-center gap-6 md:gap-10 text-left">
+          <div className="mt-10 pt-8 border-t border-border/60 flex flex-col md:flex-row md:items-center gap-5 md:gap-10 text-left">
             <div className="md:max-w-sm flex-shrink-0">
-              <h4 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-2 leading-snug">
-                [PLACEHOLDER] Signature Experiences
+              <h4 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-1.5 leading-snug">
+                Signature Experiences
               </h4>
               <p className="text-muted text-sm md:text-base leading-relaxed">
-                A few of the things that make life at Pharo Foundation
-                distinctive.
+                A few of the things that make life at Pharo Foundation distinctive.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
