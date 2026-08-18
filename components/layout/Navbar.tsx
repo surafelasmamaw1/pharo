@@ -14,8 +14,8 @@ import {
   X,
   Moon,
   Sun,
-  Sparkles,
 } from "lucide-react";
+import Image from "next/image";
 import { useTheme } from "next-themes";
 import Container from "../ui/Container";
 import Button from "../ui/Button";
@@ -24,9 +24,9 @@ const navItems = [
   { name: "Home",         href: "#home",          id: "home",          icon: Home },
   { name: "About Us",     href: "#about",         id: "about",         icon: GraduationCap },
   { name: "Academics",    href: "#academics",     id: "academics",     icon: BookOpen },
-  { name: "Admissions",   href: "#admissions",    id: "admissions",    icon: ClipboardList },
   { name: "Student Life", href: "#student-life",  id: "student-life",  icon: Users },
   { name: "News & Events",href: "#news-events",   id: "news-events",   icon: CalendarDays },
+  { name: "Admissions",   href: "#admissions",    id: "admissions",    icon: ClipboardList },
   { name: "Contact",      href: "#contact",       id: "contact",       icon: Mail },
 ];
 
@@ -132,17 +132,24 @@ export default function Navbar() {
     >
       <Container>
         <div className="flex items-center justify-between h-[76px] lg:h-20">
-          {/* Logo */}
+          {/* Logo — pinned to the far-left viewport edge (offset container's inner padding) */}
           <motion.a
             href="#home"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2, type: "spring", stiffness: 400, damping: 12 }}
-            className="flex-shrink-0 flex items-center gap-3"
+            className="flex-shrink-0 flex items-center gap-3 -ml-6 sm:-ml-8 mr-6 md:mr-10 lg:mr-16"
             aria-label="Pharo Foundation - Go to home"
           >
-            <div className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-full border border-border bg-scholarly shadow-sm transition-colors duration-200">
-              <Sparkles className="w-4.5 h-4.5 lg:w-5 lg:h-5 text-accent" strokeWidth={2} />
+            <div className="flex items-center justify-center w-10 h-10 lg:w-11 lg:h-11 rounded-full overflow-hidden border border-scholarly/30 shadow-sm flex-shrink-0 bg-white">
+              <Image
+                src="/pharo-logo.png"
+                alt="Pharo Foundation"
+                width={44}
+                height={44}
+                className="w-full h-full object-contain"
+                priority
+              />
             </div>
             <div className="hidden sm:flex flex-col leading-none justify-center">
               <span className="font-serif text-xl lg:text-[22px] font-bold tracking-tight text-foreground leading-none">Pharo</span>
@@ -150,44 +157,52 @@ export default function Navbar() {
             </div>
           </motion.a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1.5" aria-label="Main navigation">
-            {navItems.map((item) => {
-              const isActive = activeSection === item.id;
-              const Icon = item.icon;
-              return (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.18, type: "spring", stiffness: 420, damping: 14 }}
-                  className={`relative flex items-center gap-2 px-4 ${NAV_HEIGHT} rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap leading-none ${
-                    isActive
-                      ? "text-white bg-scholarly border border-scholarly/30 shadow-[0_1px_2px_rgba(0,0,0,0.06),0_0_0_4px_rgba(30,58,95,0.05)]"
-                      : "text-muted hover:text-foreground hover:bg-foreground/[0.04] hover:shadow-[0_0_0_4px_rgba(0,0,0,0.02)] dark:hover:bg-white/[0.04] dark:hover:bg-scholarly/10"
-                  }`}
-                >
-                  <Icon className="w-[18px] h-[18px] flex-shrink-0" strokeWidth={1.85} />
-                  <span className="pb-[1px]">{item.name}</span>
-                </motion.a>
-              );
-            })}
-          </nav>
+          {/* Right cluster: Desktop Navigation + Apply Now + theme toggle + mobile menu */}
+          <div className="flex items-center gap-3 lg:gap-4 -mr-6 sm:-mr-8">
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1.5" aria-label="Main navigation">
+              {navItems.map((item) => {
+                const isActive = activeSection === item.id;
+                const Icon = item.icon;
+                return (
+                  <motion.a
+                    key={item.name}
+                    href={item.href}
+                    whileHover={{ y: -1 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ duration: 0.18, type: "spring", stiffness: 420, damping: 14 }}
+                    className={`relative flex items-center gap-2 px-4 ${NAV_HEIGHT} rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap leading-none ${
+                      isActive
+                        ? "text-white bg-scholarly border border-scholarly/30 shadow-[0_1px_2px_rgba(0,0,0,0.06),0_0_0_4px_rgba(30,58,95,0.05)]"
+                        : "text-muted hover:text-foreground hover:bg-foreground/[0.04] hover:shadow-[0_0_0_4px_rgba(0,0,0,0.02)] dark:hover:bg-white/[0.04] dark:hover:bg-scholarly/10"
+                    }`}
+                  >
+                    <Icon className="w-[18px] h-[18px] flex-shrink-0" strokeWidth={1.85} />
+                    <span className="pb-[1px]">{item.name}</span>
+                  </motion.a>
+                );
+              })}
+            </nav>
 
-          {/* Right: Apply Now CTA + theme toggle + mobile menu */}
-          <div className="flex items-center gap-2 sm:gap-3">
             <div className="hidden md:block">
               <Button
                 href="#admissions"
                 variant="secondary"
                 size="sm"
-                className={`!${NAV_HEIGHT} !px-6 !text-sm !leading-none`}
+                className="!h-10 !py-0 !px-6 !text-sm !leading-none"
               >
                 Apply Now
               </Button>
             </div>
-            <ThemeToggle />
+
+            {/* Divider + Theme toggle — isolated to the right */}
+            <div className="hidden md:flex items-center gap-3 pl-3 border-l border-border/60 ml-1">
+              <ThemeToggle />
+            </div>
+            {/* Theme toggle on mobile (no divider) */}
+            <div className="md:hidden">
+              <ThemeToggle />
+            </div>
             <motion.button
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.93 }}
