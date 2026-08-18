@@ -11,6 +11,7 @@ import {
   Youtube,
 } from "lucide-react";
 import Link from "next/link";
+import { siteConfig } from "@/lib/siteConfig";
 
 const schoolLinks = [
   { name: "About Us", href: "#about" },
@@ -99,9 +100,8 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-muted leading-relaxed max-w-md text-sm md:text-base mb-7">
-              [PLACEHOLDER — Short institutional tagline] A community dedicated
-              to academic excellence, character formation, and the joyful
-              pursuit of learning.
+              {siteConfig.tagline} A community dedicated to academic excellence,
+              character formation, and the joyful pursuit of learning.
             </p>
 
             {/* Social icons — brand color on hover */}
@@ -174,7 +174,7 @@ export default function Footer() {
                   strokeWidth={1.8}
                 />
                 <span className="text-muted text-sm md:text-base leading-relaxed">
-                  [PLACEHOLDER] Official School Address
+                  {siteConfig.contact.address.join(", ")}
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
@@ -183,10 +183,10 @@ export default function Footer() {
                   strokeWidth={1.8}
                 />
                 <a
-                  href="mailto:info@pharofoundation.example"
+                  href={siteConfig.contact.emailHref}
                   className="text-muted hover:text-scholarly transition-colors text-sm md:text-base"
                 >
-                  [PLACEHOLDER] info@pharofoundation.example
+                  {siteConfig.contact.email}
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
@@ -195,10 +195,10 @@ export default function Footer() {
                   strokeWidth={1.8}
                 />
                 <a
-                  href="tel:+0000000000"
+                  href={siteConfig.contact.phoneHref}
                   className="text-muted hover:text-scholarly transition-colors text-sm md:text-base"
                 >
-                  [PLACEHOLDER] +00 000 000 0000
+                  {siteConfig.contact.phone}
                 </a>
               </li>
             </ul>

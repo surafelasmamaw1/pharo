@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
@@ -10,6 +10,7 @@ import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
 import { contactFormSchema } from "@/lib/zodSchemas";
+import { siteConfig } from "@/lib/siteConfig";
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
@@ -38,20 +39,16 @@ export default function Contact() {
     setStatus("submitting");
 
     try {
-      const formData = new FormData();
-      formData.append("access_key", "89429d11-e490-457f-8f69-342467c35ae4");
-      formData.append("name", data.name);
-      formData.append("email", data.email);
-      formData.append("phone", data.phone);
-      formData.append(
-        "subject",
-        data.subject || "Pharo Foundation Website Inquiry"
-      );
-      formData.append("message", data.message);
-
       const response = await fetch("/api/contact", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          subject: data.subject || "Pharo Foundation Website Inquiry",
+          message: data.message,
+        }),
       });
 
       const result = await response.json();
@@ -77,7 +74,7 @@ export default function Contact() {
             Contact Pharo Foundation
           </SectionHeading>
           <p className="mt-6 text-muted leading-relaxed text-base md:text-lg">
-            [PLACEHOLDER] We would love to hear from you. Whether you are
+            We would love to hear from you. Whether you are
             exploring admissions, planning a visit, or have a question for our
             team — please reach out and a member of our staff will respond
             promptly.
@@ -86,7 +83,7 @@ export default function Contact() {
 
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
           {/* Left Side - Contact Info */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -106,9 +103,7 @@ export default function Contact() {
                     Address
                   </h4>
                   <p className="text-muted leading-relaxed">
-                    [PLACEHOLDER — Official School Address]
-                    <br />
-                    [Street / City / Country]
+                    {siteConfig.contact.address.join(", ")}
                   </p>
                 </div>
               </div>
@@ -125,10 +120,10 @@ export default function Contact() {
                     Phone
                   </h4>
                   <a
-                    href="tel:+0000000000"
+                    href={siteConfig.contact.phoneHref}
                     className="text-muted hover:text-scholarly transition-colors"
                   >
-                    [PLACEHOLDER] +00 000 000 0000
+                    {siteConfig.contact.phone}
                   </a>
                 </div>
               </div>
@@ -145,10 +140,10 @@ export default function Contact() {
                     Email
                   </h4>
                   <a
-                    href="mailto:info@pharofoundation.example"
+                    href={siteConfig.contact.emailHref}
                     className="text-muted hover:text-scholarly transition-colors"
                   >
-                    [PLACEHOLDER] info@pharofoundation.example
+                    {siteConfig.contact.email}
                   </a>
                 </div>
               </div>
@@ -165,7 +160,7 @@ export default function Contact() {
                     Office Hours
                   </h4>
                   <p className="text-muted leading-relaxed">
-                    [PLACEHOLDER] Monday – Friday · 8:00 AM – 4:30 PM
+                    {siteConfig.contact.officeHours}
                     <br />
                     Saturday &amp; Sunday · Closed
                   </p>
@@ -178,17 +173,17 @@ export default function Contact() {
                 Visit Our Campus
               </h4>
               <p className="text-muted leading-relaxed mb-5">
-                [PLACEHOLDER] We warmly invite families to schedule a personal
+                We warmly invite families to schedule a personal
                 tour and experience the Pharo Foundation difference in person.
               </p>
               <Button href="#admissions" variant="outline" size="md">
                 Schedule a Tour
               </Button>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Right Side - Contact Form */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -363,7 +358,7 @@ export default function Contact() {
                 </Button>
               </form>
             )}
-          </motion.div>
+          </m.div>
         </div>
       </Container>
     </section>

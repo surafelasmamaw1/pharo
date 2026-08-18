@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
+import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import {
   School as Classrooms,
@@ -104,7 +105,7 @@ export default function Facilities() {
       className="py-section-sm md:py-section-md bg-foreground/[0.025] dark:bg-white/[0.02] relative overflow-hidden"
     >
       <Container>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -138,7 +139,7 @@ export default function Facilities() {
                   : "row-span-1 md:row-span-1";
 
               return (
-                <motion.article
+                <m.article
                   key={f.title}
                   initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -150,11 +151,12 @@ export default function Facilities() {
                   {/* Image layer — real photo if available, gradient fallback */}
                   <div className={`absolute inset-0 ${f.gradient}`}>
                     {f.image && (
-                      <img
+                      <Image
                         src={f.image}
                         alt={f.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        loading="lazy"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
                       />
                     )}
                     {/* Soft grainy overlay for depth */}
@@ -211,11 +213,11 @@ export default function Facilities() {
                       </div>
                     </div>
                   </div>
-                </motion.article>
+                </m.article>
               );
             })}
           </div>
-        </motion.div>
+        </m.div>
       </Container>
     </section>
   );

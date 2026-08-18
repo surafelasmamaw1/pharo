@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { MotionProvider } from "@/lib/motion";
+import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
 // Set up fonts with optimizations
@@ -24,31 +26,31 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Pharo Foundation | Educational Institution",
-    template: "%s | Pharo Foundation",
+    default: siteConfig.meta.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: "[PLACEHOLDER - Replace with official Pharo Foundation description] Pharo Foundation is an educational institution dedicated to academic excellence, student development, innovation, and community growth.",
-  keywords: ["education", "school", "academics", "admissions", "student life", "learning", "excellence", "Pharo Foundation"],
+  description: siteConfig.meta.description,
+  keywords: siteConfig.meta.keywords,
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Pharo Foundation",
-    title: "Pharo Foundation | Educational Institution",
-    description: "[PLACEHOLDER - Replace with official description] Pharo Foundation: Nurturing minds, building futures.",
+    siteName: siteConfig.name,
+    title: siteConfig.meta.title,
+    description: siteConfig.tagline,
     images: [
       {
-        url: "/og-image.png",
+        url: siteConfig.meta.ogImage,
         width: 1200,
         height: 630,
-        alt: "Pharo Foundation",
+        alt: siteConfig.name,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pharo Foundation | Educational Institution",
-    description: "[PLACEHOLDER - Replace with official description] Pharo Foundation: Nurturing minds, building futures.",
-    images: ["/og-image.png"],
+    title: siteConfig.meta.title,
+    description: siteConfig.tagline,
+    images: [siteConfig.meta.ogImage],
   },
   robots: {
     index: true,
@@ -78,7 +80,7 @@ export default function RootLayout({
     <html lang="en" className={`${cormorant.variable} ${manrope.variable}`} suppressHydrationWarning>
       <body className="bg-background text-foreground font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          {children}
+          <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
       </body>
     </html>

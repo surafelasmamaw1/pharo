@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
   Award,
@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
+import { siteConfig } from "@/lib/siteConfig";
 
 type WhyCard = {
   icon: LucideIcon;
@@ -24,74 +25,22 @@ type WhyCard = {
   borderGlow: string;
 };
 
-const cards: WhyCard[] = [
-  {
-    icon: Award,
-    title: "Quality Education",
-    description:
-      "[PLACEHOLDER — replace with official quality statement] A rigorous, balanced, and research-based curriculum that upholds high academic standards while nurturing genuine curiosity and love of learning.",
-    tagColor: "text-scholarly border-scholarly/15 bg-scholarly/[0.07]",
-    chipBg: "bg-scholarly text-white",
-    iconBg: "from-scholarly/25 to-scholarly-light/10 border-scholarly/20",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.18)]",
-    borderGlow: "dark:hover:border-scholarly/40",
-  },
-  {
-    icon: UserCheck,
-    title: "Experienced Educators",
-    description:
-      "[PLACEHOLDER] Talented, dedicated faculty who combine deep subject expertise with a genuine passion for teaching, mentorship, and the success of every individual student.",
-    tagColor: "text-gold border-gold/20 bg-gold/[0.08]",
-    chipBg: "bg-gold text-white",
-    iconBg: "from-gold/25 to-accent/10 border-gold/20",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(184,137,60,0.18)]",
-    borderGlow: "dark:hover:border-gold/40",
-  },
-  {
-    icon: Lightbulb,
-    title: "Innovation & Technology",
-    description:
-      "[PLACEHOLDER] Modern learning tools, technology-rich classrooms, and forward-thinking pedagogy that prepare students to thrive in a rapidly changing world.",
-    tagColor: "text-scholarly-light border-scholarly-light/20 bg-scholarly-light/[0.08]",
-    chipBg: "bg-scholarly-light text-white",
-    iconBg: "from-scholarly-light/25 to-cyan-500/10 border-scholarly-light/20",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(45,79,122,0.18)]",
-    borderGlow: "dark:hover:border-scholarly-light/40",
-  },
-  {
-    icon: Sprout,
-    title: "Student Development",
-    description:
-      "[PLACEHOLDER] A whole-child approach — intellectual, social, emotional, and physical — that helps every student discover strengths, build confidence, and grow into thoughtful young adults.",
-    tagColor: "text-success border-success/20 bg-success/[0.08]",
-    chipBg: "bg-success text-white",
-    iconBg: "from-success/25 to-emerald-500/10 border-success/20",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(46,125,87,0.18)]",
-    borderGlow: "dark:hover:border-success/40",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Safe Learning Environment",
-    description:
-      "[PLACEHOLDER] A caring, inclusive, and well-supervised campus culture where every student feels secure, respected, and free to focus on learning and healthy growth.",
-    tagColor: "text-accent border-accent/20 bg-accent/[0.08]",
-    chipBg: "bg-accent text-white",
-    iconBg: "from-accent/25 to-gold/10 border-accent/20",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(166,110,63,0.18)]",
-    borderGlow: "dark:hover:border-accent/40",
-  },
-  {
-    icon: UsersRound,
-    title: "Community",
-    description:
-      "[PLACEHOLDER] A warm, connected community of students, teachers, staff, and families — united by shared values, active partnership, and mutual support.",
-    tagColor: "text-scholarly border-scholarly/15 bg-scholarly/[0.06]",
-    chipBg: "bg-scholarly text-white",
-    iconBg: "from-scholarly/20 to-blue-500/10 border-scholarly/20",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.18)]",
-    borderGlow: "dark:hover:border-scholarly/40",
-  },
+const cardIcons = [Award, UserCheck, Lightbulb, Sprout, ShieldCheck, UsersRound];
+const cardStyles: Omit<WhyCard, "icon" | "title" | "description">[] = [
+  { tagColor: "text-scholarly border-scholarly/15 bg-scholarly/[0.07]", chipBg: "bg-scholarly text-white", iconBg: "from-scholarly/25 to-scholarly-light/10 border-scholarly/20", shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.18)]", borderGlow: "dark:hover:border-scholarly/40" },
+  { tagColor: "text-gold border-gold/20 bg-gold/[0.08]", chipBg: "bg-gold text-white", iconBg: "from-gold/25 to-accent/10 border-gold/20", shadowGlow: "hover:shadow-[0_0_32px_rgba(184,137,60,0.18)]", borderGlow: "dark:hover:border-gold/40" },
+  { tagColor: "text-scholarly-light border-scholarly-light/20 bg-scholarly-light/[0.08]", chipBg: "bg-scholarly-light text-white", iconBg: "from-scholarly-light/25 to-cyan-500/10 border-scholarly-light/20", shadowGlow: "hover:shadow-[0_0_32px_rgba(45,79,122,0.18)]", borderGlow: "dark:hover:border-scholarly-light/40" },
+  { tagColor: "text-success border-success/20 bg-success/[0.08]", chipBg: "bg-success text-white", iconBg: "from-success/25 to-emerald-500/10 border-success/20", shadowGlow: "hover:shadow-[0_0_32px_rgba(46,125,87,0.18)]", borderGlow: "dark:hover:border-success/40" },
+  { tagColor: "text-accent border-accent/20 bg-accent/[0.08]", chipBg: "bg-accent text-white", iconBg: "from-accent/25 to-gold/10 border-accent/20", shadowGlow: "hover:shadow-[0_0_32px_rgba(166,110,63,0.18)]", borderGlow: "dark:hover:border-accent/40" },
+  { tagColor: "text-scholarly border-scholarly/15 bg-scholarly/[0.06]", chipBg: "bg-scholarly text-white", iconBg: "from-scholarly/20 to-blue-500/10 border-scholarly/20", shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.18)]", borderGlow: "dark:hover:border-scholarly/40" },
 ];
+
+const cards: WhyCard[] = siteConfig.services.map((s, i) => ({
+  icon: cardIcons[i],
+  title: s.title,
+  description: s.description,
+  ...cardStyles[i],
+}));
 
 export default function Services() {
   return (
@@ -100,7 +49,7 @@ export default function Services() {
       className="py-section-sm md:py-section-md bg-foreground/[0.025] dark:bg-white/[0.02] relative"
     >
       <Container>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -120,7 +69,7 @@ export default function Services() {
             {cards.map((c, idx) => {
               const Icon = c.icon;
               return (
-                <motion.article
+                <m.article
                   key={c.title}
                   initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -156,11 +105,11 @@ export default function Services() {
                       {c.description}
                     </p>
                   </div>
-                </motion.article>
+                </m.article>
               );
             })}
           </div>
-        </motion.div>
+        </m.div>
       </Container>
     </section>
   );

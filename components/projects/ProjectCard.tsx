@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { CalendarDays, ArrowRight, Tag as TagIcon, X } from "lucide-react";
 import Button from "../ui/Button";
 import type { NewsItem } from "../sections/Projects";
@@ -52,11 +53,12 @@ export default function ProjectCard({
         <div className={`relative aspect-[16/10] overflow-hidden bg-gradient-to-br ${imageStyle}`}>
           {/* Real photo if available */}
           {project.image && (
-            <img
+            <Image
               src={project.image}
               alt={project.title}
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
             />
           )}
           {/* Overlay — always present to ensure text contrast */}
@@ -135,10 +137,12 @@ export default function ProjectCard({
                 {/* Modal image header */}
                 <div className={`relative aspect-[16/7] bg-gradient-to-br ${imageStyle} flex-shrink-0`}>
                   {project.image && (
-                    <img
+                    <Image
                       src={project.image}
                       alt={project.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 640px) 100vw, 600px"
+                      className="object-cover"
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-black/30" />

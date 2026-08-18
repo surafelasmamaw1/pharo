@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import {
   Compass as ExploreIcon,
   ClipboardList as ApplyIcon,
@@ -78,7 +78,7 @@ export default function Resume() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-scholarly-pale/60 via-transparent to-gold-pale/40 dark:from-scholarly-pale dark:via-transparent dark:to-gold-pale/40" />
 
       <Container>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -111,7 +111,7 @@ export default function Resume() {
               {steps.map((s, idx) => {
                 const Icon = s.icon;
                 return (
-                  <motion.article
+                  <m.article
                     key={s.num}
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -143,14 +143,14 @@ export default function Resume() {
                     <p className="text-muted leading-relaxed text-sm md:text-base">
                       {s.description}
                     </p>
-                  </motion.article>
+                  </m.article>
                 );
               })}
             </div>
           </div>
 
           {/* CTA row */}
-        </motion.div>
+        </m.div>
       </Container>
     </section>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import {
   Dumbbell,
@@ -135,7 +135,7 @@ export default function StudentLife() {
   return (
     <section id="student-life" className="py-section-sm md:py-section-md relative overflow-hidden">
       <Container>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -157,7 +157,7 @@ export default function StudentLife() {
               const isLastWide =
                 idx === activities.length - 1; // 7th card spans 2 cols on large screens
               return (
-                <motion.article
+                <m.article
                   key={a.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -206,7 +206,7 @@ export default function StudentLife() {
                       ))}
                     </div>
                   </div>
-                </motion.article>
+                </m.article>
               );
             })}
           </div>
@@ -229,7 +229,7 @@ export default function StudentLife() {
               ))}
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </Container>
     </section>
   );

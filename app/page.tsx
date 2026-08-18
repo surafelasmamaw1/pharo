@@ -1,31 +1,25 @@
-"use client";
-
-import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
-import BackToTop from "@/components/layout/BackToTop";
-import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import TimelineSection from "@/components/sections/TimelineSection";
-import Services from "@/components/sections/Services";
-import Skills from "@/components/sections/Skills";
-import Facilities from "@/components/sections/Facilities";
-import StudentLife from "@/components/sections/StudentLife";
-import Resume from "@/components/sections/Resume";
-import Projects from "@/components/sections/Projects";
-import Testimonials from "@/components/sections/Testimonials";
-import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
+
+const BackToTop = dynamic(() => import("@/components/layout/BackToTop"));
+const Hero = dynamic(() => import("@/components/sections/Hero"));
+const About = dynamic(() => import("@/components/sections/About"));
+const TimelineSection = dynamic(() => import("@/components/sections/TimelineSection"));
+const Services = dynamic(() => import("@/components/sections/Services"));
+const Skills = dynamic(() => import("@/components/sections/Skills"));
+const Facilities = dynamic(() => import("@/components/sections/Facilities"));
+const StudentLife = dynamic(() => import("@/components/sections/StudentLife"));
+const Resume = dynamic(() => import("@/components/sections/Resume"));
+const Projects = dynamic(() => import("@/components/sections/Projects"));
+const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
+const Contact = dynamic(() => import("@/components/sections/Contact"));
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="bg-background text-foreground"
-      >
+      <main className="bg-background text-foreground animate-[fadeIn_0.5s_ease-out]">
         <Hero />
         <About />
         <TimelineSection />
@@ -37,7 +31,7 @@ export default function Home() {
         <Testimonials />
         <Resume />
         <Contact />
-      </motion.main>
+      </main>
       <Footer />
       <BackToTop />
     </>

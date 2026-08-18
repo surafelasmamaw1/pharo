@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Quote, UserCircle, Heart } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
@@ -50,7 +50,7 @@ export default function Testimonials() {
       className="py-section-sm md:py-section-md bg-foreground/[0.025] dark:bg-white/[0.02] relative overflow-hidden"
     >
       <Container>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -72,7 +72,7 @@ export default function Testimonials() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
             {testimonials.map((t, idx) => (
-              <motion.figure
+              <m.figure
                 key={`${t.type}-${idx}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -107,10 +107,10 @@ export default function Testimonials() {
                     </div>
                   </div>
                 </figcaption>
-              </motion.figure>
+              </m.figure>
             ))}
           </div>
-        </motion.div>
+        </m.div>
       </Container>
     </section>
   );
