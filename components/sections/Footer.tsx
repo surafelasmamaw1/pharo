@@ -100,8 +100,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-muted leading-relaxed max-w-md text-sm md:text-base mb-7">
-              {siteConfig.tagline} A community dedicated to academic excellence,
-              character formation, and the joyful pursuit of learning.
+              Providing high-quality primary and secondary education in Assosa, BGRS — combining the Ethiopian curriculum with international standards to empower lifelong learners.
             </p>
 
             {/* Social icons — brand color on hover */}

@@ -37,7 +37,7 @@ export default function Hero() {
             >
               <span className="w-1.5 h-1.5 rounded-full bg-scholarly" />
               <span className="text-[11px] md:text-xs font-bold tracking-[0.2em] uppercase text-scholarly">
-                Welcome to Pharo Foundation
+                Welcome to Pharo School Assosa
               </span>
             </m.div>
 
@@ -57,9 +57,9 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.26 }}
               className="text-body md:text-[19px] text-muted mb-10 leading-relaxed max-w-2xl text-left"
             >
-              Pharo Foundation is committed to creating an inspiring learning
-              environment where students develop knowledge, confidence,
-              creativity, character, and the skills they need for the future.
+              Located in Assosa, BGRS — we provide primary and secondary education
+              that combines the Ethiopian curriculum with international standards,
+              empowering students to become lifelong learners and productive global citizens.
             </m.p>
 
             <m.div
@@ -149,7 +149,7 @@ export default function Hero() {
                   <div className="text-[10px] font-extrabold tracking-[0.2em] uppercase text-scholarly mb-0.5">
                     Est.
                   </div>
-                  <div className="font-serif text-xl font-bold leading-none text-gray-900">2011</div>
+                  <div className="font-serif text-xl font-bold leading-none text-gray-900">2020</div>
                 </m.div>
 
                 {/* Programs pill — top left */}

@@ -13,6 +13,7 @@ const StudentLife = dynamic(() => import("@/components/sections/StudentLife"));
 const Resume = dynamic(() => import("@/components/sections/Resume"));
 const Projects = dynamic(() => import("@/components/sections/Projects"));
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
+const Gallery = dynamic(() => import("@/components/sections/Gallery"));
 const Vacancy = dynamic(() => import("@/components/sections/Vacancy"));
 const Contact = dynamic(() => import("@/components/sections/Contact"));
 

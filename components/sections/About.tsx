@@ -63,19 +63,21 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="lg:col-span-7 text-left"
             >
-              <SectionHeading className="text-left">About Pharo Foundation</SectionHeading>
+              <SectionHeading className="text-left">About Pharo School Assosa</SectionHeading>
 
               <div className="mt-6 md:mt-8 space-y-5 md:space-y-6 max-w-2xl">
                 <p className="text-lg md:text-xl text-foreground leading-relaxed">
-                  Pharo Foundation is an educational community dedicated to nurturing
-                  the intellectual, personal, and moral growth of every student
-                  in our care. Families trust us with the most important work there
-                  is: preparing young people for lives of purpose, achievement, and contribution.
+                  Pharo School Assosa, established in 2020, is located on the western
+                  edge of Ethiopia — in the capital of BGRS state. Offering primary and
+                  secondary education, the school strives to provide access to high-quality
+                  education for the local community and to become a centre of excellence
+                  across the region.
                 </p>
                 <p className="text-base md:text-lg text-muted leading-relaxed">
-                  We believe that a truly excellent education is about the whole child —
-                  rigorous academics paired with character formation, creative expression,
-                  meaningful relationships, and active citizenship.
+                  We are committed to a holistic approach to learning — fostering the
+                  intellectual, social, emotional, and ethical development of every learner.
+                  Our curriculum combines the Ethiopian national curriculum with international
+                  standards such as the British curriculum.
                 </p>
               </div>
 
@@ -114,10 +116,11 @@ export default function About() {
                   Empowering students to grow in knowledge, character, and purpose.
                 </h3>
                 <p className="text-muted leading-relaxed text-base md:text-[17px]">
-                  The mission of Pharo Foundation is to provide a rigorous, supportive,
-                  and inclusive learning environment in which each student is known,
-                  valued, and inspired to achieve academic excellence, develop strong
-                  character, and contribute meaningfully to the world.
+                  Our mission is to provide a locally relevant and globally competitive,
+                  high-quality learning experience — empowering students to become lifelong
+                  learners and productive global citizens. We focus on students' holistic
+                  development to discover their own talent and instil them with the passion
+                  to realise their future goals.
                 </p>
               </div>
             </motion.div>
@@ -183,13 +186,12 @@ export default function About() {
                 <div className="relative bg-gradient-to-br from-scholarly via-scholarly-light to-scholarly p-8 md:p-10 flex-shrink-0">
                   <div className="absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.4),transparent_55%),radial-gradient(circle_at_80%_90%,rgba(212,167,94,0.4),transparent_55%)]" />
                   <div className="relative flex items-start justify-between gap-4">
-                    <div>
+                  <div>
                       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 text-white text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
-                        <Landmark className="w-3 h-3" strokeWidth={2} />
-                        Pharo Foundation
+                        Pharo School Assosa
                       </div>
                       <h2 className="font-serif text-2xl md:text-3xl font-bold text-white leading-tight">
-                        About Pharo Foundation
+                        About Pharo School Assosa
                       </h2>
                       <p className="text-white/75 text-sm mt-2">Unlocking Africa's potential through education</p>
                     </div>
@@ -210,11 +212,12 @@ export default function About() {
                   <div>
                     <h3 className="font-semibold text-foreground text-lg mb-2">Who We Are</h3>
                     <p className="text-muted leading-relaxed text-base">
-                      Pharo Foundation is an educational community dedicated to nurturing
-                      the intellectual, personal, and moral growth of every student in our care.
-                      We believe that a truly excellent education is about the whole child —
-                      rigorous academics paired with character formation, creative expression,
-                      meaningful relationships, and active citizenship.
+                      Pharo School Assosa, established in 2020, is located on the western edge
+                      of Ethiopia — in the capital of BGRS state. Offering primary and secondary
+                      education, the school strives to provide access to high-quality education
+                      for the local community and to become a centre of excellence across the region.
+                      We are committed to a holistic approach that fosters the intellectual, social,
+                      emotional, and ethical development of every learner.
                     </p>
                   </div>
 
@@ -244,9 +247,10 @@ export default function About() {
                       <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-scholarly">Our Mission</span>
                     </div>
                     <p className="text-foreground leading-relaxed text-sm md:text-base">
-                      To provide a rigorous, supportive, and inclusive learning environment
-                      in which each student is known, valued, and inspired to achieve academic
-                      excellence, develop strong character, and contribute meaningfully to the world.
+                      To provide a locally relevant and globally competitive, high-quality learning
+                      experience — empowering students to become lifelong learners and productive
+                      global citizens. We focus on students' holistic development to discover their
+                      own talent and instil them with the passion to realise their future goals.
                     </p>
                   </div>
 

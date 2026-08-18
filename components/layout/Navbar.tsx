@@ -16,6 +16,7 @@ import {
   Moon,
   Sun,
   Briefcase,
+  Images,
 } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
@@ -31,6 +32,7 @@ const navItems = [
   { name: "Admissions",   href: "/admissions",    id: "admissions",    icon: ClipboardList },
   { name: "Vacancy",      href: "#vacancy",       id: "vacancy",       icon: Briefcase },
   { name: "Contact",      href: "#contact",       id: "contact",       icon: Mail },
+  { name: "Gallery",      href: "/gallery",       id: "gallery",       icon: Images },
 ];
 
 const NAV_HEIGHT = "h-10"; // Unified interactive height for nav pills, toggle, menu button, CTA
