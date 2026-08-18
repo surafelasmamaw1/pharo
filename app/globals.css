@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens as CSS custom properties — Pharo Foundation educational palette */
+:root {
+  --color-background: #F7F5F2;
+  --color-foreground: #202020;
+  --color-primary: #202020;
+  --color-accent: #A66E3F;
+  --color-scholarly: #1E3A5F;
+  --color-scholarly-light: #2D4F7A;
+  --color-scholarly-pale: #E8EEF6;
+  --color-gold: #B8893C;
+  --color-gold-pale: #F5EFE1;
+  --color-muted: #7A7A7A;
+  --color-border: #E6E3DF;
+  --color-success: #2E7D57;
+  --color-warning: #B8893C;
+}
+
+.dark {
+  --color-background: #0F1117;
+  --color-foreground: #F0EDE8;
+  --color-primary: #F0EDE8;
+  --color-accent: #C8874A;
+  --color-scholarly: #5B8FC7;
+  --color-scholarly-light: #7AA7D6;
+  --color-scholarly-pale: #1A2438;
+  --color-gold: #D4A75E;
+  --color-gold-pale: #2A241A;
+  --color-muted: #8A8A9A;
+  --color-border: #2A2A35;
+  --color-success: #4CAF7D;
+  --color-warning: #D4A75E;
+}
+
+/* Base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  /* Uniform light ⇄ dark mode transition — tight, in-sync, core color props only */
+  *,
+  *::before,
+  *::after {
+    transition:
+      background-color 220ms ease,
+      color 220ms ease,
+      border-color 220ms ease;
+  }
+
+  /* Accessibility: Focus styles */
+  *:focus-visible {
+    outline: 2px solid var(--color-scholarly);
+    outline-offset: 4px;
+  }
+
+  /* Accessibility: Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
