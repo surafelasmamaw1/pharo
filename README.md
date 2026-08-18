@@ -1,146 +1,151 @@
-# Personal Portfolio
+# Pharo Foundation Website
 
-A modern, production-ready personal portfolio website for Surafel Asmamaw built with Next.js, Tailwind CSS, and Framer Motion.
+Official website for **Pharo Foundation** — *Unlocking Africa's potential* — built with Next.js, Tailwind CSS, and Framer Motion.
 
 ## Tech Stack
 
-### Frontend
-- **Next.js 16** - React framework
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Utility-first styling
-- **Framer Motion** - Animations
-- **Lucide React** - Icons
-- **Simple Icons** - Brand/skill icons
-- **React Hook Form** - Form handling
-- **Zod** - Validation
-- **Next Themes** - Light/dark mode
-
-### Contact
-- **Web3Forms** - Contact form submission (no backend required)
+- **Next.js 16** — React framework
+- **React 19** — UI library
+- **TypeScript** — Type safety
+- **Tailwind CSS** — Utility-first styling
+- **Framer Motion** — Animations and modals
+- **Lucide React** — Icons
+- **React Hook Form + Zod** — Contact form with validation
+- **Next Themes** — Light/dark mode
 
 ## Getting Started
 
 ### Prerequisites
 - Node.js 20+
-- npm or yarn or pnpm
+- npm
 
 ### Installation
 
-1. Install dependencies:
 ```bash
 npm install
-```
-
-2. Run the development server:
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
-
-No environment variables are required.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
 ```
 .
 ├── app/
-│   ├── api/
-│   │   └── contact/
-│   │       └── route.ts        # Contact form API
-│   ├── projects/
-│   │   └── page.tsx            # Projects page
-│   ├── globals.css             # Global styles
-│   ├── icon.svg                # Favicon
-│   ├── layout.tsx              # Root layout
+│   ├── api/contact/route.ts    # Contact form API
+│   ├── icon.png                # Favicon (Pharo Foundation logo)
+│   ├── layout.tsx              # Root layout + metadata
 │   ├── not-found.tsx           # 404 page
-│   └── page.tsx                # Home page
+│   └── page.tsx                # Home page (section order)
 ├── components/
 │   ├── layout/
-│   │   ├── Navbar.tsx          # Navigation bar
+│   │   ├── Navbar.tsx          # Navigation with active section tracking
 │   │   ├── BackToTop.tsx       # Back to top button
 │   │   └── ThemeProvider.tsx   # Light/dark theme provider
 │   ├── projects/
-│   │   └── ProjectCard.tsx     # Project card component
+│   │   └── ProjectCard.tsx     # News/events card with modal
 │   ├── sections/
-│   │   ├── Hero.tsx            # Hero section
-│   │   ├── About.tsx           # About section
-│   │   ├── TimelineSection.tsx # Education, certifications, languages
-│   │   ├── Skills.tsx          # Skills section
-│   │   ├── Resume.tsx          # Work experience timeline
-│   │   ├── Services.tsx        # Services section
-│   │   ├── Projects.tsx        # Projects section
-│   │   ├── Contact.tsx         # Contact section + form
-│   │   └── Footer.tsx          # Footer
+│   │   ├── Hero.tsx            # Hero with school photo, EST. badge, programs pill
+│   │   ├── About.tsx           # About section with modal (mission, vision, pillars)
+│   │   ├── Services.tsx        # Why Choose Us section
+│   │   ├── Skills.tsx          # Academics — 6 program cards with modals
+│   │   ├── Facilities.tsx      # Our Learning Environment — bento grid with modals
+│   │   ├── StudentLife.tsx     # Life Beyond the Classroom — activity cards
+│   │   ├── Projects.tsx        # News & Events — cards with show more/less
+│   │   ├── Testimonials.tsx    # Community voices
+│   │   ├── Resume.tsx          # Admissions process — 4-step cards
+│   │   ├── TimelineSection.tsx # School history timeline
+│   │   ├── Contact.tsx         # Contact form
+│   │   └── Footer.tsx          # Footer with social links
 │   └── ui/
 │       ├── Button.tsx          # Reusable button
-│       ├── Container.tsx       # Container component
+│       ├── Container.tsx       # Layout container
 │       ├── SectionHeading.tsx  # Section heading
-│       └── Tag.tsx             # Tag component
+│       └── Tag.tsx             # Tag/chip component
 ├── lib/
-│   ├── techIcons.ts            # Tech icon helpers
-│   └── zodSchemas.ts           # Zod validation schemas
+│   ├── techIcons.ts
+│   └── zodSchemas.ts
 ├── public/
 │   ├── certificates/           # Certificate PDFs
-│   ├── cv-surafel-asmamaw.pdf  # Resume download
-│   └── profile-photo.png       # Profile photo
-├── package.json
+│   ├── pharo-logo.png          # Pharo Foundation logo
+│   ├── pharo-school.png        # Hero section school photo
+│   ├── about-photo.png         # About section photo
+│   ├── classrooms.png          # Facilities — classrooms photo
+│   ├── library.png             # Facilities — library photo
+│   ├── computer-labs.png       # Facilities — computer labs photo
+│   ├── ronaldo.jpg             # News — football event photo
+│   └── robots.txt / sitemap.xml
 ├── tailwind.config.ts
 ├── tsconfig.json
 └── README.md
 ```
 
-## Features
+## Page Sections (in order)
 
-- Custom design with calm color palette
+| Section | ID | Description |
+|---|---|---|
+| Hero | `#home` | School photo, EST. 2011, programs pill, CTAs |
+| About | `#about` | Intro, mission/vision cards, "Learn More" modal |
+| Why Choose Us | `#why-choose` | Key differentiators |
+| Academics | `#academics` | 6 program cards, each opens a detail modal |
+| Learning Environment | `#facilities` | Bento photo grid, click to open facility modal |
+| Student Life | `#student-life` | Activities grid + signature experiences strip |
+| News & Events | `#news-events` | Cards with real photos, show more/less, read more modal |
+| Testimonials | `#testimonials` | Parent, student, teacher voices |
+| Admissions | `#admissions` | 4-step process cards |
+| Contact | `#contact` | Contact form |
+
+## Key Features
+
+- Pharo Foundation branding (navy blue, gold, clean typography)
 - Light and dark mode
-- Fully responsive
-- Smooth animations with Framer Motion
-- Contact form via Web3Forms with validation
-- In-browser certificate PDF viewer
-- Resume (CV) download button
-- Mobile-friendly navigation
-- SEO optimized (metadata, sitemap, robots.txt)
+- Fully responsive layout
+- Smooth animations and page transitions (Framer Motion)
+- Interactive modals on cards (Academics, Facilities, News, About)
+- News & Events "show more / show less" with hidden count badge
+- Real photos for campus, classrooms, library, computer labs, events
+- Social media links with per-platform brand color hover effects
+- Contact form with validation (React Hook Form + Zod)
+- SEO optimized — metadata, sitemap, robots.txt
+- Circular favicon from Pharo Foundation logo
 
-## Customization
+## Adding Content
 
-### Update Content
-- Replace placeholder text in components (name, projects, contact info)
-- Add custom logo SVG in `Navbar.tsx`
-- Update color palette in `tailwind.config.ts`
+### Add a news/event card
+Edit `components/sections/Projects.tsx` — add an item to the `items` array with `title`, `date`, `category`, `description`, `image`, and `link`.
 
-### Add Projects
-Add your projects in `components/sections/Projects.tsx`
+### Add a facility photo
+1. Place the image in `public/`
+2. Add the `image` field to the matching entry in `components/sections/Facilities.tsx`
 
-### Add Certificates
-1. Place the PDF in `public/certificates/`
-2. Add a matching entry in `components/sections/TimelineSection.tsx`
+### Update social media links
+Edit the `socialLinks` array in `components/sections/Footer.tsx`.
 
-### Update CV
-Replace `public/cv-surafel-asmamaw.pdf` with the latest version of your CV.
-
-### Update Styles
-Modify `tailwind.config.ts` to customize design tokens
-
-## Deployment
-
-### Vercel
-The easiest way to deploy is using [Vercel](https://vercel.com/):
-
-1. Push your code to GitHub
-2. Import your repository in Vercel
-3. Deploy!
+### Update admissions steps
+Edit the `steps` array in `components/sections/Resume.tsx`.
 
 ## Scripts
 
 ```bash
-npm run dev          # Start dev server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run format       # Format files with Prettier
+npm run dev       # Start development server
+npm run build     # Build for production
+npm run start     # Start production server
+npm run lint      # Run ESLint
+npm run format    # Format with Prettier
 ```
+
+## Deployment
+
+Deploy instantly with [Vercel](https://vercel.com/):
+
+1. Push to GitHub (`git push`)
+2. Import the repo in Vercel
+3. Deploy — no environment variables required for the base site
+
+## Repository
+
+[github.com/surafelasmamaw1/pharo](https://github.com/surafelasmamaw1/pharo)
 
 ## License
 
