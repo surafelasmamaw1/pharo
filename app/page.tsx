@@ -13,7 +13,6 @@ import StudentLife from "@/components/sections/StudentLife";
 import Resume from "@/components/sections/Resume";
 import Projects from "@/components/sections/Projects";
 import Testimonials from "@/components/sections/Testimonials";
-import CallToAction from "@/components/sections/CallToAction";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 
@@ -37,7 +36,6 @@ export default function Home() {
         <Projects />
         <Testimonials />
         <Resume />
-        <CallToAction />
         <Contact />
       </motion.main>
       <Footer />
