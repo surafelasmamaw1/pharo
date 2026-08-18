@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Home,
@@ -22,7 +23,7 @@ import Container from "../ui/Container";
 import Button from "../ui/Button";
 
 const navItems = [
-  { name: "Home",         href: "#home",          id: "home",          icon: Home },
+  { name: "Home",         href: "/",              id: "home",          icon: Home },
   { name: "About Us",     href: "#about",         id: "about",         icon: GraduationCap },
   { name: "Academics",    href: "#academics",     id: "academics",     icon: BookOpen },
   { name: "Student Life", href: "#student-life",  id: "student-life",  icon: Users },
@@ -89,6 +90,14 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  // On sub-pages, prefix anchor hrefs with "/"
+  const resolveHref = (href: string) => {
+    if (!isHomePage && href.startsWith("#")) return `/${href}`;
+    return href;
+  };
 
   const handleScroll = useCallback(() => {
     setIsScrolled(window.scrollY > 30);
@@ -169,7 +178,7 @@ export default function Navbar() {
                 return (
                   <motion.a
                     key={item.name}
-                    href={item.href}
+                    href={resolveHref(item.href)}
                     whileHover={{ y: -1 }}
                     whileTap={{ scale: 0.97 }}
                     transition={{ duration: 0.18, type: "spring", stiffness: 420, damping: 14 }}
@@ -185,17 +194,6 @@ export default function Navbar() {
                 );
               })}
             </nav>
-
-            <div className="hidden md:block">
-              <Button
-                href="#admissions"
-                variant="secondary"
-                size="sm"
-                className="!h-10 !py-0 !px-6 !text-sm !leading-none"
-              >
-                Apply Now
-              </Button>
-            </div>
 
             {/* Divider + Theme toggle — isolated to the right */}
             <div className="hidden md:flex items-center gap-3 pl-3 border-l border-border/60 ml-1">
@@ -238,9 +236,6 @@ export default function Navbar() {
           >
             <Container>
               <div className="pt-5 pb-2">
-                <Button href="#admissions" variant="secondary" size="lg" className="w-full" onClick={() => setIsMenuOpen(false)}>
-                  Apply Now
-                </Button>
               </div>
               <nav className="py-4 space-y-1" aria-label="Mobile navigation">
                 {navItems.map((item) => {
@@ -249,7 +244,7 @@ export default function Navbar() {
                   return (
                     <motion.a
                       key={item.name}
-                      href={item.href}
+                      href={resolveHref(item.href)}
                       onClick={() => setIsMenuOpen(false)}
                       whileHover={{ scale: 1.01, x: 2 }}
                       whileTap={{ scale: 0.98 }}
