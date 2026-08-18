@@ -20,7 +20,7 @@ const steps = [
   { num: "04", icon: JoinIcon, title: "Join", description: "Enrol, attend orientation, and step into a place where your child can thrive.", accent: "bg-success text-white", iconBg: "bg-success", glow: "hover:shadow-[0_0_36px_rgba(46,125,87,0.2)]", borderGlow: "dark:hover:border-success/50" },
 ];
 
-export default function Resume() {
+export default function Admissions() {
   return (
     <section id="admissions" className="py-section-sm md:py-section-md relative overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-scholarly-pale/60 via-transparent to-gold-pale/40 dark:from-scholarly-pale dark:via-transparent dark:to-gold-pale/40" />

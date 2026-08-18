@@ -309,7 +309,7 @@ function ProgramModal({ program, onClose }: { program: Program; onClose: () => v
   );
 }
 
-export default function Skills() {
+export default function Academics() {
   const [selected, setSelected] = useState<Program | null>(null);
 
   return (

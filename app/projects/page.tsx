@@ -1,6 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import BackToTop from "@/components/layout/BackToTop";
-import Projects from "@/components/sections/Projects";
+import Projects from "@/components/sections/NewsEvents";
 import Footer from "@/components/sections/Footer";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";

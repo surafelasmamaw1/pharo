@@ -7,11 +7,11 @@ const Hero = dynamic(() => import("@/components/sections/Hero"));
 const About = dynamic(() => import("@/components/sections/About"));
 const TimelineSection = dynamic(() => import("@/components/sections/TimelineSection"));
 const Services = dynamic(() => import("@/components/sections/Services"));
-const Skills = dynamic(() => import("@/components/sections/Skills"));
+const Academics = dynamic(() => import("@/components/sections/Academics"));
 const Facilities = dynamic(() => import("@/components/sections/Facilities"));
 const StudentLife = dynamic(() => import("@/components/sections/StudentLife"));
-const Resume = dynamic(() => import("@/components/sections/Resume"));
-const Projects = dynamic(() => import("@/components/sections/Projects"));
+const Admissions = dynamic(() => import("@/components/sections/Admissions"));
+const NewsEvents = dynamic(() => import("@/components/sections/NewsEvents"));
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
 const Gallery = dynamic(() => import("@/components/sections/Gallery"));
 const Vacancy = dynamic(() => import("@/components/sections/Vacancy"));
@@ -26,12 +26,12 @@ export default function Home() {
         <About />
         <TimelineSection />
         <Services />
-        <Skills />
+        <Academics />
         <Facilities />
         <StudentLife />
-        <Projects />
+        <NewsEvents />
         <Testimonials />
-        <Resume />
+        <Admissions />
         <Vacancy />
         <Contact />
       </main>

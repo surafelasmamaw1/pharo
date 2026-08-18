@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CalendarDays, ChevronDown, ChevronUp, Layers } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
-import ProjectCard from "../projects/ProjectCard";
+import NewsCard from "../news/NewsCard";
 
 export type NewsItem = {
   title: string;
@@ -92,7 +92,7 @@ const items: NewsItem[] = [
 
 const VISIBLE_COUNT = 6;
 
-export default function Projects() {
+export default function NewsEvents() {
   const [showAll, setShowAll] = useState(false);
 
   const visibleItems = showAll ? items : items.slice(0, VISIBLE_COUNT);
@@ -145,7 +145,7 @@ export default function Projects() {
           {/* Grid */}
           <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
             {visibleItems.map((item, index) => (
-              <ProjectCard key={item.title} project={item} index={index} />
+              <NewsCard key={item.title} project={item} index={index} />
             ))}
           </div>
 

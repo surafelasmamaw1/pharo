@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { CalendarDays, ArrowRight, Tag as TagIcon, X } from "lucide-react";
 import Button from "../ui/Button";
-import type { NewsItem } from "../sections/Projects";
+import type { NewsItem } from "../sections/NewsEvents";
 
 const categoryStyles: Record<NewsItem["category"], string> = {
   "School News": "bg-scholarly text-white",
