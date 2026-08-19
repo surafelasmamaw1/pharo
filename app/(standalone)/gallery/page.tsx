@@ -3,10 +3,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Container from "@/components/ui/Container";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/sections/Footer";
 
 type GalleryItem = {
   id: number;
@@ -43,76 +42,73 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Navbar />
-      <main className="bg-background text-foreground min-h-screen">
-
-        {/* Minimal header */}
-        <div className="pt-28 pb-8 border-b border-border/50">
-          <Container>
-            <div className="flex items-center justify-between gap-6">
-              <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-scholarly hover:gap-3 transition-all group">
-                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" strokeWidth={2} />
-                Back to Home
-              </Link>
-              <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground">Gallery</h1>
-              <span className="text-sm text-muted">{filtered.length} photos</span>
-            </div>
-          </Container>
-        </div>
-
+      {/* Minimal header */}
+      <div className="pt-28 pb-8 border-b border-border/50">
         <Container>
-          <div className="py-8 md:py-10">
-
-            {/* Category filter */}
-            <div className="flex flex-wrap gap-2 mb-8">
-              {categories.map((cat) => {
-                const count = cat === "All" ? galleryItems.length : galleryItems.filter(i => i.category === cat).length;
-                if (cat !== "All" && count === 0) return null;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-full border text-sm font-semibold transition-all duration-200 ${
-                      activeCategory === cat
-                        ? "bg-scholarly text-white border-scholarly shadow-md"
-                        : "border-border text-muted hover:text-foreground hover:border-scholarly/40"
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Pure image grid — no text */}
-            <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              <AnimatePresence mode="popLayout">
-                {filtered.map((item, idx) => (
-                  <motion.div
-                    key={item.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.3, delay: idx * 0.04 }}
-                    whileHover={{ scale: 1.02 }}
-                    onClick={() => setLightbox(item.id)}
-                    className="group relative aspect-square rounded-[14px] overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300"
-                  >
-                    <img
-                      src={item.src}
-                      alt={item.alt}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
-
+          <div className="flex items-center justify-between gap-6">
+            <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-scholarly hover:gap-3 transition-all group">
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" strokeWidth={2} />
+              Back to Home
+            </Link>
+            <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground">Gallery</h1>
+            <span className="text-sm text-muted">{filtered.length} photos</span>
           </div>
         </Container>
-      </main>
+      </div>
+
+      <Container>
+        <div className="py-8 md:py-10">
+
+          {/* Category filter */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {categories.map((cat) => {
+              const count = cat === "All" ? galleryItems.length : galleryItems.filter(i => i.category === cat).length;
+              if (cat !== "All" && count === 0) return null;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-4 py-2 rounded-full border text-sm font-semibold transition-all duration-200 ${
+                    activeCategory === cat
+                      ? "bg-scholarly text-white border-scholarly shadow-md"
+                      : "border-border text-muted hover:text-foreground hover:border-scholarly/40"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Pure image grid — no text */}
+          <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+            <AnimatePresence mode="popLayout">
+              {filtered.map((item, idx) => (
+                <motion.div
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3, delay: idx * 0.04 }}
+                  whileHover={{ scale: 1.02 }}
+                  onClick={() => setLightbox(item.id)}
+                  className="group relative aspect-square rounded-[14px] overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300"
+                >
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+        </div>
+      </Container>
 
       {/* Lightbox — image only, no text */}
       <AnimatePresence>
@@ -144,11 +140,15 @@ export default function GalleryPage() {
                 </button>
 
                 {/* Image only */}
-                <img
-                  src={currentItem.src}
-                  alt={currentItem.alt}
-                  className="w-full max-h-[85vh] object-contain rounded-[16px]"
-                />
+                <div className="relative w-full max-h-[85vh]">
+                  <Image
+                    src={currentItem.src}
+                    alt={currentItem.alt}
+                    fill
+                    sizes="100vw"
+                    className="object-contain"
+                  />
+                </div>
 
                 {/* Counter */}
                 <p className="text-white/40 text-xs text-center mt-3">{currentIdx + 1} / {filtered.length}</p>
@@ -169,8 +169,6 @@ export default function GalleryPage() {
           </>
         )}
       </AnimatePresence>
-
-      <Footer />
     </>
   );
 }

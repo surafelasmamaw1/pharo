@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { Images, ArrowRight } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
@@ -59,10 +60,11 @@ export default function Gallery() {
                 className="group relative aspect-[4/3] rounded-[16px] overflow-hidden border border-border shadow-sm cursor-pointer hover:shadow-[0_0_24px_rgba(30,58,95,0.18)] transition-all duration-300"
               >
                 <Link href="/gallery">
-                  <img
+                  <Image
                     src={photo.src}
                     alt={photo.alt}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute top-3 left-3 z-10">

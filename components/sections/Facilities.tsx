@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import {
   School as Classrooms,
@@ -148,11 +149,11 @@ export default function Facilities() {
                   {/* Background — photo or gradient */}
                   <div className={`absolute inset-0 ${f.gradient}`}>
                     {f.image && (
-                      <img
+                      <Image
                         src={f.image}
                         alt={f.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        loading="lazy"
+                        fill
+                        className="object-cover"
                       />
                     )}
                     {!f.image && (
@@ -212,10 +213,11 @@ export default function Facilities() {
                 {/* Photo / gradient header */}
                 <div className={`relative aspect-[16/7] ${selected.gradient} overflow-hidden`}>
                   {selected.image && (
-                    <img
+                    <Image
                       src={selected.image}
                       alt={selected.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />

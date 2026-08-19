@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
 import { Target, Eye, ArrowRight, BookOpen, Users, Award, X } from "lucide-react";
@@ -32,10 +33,11 @@ export default function About() {
               <div className="relative">
                 <div className="relative aspect-[4/3] md:aspect-[5/4] rounded-[28px] overflow-hidden border border-border shadow-lg group">
                   {/* Real photo */}
-                  <img
+                  <Image
                     src="/about-photo.png"
                     alt="Pharo Foundation"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   {/* Overlay for caption legibility */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -118,7 +120,7 @@ export default function About() {
                 <p className="text-muted leading-relaxed text-base md:text-[17px]">
                   Our mission is to provide a locally relevant and globally competitive,
                   high-quality learning experience — empowering students to become lifelong
-                  learners and productive global citizens. We focus on students' holistic
+                  learners and productive global citizens. We focus on students&apos; holistic
                   development to discover their own talent and instil them with the passion
                   to realise their future goals.
                 </p>
@@ -193,7 +195,7 @@ export default function About() {
                       <h2 className="font-serif text-2xl md:text-3xl font-bold text-white leading-tight">
                         About Pharo School Assosa
                       </h2>
-                      <p className="text-white/75 text-sm mt-2">Unlocking Africa's potential through education</p>
+                      <p className="text-white/75 text-sm mt-2">Unlocking Africa&apos;s potential through education</p>
                     </div>
                     <button
                       onClick={() => setIsOpen(false)}
@@ -249,7 +251,7 @@ export default function About() {
                     <p className="text-foreground leading-relaxed text-sm md:text-base">
                       To provide a locally relevant and globally competitive, high-quality learning
                       experience — empowering students to become lifelong learners and productive
-                      global citizens. We focus on students' holistic development to discover their
+                      global citizens. We focus on students&apos; holistic development to discover their
                       own talent and instil them with the passion to realise their future goals.
                     </p>
                   </div>

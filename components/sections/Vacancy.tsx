@@ -261,7 +261,7 @@ export default function Vacancy() {
               </div>
               <SectionHeading className="text-left">Vacancies</SectionHeading>
               <p className="mt-6 text-muted leading-relaxed text-base md:text-lg">
-                Be part of a team dedicated to unlocking Africa's potential. We are always
+                Be part of a team dedicated to unlocking Africa&apos;s potential. We are always
                 looking for talented, passionate individuals to join Pharo Foundation.
               </p>
             </div>
