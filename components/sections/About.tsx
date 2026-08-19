@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
-import { Target, Eye, ArrowRight, BookOpen, Users, Award, X } from "lucide-react";
+import { Target, Eye, BookOpen, Users, Award, X, Search, Handshake, Lightbulb, ShieldCheck } from "lucide-react";
 
 export default function About() {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,78 +83,139 @@ export default function About() {
                 </p>
               </div>
 
-              {/* Learn More button — opens modal */}
-              <div className="mt-8 md:mt-10">
-                <button
-                  onClick={() => setIsOpen(true)}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-scholarly text-white font-bold text-base hover:bg-scholarly-light transition-all duration-200 shadow-sm hover:shadow-[0_0_24px_rgba(30,58,95,0.3)] group"
-                >
-                  Learn More About Us
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" strokeWidth={2} />
-                </button>
-              </div>
             </motion.div>
           </div>
 
           {/* Mission & Vision cards */}
-          <div className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
-            <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: 0.05 }}
-              whileHover={{ y: -5, scale: 1.015 }}
-              className="relative p-8 md:p-10 rounded-[28px] border border-border bg-gradient-to-br from-scholarly-pale/70 via-background to-background overflow-hidden shadow-sm hover:shadow-[0_0_32px_rgba(30,58,95,0.14)] dark:hover:border-scholarly/40 transition-all duration-300"
-            >
-              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-scholarly/8 blur-2xl" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-scholarly flex items-center justify-center mb-7 shadow-md">
-                  <Target className="w-7 h-7 text-white" strokeWidth={1.8} />
-                </div>
-                <div className="inline-block px-3 py-1 rounded-full border border-scholarly/15 bg-scholarly/5 text-scholarly text-[11px] font-bold tracking-[0.18em] uppercase mb-4">
-                  Our Mission
-                </div>
-                <h3 className="font-serif text-2xl md:text-[28px] font-bold text-foreground leading-tight mb-5">
-                  Empowering students to grow in knowledge, character, and purpose.
-                </h3>
-                <p className="text-muted leading-relaxed text-base md:text-[17px]">
-                  Our mission is to provide a locally relevant and globally competitive,
-                  high-quality learning experience — empowering students to become lifelong
-                  learners and productive global citizens. We focus on students&apos; holistic
-                  development to discover their own talent and instil them with the passion
-                  to realise their future goals.
-                </p>
-              </div>
-            </motion.div>
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-6xl mx-auto">
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  whileHover={{ y: -4, scale: 1.015 }}
+                  className="relative p-6 rounded-[22px] border border-border bg-gradient-to-br from-scholarly-pale/70 via-background to-background overflow-hidden shadow-sm hover:shadow-[0_0_28px_rgba(30,58,95,0.14)] dark:hover:border-scholarly/40 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-scholarly flex items-center justify-center mb-5 shadow-md">
+                    <Target className="w-6 h-6 text-white" strokeWidth={1.8} />
+                  </div>
+                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-scholarly mb-3">Our Mission</div>
+                  <h4 className="font-serif text-lg font-bold text-foreground leading-snug mb-3">
+                    Empowering students to grow in knowledge, character, and purpose.
+                  </h4>
+                  <p className="text-muted text-sm leading-relaxed">
+                    Our mission is to provide a locally relevant and globally competitive,
+                    high-quality learning experience — empowering students to become lifelong
+                    learners and productive global citizens.
+                  </p>
+                </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: 0.15 }}
-              whileHover={{ y: -5, scale: 1.015 }}
-              className="relative p-8 md:p-10 rounded-[28px] border border-border bg-gradient-to-br from-gold-pale/70 via-background to-background overflow-hidden shadow-sm hover:shadow-[0_0_32px_rgba(184,137,60,0.14)] dark:hover:border-gold/40 transition-all duration-300"
-            >
-              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-gold/10 blur-2xl" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gold flex items-center justify-center mb-7 shadow-md">
-                  <Eye className="w-7 h-7 text-white" strokeWidth={1.8} />
-                </div>
-                <div className="inline-block px-3 py-1 rounded-full border border-gold/20 bg-gold/5 text-gold text-[11px] font-bold tracking-[0.18em] uppercase mb-4">
-                  Our Vision
-                </div>
-                <h3 className="font-serif text-2xl md:text-[28px] font-bold text-foreground leading-tight mb-5">
-                  To be a community where every learner thrives.
-                </h3>
-                <p className="text-muted leading-relaxed text-base md:text-[17px]">
-                  Our vision is to be recognised as a leading educational community —
-                  one known for the strength of its scholarship, the warmth of its
-                  culture, the depth of its character, and the positive impact of its
-                  graduates on the communities they go on to serve.
-                </p>
-              </div>
-            </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.18 }}
+                  whileHover={{ y: -4, scale: 1.015 }}
+                  className="relative p-6 rounded-[22px] border border-border bg-gradient-to-br from-gold-pale/70 via-background to-background overflow-hidden shadow-sm hover:shadow-[0_0_28px_rgba(184,137,60,0.14)] dark:hover:border-gold/40 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-gold flex items-center justify-center mb-5 shadow-md">
+                    <Eye className="w-6 h-6 text-white" strokeWidth={1.8} />
+                  </div>
+                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-gold mb-3">Our Vision</div>
+                  <h4 className="font-serif text-lg font-bold text-foreground leading-snug mb-3">
+                    To be a community where every learner thrives.
+                  </h4>
+                  <p className="text-muted text-sm leading-relaxed">
+                    Our vision is to be recognised as a leading educational community — known
+                    for the strength of its scholarship, the warmth of its culture, and the
+                    positive impact of its graduates on the communities they serve.
+                  </p>
+                </motion.div>
           </div>
+
+          {/* What Pharo Schools Stand For */}
+          <motion.div
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-16 md:mt-20 pt-14 border-t border-border/60"
+          >
+            <div className="max-w-3xl mb-12">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-6">
+                What Pharo Schools Stand For
+              </h2>
+              <p className="text-muted leading-relaxed text-base md:text-lg mb-4">
+                In a continent where 40% of the population is aged 15 years and younger, schools are by definition the point of maximum development impact. The challenge is to create schools that do more than boost enrolment rate statistics and find creative ways of engaging the child, leveraging the school and home environments, in order to improve the quality of learning. With this approach, we create tomorrow's local and global leaders, from kindergarten all the way to secondary school education.
+              </p>
+              <p className="text-muted leading-relaxed text-base md:text-lg">
+                All Pharo Schools have a common identity, which is rooted in our commitment to excellent education and our values which guide all our students and teachers. Therefore Pharo Schools have developed a comprehensive quality management framework focusing on quality teaching, learning and school management.
+              </p>
+            </div>
+
+            {/* Our Values */}
+            <h3 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-8">Our Values</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+              {[
+                {
+                  icon: Search,
+                  title: "Curiosity",
+                  desc: "We ignite our students' intrinsic motivation to independently explore new ideas, knowledge, skills, technologies, places, cultures, people, and the environment.",
+                  color: "bg-scholarly",
+                  glow: "hover:shadow-[0_0_28px_rgba(30,58,95,0.15)] hover:border-scholarly/30",
+                },
+                {
+                  icon: Award,
+                  title: "Excellence",
+                  desc: "Our students strive to achieve their ambitious personal life and career goals. Our students place a special focus on STEM and achieve academic excellence through rigorous learning and a culture of hard work.",
+                  color: "bg-gold",
+                  glow: "hover:shadow-[0_0_28px_rgba(184,137,60,0.15)] hover:border-gold/30",
+                },
+                {
+                  icon: Handshake,
+                  title: "Respect",
+                  desc: "We encourage our students to value diversity and practise politeness and respect with one another, while appreciating and taking diligent care of the environment.",
+                  color: "bg-scholarly-light",
+                  glow: "hover:shadow-[0_0_28px_rgba(45,79,122,0.15)] hover:border-scholarly-light/30",
+                },
+                {
+                  icon: Lightbulb,
+                  title: "Creativity",
+                  desc: "We foster critical thinking, and our students are willing and able to challenge the status quo and embody an entrepreneurial spirit that feeds innovation and problem solving.",
+                  color: "bg-accent",
+                  glow: "hover:shadow-[0_0_28px_rgba(166,110,63,0.15)] hover:border-accent/30",
+                },
+                {
+                  icon: ShieldCheck,
+                  title: "Responsibility",
+                  desc: "We always lead by example and expect our students to take responsibility for their own learning, achievements and shortcomings and demonstrate responsible citizenship.",
+                  color: "bg-success",
+                  glow: "hover:shadow-[0_0_28px_rgba(46,125,87,0.15)] hover:border-success/30",
+                },
+              ].map((value, idx) => {
+                const Icon = value.icon;
+                return (
+                  <motion.div
+                    key={value.title}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.45, delay: idx * 0.07 }}
+                    whileHover={{ y: -4 }}
+                    className={`flex flex-col gap-5 p-7 rounded-[22px] border border-border bg-background shadow-sm transition-all duration-200 ${value.glow}`}
+                  >
+                    <div className={`w-14 h-14 rounded-2xl ${value.color} flex items-center justify-center shadow-md flex-shrink-0`}>
+                      <Icon className="w-7 h-7 text-white" strokeWidth={1.8} />
+                    </div>
+                    <div>
+                      <h4 className="font-serif text-xl font-bold text-foreground mb-2">{value.title}</h4>
+                      <p className="text-muted text-sm md:text-base leading-relaxed">{value.desc}</p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
         </motion.div>
       </Container>
 
