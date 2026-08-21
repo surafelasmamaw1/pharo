@@ -14,7 +14,6 @@ const Admissions = dynamic(() => import("@/components/sections/Admissions"));
 const NewsEvents = dynamic(() => import("@/components/sections/NewsEvents"));
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
 const Gallery = dynamic(() => import("@/components/sections/Gallery"));
-const Vacancy = dynamic(() => import("@/components/sections/Vacancy"));
 const Contact = dynamic(() => import("@/components/sections/Contact"));
 
 export default function Home() {
@@ -32,7 +31,6 @@ export default function Home() {
         <NewsEvents />
         <Testimonials />
         <Admissions />
-        <Vacancy />
         <Contact />
       </main>
       <Footer />

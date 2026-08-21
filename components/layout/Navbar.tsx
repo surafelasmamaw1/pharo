@@ -15,7 +15,6 @@ import {
   X,
   Moon,
   Sun,
-  Briefcase,
   Images,
 } from "lucide-react";
 import Image from "next/image";
@@ -30,7 +29,6 @@ const navItems = [
   { name: "Student Life", href: "#student-life",  id: "student-life",  icon: Users },
   { name: "News & Events",href: "#news-events",   id: "news-events",   icon: CalendarDays },
   { name: "Admissions",   href: "/admissions",    id: "admissions",    icon: ClipboardList },
-  { name: "Vacancy",      href: "#vacancy",       id: "vacancy",       icon: Briefcase },
   { name: "Contact",      href: "#contact",       id: "contact",       icon: Mail },
   { name: "Gallery",      href: "/gallery",       id: "gallery",       icon: Images },
 ];
