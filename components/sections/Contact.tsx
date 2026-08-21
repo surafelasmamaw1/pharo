@@ -4,7 +4,7 @@ import { useState } from "react";
 import { m } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Navigation } from "lucide-react";
 import { z } from "zod";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
@@ -13,6 +13,65 @@ import { contactFormSchema } from "@/lib/zodSchemas";
 import { siteConfig } from "@/lib/siteConfig";
 
 type ContactFormData = z.infer<typeof contactFormSchema>;
+
+const campuses = [
+  {
+    label: "Campus 1",
+    src: "https://maps.google.com/maps?q=10.0677727,34.5528496&z=18&t=k&output=embed",
+    directions: "https://www.google.com/maps/dir/?api=1&destination=10.0677727,34.5528496",
+  },
+  {
+    label: "Campus 2",
+    src: "https://maps.google.com/maps?q=10.050165,34.520868&z=18&t=k&output=embed",
+    directions: "https://www.google.com/maps/dir/?api=1&destination=10.050165,34.520868",
+  },
+];
+
+function MapTabs() {
+  const [active, setActive] = useState(0);
+  return (
+    <div className="mb-8">
+      <div className="flex gap-2 mb-3">
+        {campuses.map((c, i) => (
+          <button
+            key={c.label}
+            onClick={() => setActive(i)}
+            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+              active === i
+                ? "bg-scholarly text-white shadow-sm"
+                : "border border-border text-muted hover:text-foreground hover:border-scholarly/40"
+            }`}
+          >
+            {c.label}
+          </button>
+        ))}
+      </div>
+      <div className="rounded-2xl overflow-hidden border border-border shadow-sm aspect-[4/3]">
+        <iframe
+          key={active}
+          title={campuses[active].label}
+          src={campuses[active].src}
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="w-full h-full"
+        />
+      </div>
+      <a
+        href={campuses[active].directions}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-3 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-scholarly text-white text-sm font-bold hover:bg-scholarly-light transition-all duration-200 shadow-sm hover:shadow-[0_0_20px_rgba(30,58,95,0.3)]"
+      >
+        <Navigation className="w-4 h-4" strokeWidth={2} />
+        Get Directions to {campuses[active].label}
+      </a>
+    </div>
+  );
+}
 
 export default function Contact() {
   const [status, setStatus] = useState<
@@ -169,6 +228,10 @@ export default function Contact() {
             </div>
 
             <div className="pt-8 border-t border-border/60">
+              {/* Map with campus tabs */}
+              <MapTabs />
+
+
               <h4 className="font-serif text-2xl font-semibold text-foreground mb-3">
                 Visit Our Campus
               </h4>
@@ -176,7 +239,7 @@ export default function Contact() {
                 We warmly invite families to schedule a personal
                 tour and experience the Pharo Foundation difference in person.
               </p>
-              <Button href="#admissions" variant="outline" size="md">
+              <Button href="/admissions" variant="outline" size="md">
                 Schedule a Tour
               </Button>
             </div>
