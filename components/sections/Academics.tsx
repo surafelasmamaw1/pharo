@@ -145,6 +145,9 @@ export default function Academics() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.55, delay: idx * 0.07 }}
                   whileHover={{ y: -6, scale: 1.018 }}
+                  style={{ transition: "background-color 0.2s ease" }}
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = p.hoverColor)}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = "")}
                   className={`group relative flex flex-col p-7 md:p-8 rounded-[24px] border border-border bg-background overflow-hidden shadow-sm transition-all duration-300 ${p.glow} ${p.borderGlow}`}
                 >
                   <div className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-gradient-to-br from-scholarly/10 via-transparent to-gold/10 blur-3xl opacity-70" />

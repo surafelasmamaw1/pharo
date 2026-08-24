@@ -15,6 +15,7 @@ export type Program = {
   accentBg: string;
   glow: string;
   borderGlow: string;
+  hoverColor: string;
 };
 
 export const coreSubjects = [
@@ -39,8 +40,9 @@ export const programs: Program[] = [
     subjectGroups: [{ label: "Core Subjects", subjects: coreSubjects }],
     accent: "bg-gold text-white",
     accentBg: "from-gold/20 to-amber-500/10 border-gold/25",
-    glow: "hover:shadow-[0_0_32px_rgba(184,137,60,0.2)] hover:bg-gold/5 hover:border-gold/40",
-    borderGlow: "dark:hover:border-gold/40",
+    glow: "hover:shadow-[0_0_36px_rgba(184,137,60,0.3)]",
+    borderGlow: "dark:hover:border-gold/50",
+    hoverColor: "rgba(184,137,60,0.10)",
   },
   {
     icon: School,
@@ -57,8 +59,9 @@ export const programs: Program[] = [
     ],
     accent: "bg-scholarly text-white",
     accentBg: "from-scholarly/20 to-scholarly-light/10 border-scholarly/25",
-    glow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.2)] hover:bg-scholarly/5 hover:border-scholarly/40",
-    borderGlow: "dark:hover:border-scholarly/40",
+    glow: "hover:shadow-[0_0_36px_rgba(30,58,95,0.3)]",
+    borderGlow: "dark:hover:border-scholarly/50",
+    hoverColor: "rgba(30,58,95,0.10)",
   },
   {
     icon: BookOpen,
@@ -84,8 +87,9 @@ export const programs: Program[] = [
     ],
     accent: "bg-scholarly-light text-white",
     accentBg: "from-scholarly-light/20 to-blue-500/10 border-scholarly-light/25",
-    glow: "hover:shadow-[0_0_32px_rgba(45,79,122,0.2)] hover:bg-scholarly-light/5 hover:border-scholarly-light/40",
-    borderGlow: "dark:hover:border-scholarly-light/40",
+    glow: "hover:shadow-[0_0_36px_rgba(45,79,122,0.3)]",
+    borderGlow: "dark:hover:border-scholarly-light/50",
+    hoverColor: "rgba(45,79,122,0.10)",
   },
   {
     icon: GraduationCap,
@@ -115,8 +119,9 @@ export const programs: Program[] = [
     ],
     accent: "bg-success text-white",
     accentBg: "from-success/20 to-emerald-500/10 border-success/25",
-    glow: "hover:shadow-[0_0_32px_rgba(46,125,87,0.2)] hover:bg-success/5 hover:border-success/40",
-    borderGlow: "dark:hover:border-success/40",
+    glow: "hover:shadow-[0_0_36px_rgba(46,125,87,0.3)]",
+    borderGlow: "dark:hover:border-success/50",
+    hoverColor: "rgba(46,125,87,0.10)",
   },
   {
     icon: Atom,
@@ -144,8 +149,9 @@ export const programs: Program[] = [
     ],
     accent: "bg-accent text-white",
     accentBg: "from-accent/20 to-gold/10 border-accent/25",
-    glow: "hover:shadow-[0_0_32px_rgba(166,110,63,0.2)] hover:bg-accent/5 hover:border-accent/40",
-    borderGlow: "dark:hover:border-accent/40",
+    glow: "hover:shadow-[0_0_36px_rgba(166,110,63,0.3)]",
+    borderGlow: "dark:hover:border-accent/50",
+    hoverColor: "rgba(166,110,63,0.10)",
   },
   {
     icon: Palette,
@@ -171,7 +177,8 @@ export const programs: Program[] = [
     ],
     accent: "bg-purple-500 text-white",
     accentBg: "from-purple-500/20 to-pink-500/10 border-purple-500/25",
-    glow: "hover:shadow-[0_0_32px_rgba(120,40,200,0.2)] hover:bg-purple-500/5 hover:border-purple-400/40",
-    borderGlow: "dark:hover:border-purple-400/40",
+    glow: "hover:shadow-[0_0_36px_rgba(168,85,247,0.3)]",
+    borderGlow: "dark:hover:border-purple-500/50",
+    hoverColor: "rgba(168,85,247,0.10)",
   },
 ];
