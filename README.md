@@ -1,152 +1,140 @@
-# Pharo Foundation Website
+# Pharo Foundation Website & Admin Backend
 
-Official website for **Pharo Foundation** — *Unlocking Africa's potential* — built with Next.js, Tailwind CSS, and Framer Motion.
+Official website and administrative portal for **Pharo Foundation** — *Unlocking Africa's potential* — built with Next.js, Prisma ORM, SQLite, Tailwind CSS, and Framer Motion.
 
-## Tech Stack
+---
 
-- **Next.js 16** — React framework
+## 🚀 Tech Stack & Infrastructure
+
+- **Next.js 16 (App Router & Turbopack)** — Fullstack React framework
 - **React 19** — UI library
-- **TypeScript** — Type safety
-- **Tailwind CSS** — Utility-first styling
-- **Framer Motion** — Animations and modals
-- **Lucide React** — Icons
-- **React Hook Form + Zod** — Contact form with validation
-- **Next Themes** — Light/dark mode
+- **Prisma ORM (v5.22.0)** — Database ORM & schema management
+- **SQLite (`prisma/dev.db`)** — Local lightweight database engine
+- **TypeScript** — End-to-end type safety
+- **Tailwind CSS** — Utility-first responsive design
+- **Framer Motion** — Smooth animations and modal transitions
+- **Lucide React** — Modern UI icons
+- **Next Themes** — Light/dark theme provider
 
-## Getting Started
+---
 
-### Prerequisites
-- Node.js 20+
-- npm
+## 🔒 Admin Portal & Backend Architecture
 
-### Installation
+| Route / Feature | Method | Description |
+|---|---|---|
+| **`/admin`** | `GET` | Administrative portal to manage student applications, read contact form inquiries, and publish news announcements. |
+| **`/api/admin/login`** | `POST`, `GET`, `DELETE` | Passcode authentication gate (`pharo2026`) with HTTP-only session cookies and logout functionality. |
+| **`/api/admissions`** | `POST`, `GET`, `PATCH`, `DELETE` | Online admissions API: receives applications, updates status (`PENDING`, `REVIEWED`, `ACCEPTED`, `REJECTED`), and handles record deletion. |
+| **`/api/contact`** | `POST`, `GET` | Receives contact form submissions, stores them in SQLite DB, and falls back to Web3Forms. |
+| **`/api/news`** | `POST`, `GET`, `DELETE` | Dynamic news publishing API with image support and 1-click deletion. |
+
+---
+
+## 🛠️ Key Features
+
+- **🔒 Passcode-Protected Admin Portal (`/admin`)**:
+  - Protected with a passcode lock screen (`ADMIN_PASSWORD` in `.env.local`).
+  - Session cookie handling and logout button.
+- **📝 Comprehensive Student Admissions Form (`/admissions`)**:
+  - Accepts Student Name, Parent Name, Email, Phone Number, Emergency Contact Phone, Age, Gender (Male/Female), City/Region, Previous School Attended, Grade Level, and Notes.
+  - Interactive status review in Admin Portal.
+- **🖼️ Drag & Drop News & Event Publisher**:
+  - Interactive Drag & Drop image file picker or local computer file browser.
+  - Instant live image preview, quick preset buttons, and 1-click article removal.
+  - Live dynamic news feed on the main website (`/api/news`).
+- **🌙 Theme Switcher**: Full Light / Dark mode support.
+
+---
+
+## 💻 Getting Started
+
+### 1. Installation
 
 ```bash
 npm install
+```
+
+### 2. Database Sync & Client Generation
+
+```bash
+npx prisma db push
+npx prisma generate
+```
+
+### 3. Launch Development Server
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.  
+Access the Admin Portal at [http://localhost:3000/admin](http://localhost:3000/admin) *(Passcode: `pharo2026`)*.
 
-## Project Structure
+---
 
-```
+## 📁 Project Structure
+
+```text
 .
 ├── app/
-│   ├── api/contact/route.ts    # Contact form API
-│   ├── icon.png                # Favicon (Pharo Foundation logo)
-│   ├── layout.tsx              # Root layout + metadata
-│   ├── not-found.tsx           # 404 page
-│   └── page.tsx                # Home page (section order)
+│   ├── (standalone)/
+│   │   └── admissions/page.tsx   # Interactive Online Admissions Form
+│   ├── admin/
+│   │   └── page.tsx              # Passcode-Protected Admin Dashboard
+│   ├── api/
+│   │   ├── admin/login/route.ts  # Admin session authentication API
+│   │   ├── admissions/route.ts   # Student admissions CRUD API
+│   │   ├── contact/route.ts      # Contact form submission API
+│   │   └── news/route.ts         # Announcement publishing & deletion API
+│   ├── layout.tsx                # Root layout + metadata
+│   ├── not-found.tsx             # 404 page
+│   └── page.tsx                  # Home page
 ├── components/
 │   ├── layout/
-│   │   ├── Navbar.tsx          # Navigation with active section tracking
-│   │   ├── BackToTop.tsx       # Back to top button
-│   │   └── ThemeProvider.tsx   # Light/dark theme provider
-│   ├── projects/
-│   │   └── ProjectCard.tsx     # News/events card with modal
+│   │   ├── Navbar.tsx            # Responsive navigation bar
+│   │   ├── BackToTop.tsx         # Scroll to top button
+│   │   └── ThemeProvider.tsx     # Next-themes provider
 │   ├── sections/
-│   │   ├── Hero.tsx            # Hero with school photo, EST. badge, programs pill
-│   │   ├── About.tsx           # About section with modal (mission, vision, pillars)
-│   │   ├── Services.tsx        # Why Choose Us section
-│   │   ├── Skills.tsx          # Academics — 6 program cards with modals
-│   │   ├── Facilities.tsx      # Our Learning Environment — bento grid with modals
-│   │   ├── StudentLife.tsx     # Life Beyond the Classroom — activity cards
-│   │   ├── Projects.tsx        # News & Events — cards with show more/less
-│   │   ├── Testimonials.tsx    # Community voices
-│   │   ├── Resume.tsx          # Admissions process — 4-step cards
-│   │   ├── TimelineSection.tsx # School history timeline
-│   │   ├── Contact.tsx         # Contact form
-│   │   └── Footer.tsx          # Footer with social links
-│   └── ui/
-│       ├── Button.tsx          # Reusable button
-│       ├── Container.tsx       # Layout container
-│       ├── SectionHeading.tsx  # Section heading
-│       └── Tag.tsx             # Tag/chip component
+│   │   ├── Hero.tsx              # Hero section
+│   │   ├── About.tsx             # Mission & vision
+│   │   ├── Academics.tsx         # Educational programs
+│   │   ├── Facilities.tsx        # Campus facilities grid
+│   │   ├── StudentLife.tsx       # Student activities
+│   │   ├── NewsEvents.tsx        # Dynamic news & announcements list
+│   │   ├── Admissions.tsx        # Admissions overview
+│   │   ├── Contact.tsx           # Contact form
+│   │   └── Footer.tsx            # Footer navigation & social links
+│   └── ui/                       # Reusable UI components
 ├── lib/
-│   ├── techIcons.ts
-│   └── zodSchemas.ts
-├── public/
-│   ├── certificates/           # Certificate PDFs
-│   ├── pharo-logo.png          # Pharo Foundation logo
-│   ├── pharo-school.png        # Hero section school photo
-│   ├── about-photo.png         # About section photo
-│   ├── classrooms.png          # Facilities — classrooms photo
-│   ├── library.png             # Facilities — library photo
-│   ├── computer-labs.png       # Facilities — computer labs photo
-│   ├── ronaldo.jpg             # News — football event photo
-│   └── robots.txt / sitemap.xml
-├── tailwind.config.ts
-├── tsconfig.json
+│   └── prisma.ts                 # Global Prisma Client instance
+├── prisma/
+│   ├── dev.db                    # SQLite database file
+│   └── schema.prisma             # Database models (Application, Inquiry, NewsEvent)
+├── .env.local                    # Local environment secrets (ADMIN_PASSWORD, WEB3FORMS_KEY)
 └── README.md
 ```
 
-## Page Sections (in order)
+---
 
-| Section | ID | Description |
-|---|---|---|
-| Hero | `#home` | School photo, EST. 2011, programs pill, CTAs |
-| About | `#about` | Intro, mission/vision cards, "Learn More" modal |
-| Why Choose Us | `#why-choose` | Key differentiators |
-| Academics | `#academics` | 6 program cards, each opens a detail modal |
-| Learning Environment | `#facilities` | Bento photo grid, click to open facility modal |
-| Student Life | `#student-life` | Activities grid + signature experiences strip |
-| News & Events | `#news-events` | Cards with real photos, show more/less, read more modal |
-| Testimonials | `#testimonials` | Parent, student, teacher voices |
-| Admissions | `#admissions` | 4-step process cards |
-| Contact | `#contact` | Contact form |
-
-## Key Features
-
-- Pharo Foundation branding (navy blue, gold, clean typography)
-- Light and dark mode
-- Fully responsive layout
-- Smooth animations and page transitions (Framer Motion)
-- Interactive modals on cards (Academics, Facilities, News, About)
-- News & Events "show more / show less" with hidden count badge
-- Real photos for campus, classrooms, library, computer labs, events
-- Social media links with per-platform brand color hover effects
-- Contact form with validation (React Hook Form + Zod)
-- SEO optimized — metadata, sitemap, robots.txt
-- Circular favicon from Pharo Foundation logo
-
-## Adding Content
-
-### Add a news/event card
-Edit `components/sections/Projects.tsx` — add an item to the `items` array with `title`, `date`, `category`, `description`, `image`, and `link`.
-
-### Add a facility photo
-1. Place the image in `public/`
-2. Add the `image` field to the matching entry in `components/sections/Facilities.tsx`
-
-### Update social media links
-Edit the `socialLinks` array in `components/sections/Footer.tsx`.
-
-### Update admissions steps
-Edit the `steps` array in `components/sections/Resume.tsx`.
-
-## Scripts
+## 📦 Scripts
 
 ```bash
-npm run dev       # Start development server
-npm run build     # Build for production
-npm run start     # Start production server
-npm run lint      # Run ESLint
-npm run format    # Format with Prettier
+npm run dev       # Start development server on localhost:3000
+npm run build     # Build production bundle & verify TypeScript types
+npm run start     # Run production build server
+npm run lint      # Run ESLint validation
 ```
 
-## Deployment
+---
 
-Deploy instantly with [Vercel](https://vercel.com/):
+## 🌐 Deployment to Production
 
-1. Push to GitHub (`git push`)
-2. Import the repo in Vercel
-3. Deploy — no environment variables required for the base site
+1. **Database**: To connect to a cloud database (PostgreSQL, Supabase, Neon), update `provider = "postgresql"` and `url = env("DATABASE_URL")` in `prisma/schema.prisma`.
+2. **Environment Variables**: Set `ADMIN_PASSWORD` and `DATABASE_URL` in your hosting dashboard (e.g. Vercel, Railway, Render).
+3. **Repository**: [github.com/surafelasmamaw1/pharo](https://github.com/surafelasmamaw1/pharo)
 
-## Repository
+---
 
-[github.com/surafelasmamaw1/pharo](https://github.com/surafelasmamaw1/pharo)
+## 📄 License
 
-## License
-
-MIT
+MIT © Pharo Foundation
