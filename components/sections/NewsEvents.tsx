@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CalendarDays, ChevronDown, ChevronUp, Layers } from "lucide-react";
 import Container from "../ui/Container";
@@ -17,7 +17,7 @@ export type NewsItem = {
   link?: string;
 };
 
-const items: NewsItem[] = [
+const defaultItems: NewsItem[] = [
   {
     title: "Inter-School Football Championship",
     date: "August 10, 2026",
@@ -94,6 +94,31 @@ const VISIBLE_COUNT = 6;
 
 export default function NewsEvents() {
   const [showAll, setShowAll] = useState(false);
+  const [items, setItems] = useState<NewsItem[]>(defaultItems);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const res = await fetch("/api/news");
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const apiItems: NewsItem[] = json.data.map((item: any) => ({
+            title: item.title,
+            date: item.date || new Date(item.createdAt).toLocaleDateString(),
+            category: item.category || "School News",
+            description: item.snippet || item.content,
+            imageTag: item.category,
+            image: item.imageUrl || "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop",
+            link: "#news-events",
+          }));
+          setItems([...apiItems, ...defaultItems]);
+        }
+      } catch (err) {
+        // Fall back to default items
+      }
+    };
+    fetchNews();
+  }, []);
 
   const visibleItems = showAll ? items : items.slice(0, VISIBLE_COUNT);
   const hiddenCount = items.length - VISIBLE_COUNT;

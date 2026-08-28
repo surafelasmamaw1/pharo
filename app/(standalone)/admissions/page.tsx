@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,8 +15,272 @@ import {
   Star,
   ArrowLeft,
   ClipboardList,
+  CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
+
+function AdmissionsForm() {
+  const [formData, setFormData] = useState({
+    applicantName: "",
+    parentName: "",
+    email: "",
+    phone: "",
+    emergencyPhone: "",
+    gradeLevel: "Grade 1",
+    age: "7",
+    gender: "Male",
+    previousSchool: "",
+    city: "Hargeisa",
+    program: "Primary Education",
+    notes: "",
+  });
+
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/admissions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+        setFormData({
+          applicantName: "",
+          parentName: "",
+          email: "",
+          phone: "",
+          emergencyPhone: "",
+          gradeLevel: "Grade 1",
+          age: "7",
+          gender: "Male",
+          previousSchool: "",
+          city: "Hargeisa",
+          program: "Primary Education",
+          notes: "",
+        });
+      } else {
+        setStatus("error");
+        setErrorMessage(data.message || "Failed to submit. Please check input fields.");
+      }
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage("Network error. Please try again later.");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <div className="p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-4">
+        <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
+        <h3 className="text-xl font-bold text-foreground">Application Received!</h3>
+        <p className="text-muted text-sm max-w-md mx-auto">
+          Thank you for applying to Pharo Foundation. Your application has been logged into our admissions database.
+        </p>
+        <button
+          onClick={() => setStatus("idle")}
+          className="px-6 py-2.5 rounded-full bg-scholarly text-white font-semibold text-xs uppercase tracking-wider hover:bg-scholarly-light transition-colors"
+        >
+          Submit Another Application
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {status === "error" && (
+        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-sm flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          {errorMessage}
+        </div>
+      )}
+
+      {/* Student & Parent Info */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Student Full Name *</label>
+          <input
+            type="text"
+            required
+            value={formData.applicantName}
+            onChange={(e) => setFormData({ ...formData, applicantName: e.target.value })}
+            placeholder="e.g. Abebe Bikila"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Parent / Guardian Name</label>
+          <input
+            type="text"
+            value={formData.parentName}
+            onChange={(e) => setFormData({ ...formData, parentName: e.target.value })}
+            placeholder="e.g. Kebede Bikila"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          />
+        </div>
+      </div>
+
+      {/* Age & Gender */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Student Age *</label>
+          <input
+            type="number"
+            min="3"
+            max="20"
+            required
+            value={formData.age}
+            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+            placeholder="e.g. 7"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Gender *</label>
+          <select
+            value={formData.gender}
+            onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          >
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">City / Region</label>
+          <input
+            type="text"
+            value={formData.city}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+            placeholder="e.g. Hargeisa, Addis Ababa"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          />
+        </div>
+      </div>
+
+      {/* Contact Information */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Contact Email *</label>
+          <input
+            type="email"
+            required
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            placeholder="name@example.com"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Phone Number *</label>
+          <input
+            type="tel"
+            required
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            placeholder="+251 91 234 5678"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          />
+        </div>
+      </div>
+
+      {/* Emergency Phone & Previous School */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Emergency Contact Phone</label>
+          <input
+            type="tel"
+            value={formData.emergencyPhone}
+            onChange={(e) => setFormData({ ...formData, emergencyPhone: e.target.value })}
+            placeholder="+251 91 987 6543"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          />
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Previous School Attended</label>
+          <input
+            type="text"
+            value={formData.previousSchool}
+            onChange={(e) => setFormData({ ...formData, previousSchool: e.target.value })}
+            placeholder="e.g. Hope Academy"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          />
+        </div>
+      </div>
+
+      {/* Academic Grade & Program */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Applying for Grade/Level *</label>
+          <select
+            value={formData.gradeLevel}
+            onChange={(e) => setFormData({ ...formData, gradeLevel: e.target.value })}
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          >
+            <option value="Kindergarten">Kindergarten</option>
+            <option value="Grade 1">Grade 1</option>
+            <option value="Grade 2">Grade 2</option>
+            <option value="Grade 3">Grade 3</option>
+            <option value="Grade 4">Grade 4</option>
+            <option value="Grade 5">Grade 5</option>
+            <option value="Grade 6">Grade 6</option>
+            <option value="Grade 7">Grade 7</option>
+            <option value="Grade 8">Grade 8</option>
+            <option value="Secondary High School">Secondary High School</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-xs font-semibold text-muted mb-1">Program of Interest</label>
+          <select
+            value={formData.program}
+            onChange={(e) => setFormData({ ...formData, program: e.target.value })}
+            className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+          >
+            <option value="Primary Education">Primary Education</option>
+            <option value="STEM & Robotics">STEM & Robotics Focus</option>
+            <option value="Early Childhood Education">Early Childhood Education</option>
+            <option value="High School General">High School General</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-muted mb-1">Additional Notes / Previous School Info</label>
+        <textarea
+          rows={3}
+          value={formData.notes}
+          onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+          placeholder="Mention previous report card average, conduct grade, or special requirements..."
+          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={status === "submitting"}
+        className="px-8 py-3.5 rounded-full bg-scholarly text-white font-bold text-sm hover:bg-scholarly-light transition-all shadow-md disabled:opacity-50"
+      >
+        {status === "submitting" ? "Submitting Application..." : "Submit Application"}
+      </button>
+    </form>
+  );
+}
 
 const steps = [
   {
@@ -194,6 +459,23 @@ export default function AdmissionsPage() {
                 </div>
               </div>
             </motion.div>
+          </motion.div>
+
+          {/* Online Admissions Application Form */}
+          <motion.div id="apply-online" initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+            <div className="p-8 md:p-12 rounded-[28px] border border-scholarly/20 bg-background shadow-xl relative overflow-hidden">
+              <div className="max-w-2xl mb-8">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-scholarly-pale text-scholarly font-semibold text-xs mb-3 border border-scholarly/20">
+                  ONLINE ADMISSIONS FORM
+                </div>
+                <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">Apply Online for Admission</h2>
+                <p className="text-muted text-sm md:text-base mt-2">
+                  Submit your application directly to our admissions office. Our team will review your application and contact you within 3 business days.
+                </p>
+              </div>
+
+              <AdmissionsForm />
+            </div>
           </motion.div>
 
           {/* Supporting Documents + photo */}

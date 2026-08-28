@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 const phoneRegExp = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/;
 
@@ -24,15 +25,6 @@ function isRateLimited(key: string): boolean {
   entry.count++;
   return entry.count > RATE_LIMIT_MAX;
 }
-
-// Periodically clean up expired entries to prevent memory leaks
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, entry] of rateLimitMap) {
-    if (now > entry.expiresAt) rateLimitMap.delete(key);
-  }
-}, RATE_LIMIT_WINDOW_MS);
-// ------------------------------------
 
 export async function POST(req: NextRequest) {
   try {
@@ -79,7 +71,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Forward to Web3Forms using server-side env var
+    // Save inquiry to Database via Prisma
+    const inquiry = await prisma.inquiry.create({
+      data: {
+        name: name.trim(),
+        email: email.trim(),
+        subject: subject.trim(),
+        message: message.trim(),
+      },
+    });
+
+    // Optional Web3Forms forwarding
     const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
     if (accessKey) {
       try {
@@ -91,23 +93,36 @@ export async function POST(req: NextRequest) {
         formData.append("subject", subject.trim());
         formData.append("message", message.trim());
 
-        const external = await fetch("https://api.web3forms.com/submit", {
+        await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: formData.toString(),
         });
-        const result = await external.json();
-        if (result?.success) return NextResponse.json({ success: true });
       } catch {
-        // Fall through to local success
+        // Fallback to local database storage
       }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, data: inquiry });
   } catch (err) {
     console.error("Contact API error:", err);
     return NextResponse.json(
       { error: "Server error. Please try again." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    const inquiries = await prisma.inquiry.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+    return NextResponse.json({ success: true, data: inquiries });
+  } catch (err) {
+    console.error("Fetch inquiries error:", err);
+    return NextResponse.json(
+      { error: "Failed to fetch inquiries." },
       { status: 500 }
     );
   }
