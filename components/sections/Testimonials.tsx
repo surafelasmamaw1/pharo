@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { m } from "framer-motion";
 import { Quote, UserCircle, Heart } from "lucide-react";
 import Container from "../ui/Container";
@@ -13,7 +14,7 @@ type Testimonial = {
   type: "Parent" | "Student" | "Teacher";
 };
 
-const testimonials: Testimonial[] = [
+const defaultTestimonials: Testimonial[] = [
   {
     type: "Parent",
     quote:
@@ -44,6 +45,28 @@ const typeTagStyle: Record<Testimonial["type"], string> = {
 };
 
 export default function Testimonials() {
+  const [items, setItems] = useState<Testimonial[]>(defaultTestimonials);
+
+  useEffect(() => {
+    async function loadTestimonials() {
+      try {
+        const res = await fetch("/api/testimonials");
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const apiItems: Testimonial[] = json.data.map((item: any) => ({
+            name: item.name,
+            role: item.role,
+            quote: item.quote,
+            type: (item.type as Testimonial["type"]) || "Parent",
+          }));
+          setItems([...apiItems, ...defaultTestimonials]);
+        }
+      } catch (e) {
+        // use fallback
+      }
+    }
+    loadTestimonials();
+  }, []);
   return (
     <section
       id="testimonials"
@@ -71,7 +94,7 @@ export default function Testimonials() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
-            {testimonials.map((t, idx) => (
+            {items.map((t, idx) => (
               <m.figure
                 key={`${t.type}-${idx}`}
                 initial={{ opacity: 0, y: 20 }}

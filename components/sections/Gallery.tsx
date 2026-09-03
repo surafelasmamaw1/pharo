@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,7 +8,13 @@ import { Images, ArrowRight } from "lucide-react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
 
-const previewPhotos = [
+type PhotoItem = {
+  src: string;
+  alt: string;
+  category: string;
+};
+
+const defaultPreviewPhotos: PhotoItem[] = [
   { src: "/pharo-school.png",   alt: "Pharo School campus",   category: "Campus" },
   { src: "/about-photo.png",    alt: "Students",               category: "Students" },
   { src: "/classrooms.png",     alt: "Classrooms",             category: "Classrooms" },
@@ -17,6 +24,27 @@ const previewPhotos = [
 ];
 
 export default function Gallery() {
+  const [photos, setPhotos] = useState<PhotoItem[]>(defaultPreviewPhotos);
+
+  useEffect(() => {
+    async function loadGallery() {
+      try {
+        const res = await fetch("/api/gallery");
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const apiPhotos: PhotoItem[] = json.data.map((item: any) => ({
+            src: item.imageUrl,
+            alt: item.title,
+            category: item.category,
+          }));
+          setPhotos([...apiPhotos, ...defaultPreviewPhotos]);
+        }
+      } catch (e) {
+        // fallback
+      }
+    }
+    loadGallery();
+  }, []);
   return (
     <section id="gallery" className="py-section-sm md:py-section-md relative overflow-hidden">
       <Container>
@@ -49,9 +77,9 @@ export default function Gallery() {
 
           {/* Photo grid preview */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-            {previewPhotos.map((photo, idx) => (
+            {photos.map((photo, idx) => (
               <motion.div
-                key={photo.src}
+                key={`${photo.src}-${idx}`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -94,7 +122,7 @@ export default function Gallery() {
               href="/gallery"
               className="inline-flex items-center gap-2 text-sm font-bold text-scholarly dark:text-scholarly-light hover:gap-3 transition-all"
             >
-              See all {previewPhotos.length}+ photos in the gallery
+              See all {photos.length}+ photos in the gallery
               <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
             </Link>
           </motion.div>

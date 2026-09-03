@@ -53,3 +53,35 @@ model NewsEvent {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+// Site-Wide Settings & Urgent Banner Model
+model SiteSetting {
+  id                 String   @id @default("default")
+  urgentBannerActive Boolean  @default(false)
+  urgentBannerText   String?  @default("")
+  tuitionFeeText     String?  @default("ETB 9,700")
+  admissionDeadline  String?  @default("Rolling Admissions")
+  contactPhone       String?  @default("+251 91 234 5678")
+  contactEmail       String?  @default("admissions@pharoschool.edu.et")
+  updatedAt          DateTime @updatedAt
+}
+
+// Community Testimonials & Reviews Model
+model Testimonial {
+  id        String   @id @default(uuid())
+  type      String   @default("Parent") // Parent, Student, Teacher
+  name      String
+  role      String
+  quote     String
+  createdAt DateTime @default(now())
+}
+
+// School Photo Gallery Model
+model GalleryItem {
+  id        String   @id @default(uuid())
+  title     String
+  category  String   @default("Campus") // Campus, Sports, Academics, Events
+  imageUrl  String
+  createdAt DateTime @default(now())
+}
+

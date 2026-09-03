@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -21,6 +22,23 @@ const steps = [
 ];
 
 export default function Admissions() {
+  const [feeText, setFeeText] = useState("ETB 9,700");
+
+  useEffect(() => {
+    async function loadSettings() {
+      try {
+        const res = await fetch("/api/settings");
+        const json = await res.json();
+        if (json.success && json.data?.tuitionFeeText) {
+          setFeeText(json.data.tuitionFeeText);
+        }
+      } catch (e) {
+        // use fallback
+      }
+    }
+    loadSettings();
+  }, []);
+
   return (
     <section id="admissions" className="py-section-sm md:py-section-md relative overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-scholarly-pale/60 via-transparent to-gold-pale/40 dark:from-scholarly-pale dark:via-transparent dark:to-gold-pale/40" />
@@ -37,7 +55,7 @@ export default function Admissions() {
               </div>
               <SectionHeading className="text-left">Start Your Journey With Us</SectionHeading>
               <p className="mt-4 text-muted leading-relaxed text-base md:text-lg">
-                Our programmes are 70% subsidised — families pay an average of only <strong className="text-foreground">ETB 9,700</strong> for the full programme.
+                Our programmes are 70% subsidised — families pay an average of only <strong className="text-foreground">{feeText}</strong> for the full programme.
               </p>
             </div>
             <Link
