@@ -8,8 +8,10 @@ const About = dynamic(() => import("@/components/sections/About"));
 const TimelineSection = dynamic(() => import("@/components/sections/TimelineSection"));
 const Services = dynamic(() => import("@/components/sections/Services"));
 const Academics = dynamic(() => import("@/components/sections/Academics"));
+const FacultyLeadership = dynamic(() => import("@/components/sections/FacultyLeadership"));
 const Facilities = dynamic(() => import("@/components/sections/Facilities"));
 const StudentLife = dynamic(() => import("@/components/sections/StudentLife"));
+const UniformGuide = dynamic(() => import("@/components/sections/UniformGuide"));
 const Admissions = dynamic(() => import("@/components/sections/Admissions"));
 const NewsEvents = dynamic(() => import("@/components/sections/NewsEvents"));
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
@@ -26,8 +28,10 @@ export default function Home() {
         <TimelineSection />
         <Services />
         <Academics />
+        <FacultyLeadership />
         <Facilities />
         <StudentLife />
+        <UniformGuide />
         <NewsEvents />
         <Testimonials />
         <Admissions />
