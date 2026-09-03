@@ -340,6 +340,57 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeleteBanner = async () => {
+    if (!confirm("Are you sure you want to delete and disable the announcement banner?")) return;
+    setIsSavingSettings(true);
+    try {
+      const updated = { ...settings, urgentBannerActive: false, urgentBannerText: "" };
+      setSettings(updated);
+      const res = await fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSettingsSuccessMsg("Announcement banner has been deleted and disabled!");
+      }
+    } catch (err) {
+      console.error("Failed to delete banner:", err);
+    } finally {
+      setIsSavingSettings(false);
+    }
+  };
+
+  const handleResetAllSettings = async () => {
+    if (!confirm("Are you sure you want to delete all custom settings and reset to defaults?")) return;
+    setIsSavingSettings(true);
+    try {
+      const defaultSettings = {
+        urgentBannerActive: false,
+        urgentBannerText: "",
+        tuitionFeeText: "ETB 9,700",
+        admissionDeadline: "Rolling Admissions",
+        contactPhone: "+251 91 234 5678",
+        contactEmail: "admissions@pharoschool.edu.et",
+      };
+      setSettings(defaultSettings);
+      const res = await fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(defaultSettings),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSettingsSuccessMsg("All site settings have been reset and banner deleted!");
+      }
+    } catch (err) {
+      console.error("Failed to reset settings:", err);
+    } finally {
+      setIsSavingSettings(false);
+    }
+  };
+
   // Testimonials handlers
   const handleCreateTestimonial = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -909,9 +960,9 @@ export default function AdminDashboard() {
               )}
 
               <form onSubmit={handleSaveSettings} className="space-y-6">
-                {/* Urgent Banner Switch & Text */}
+                {/* Urgent Banner Switch, Text, and Delete Button */}
                 <div className="p-5 rounded-2xl border border-border bg-background space-y-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                       <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
                         <Megaphone className="w-4 h-4 text-gold" />
@@ -919,27 +970,62 @@ export default function AdminDashboard() {
                       </h4>
                       <p className="text-xs text-muted">Displays a high-visibility announcement across the top of all pages.</p>
                     </div>
-                    <label className="relative inline-flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={settings.urgentBannerActive}
-                        onChange={(e) => setSettings({ ...settings, urgentBannerActive: e.target.checked })}
-                        className="sr-only peer"
-                      />
-                      <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-scholarly"></div>
-                    </label>
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={handleDeleteBanner}
+                        disabled={isSavingSettings}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 text-xs font-semibold transition-colors border border-red-500/20"
+                        title="Delete and disable banner"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        Delete Banner
+                      </button>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={settings.urgentBannerActive}
+                          onChange={(e) => setSettings({ ...settings, urgentBannerActive: e.target.checked })}
+                          className="sr-only peer"
+                        />
+                        <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-scholarly"></div>
+                      </label>
+                    </div>
                   </div>
 
                   {settings.urgentBannerActive && (
                     <div>
-                      <label className="block text-xs font-semibold text-muted mb-1">Banner Announcement Text</label>
-                      <input
-                        type="text"
-                        value={settings.urgentBannerText}
-                        onChange={(e) => setSettings({ ...settings, urgentBannerText: e.target.value })}
-                        placeholder="e.g. 📢 School reopens Monday, September 15 for the new academic semester!"
-                        className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                      />
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-xs font-semibold text-muted">Banner Announcement Text</label>
+                        {settings.urgentBannerText && (
+                          <button
+                            type="button"
+                            onClick={() => setSettings({ ...settings, urgentBannerText: "" })}
+                            className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
+                          >
+                            <X className="w-3 h-3" /> Clear Text
+                          </button>
+                        )}
+                      </div>
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={settings.urgentBannerText}
+                          onChange={(e) => setSettings({ ...settings, urgentBannerText: e.target.value })}
+                          placeholder="e.g. 📢 School reopens Monday, September 15 for the new academic semester!"
+                          className="w-full px-4 py-2.5 pr-10 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+                        />
+                        {settings.urgentBannerText && (
+                          <button
+                            type="button"
+                            onClick={() => setSettings({ ...settings, urgentBannerText: "" })}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
+                            title="Clear input"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -947,61 +1033,161 @@ export default function AdminDashboard() {
                 {/* Fees & Deadlines */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Tuition Fee Display Text</label>
-                    <input
-                      type="text"
-                      value={settings.tuitionFeeText}
-                      onChange={(e) => setSettings({ ...settings, tuitionFeeText: e.target.value })}
-                      placeholder="e.g. ETB 9,700"
-                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                    />
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-semibold text-muted">Tuition Fee Display Text</label>
+                      {settings.tuitionFeeText && (
+                        <button
+                          type="button"
+                          onClick={() => setSettings({ ...settings, tuitionFeeText: "" })}
+                          className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
+                        >
+                          <X className="w-3 h-3" /> Clear
+                        </button>
+                      )}
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={settings.tuitionFeeText}
+                        onChange={(e) => setSettings({ ...settings, tuitionFeeText: e.target.value })}
+                        placeholder="e.g. ETB 9,700"
+                        className="w-full px-4 py-2.5 pr-8 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+                      />
+                      {settings.tuitionFeeText && (
+                        <button
+                          type="button"
+                          onClick={() => setSettings({ ...settings, tuitionFeeText: "" })}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
                     <p className="text-[11px] text-muted mt-1">Displayed in the Admissions section on the homepage.</p>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Admissions Deadline</label>
-                    <input
-                      type="text"
-                      value={settings.admissionDeadline}
-                      onChange={(e) => setSettings({ ...settings, admissionDeadline: e.target.value })}
-                      placeholder="e.g. September 30, 2026"
-                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                    />
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-semibold text-muted">Admissions Deadline</label>
+                      {settings.admissionDeadline && (
+                        <button
+                          type="button"
+                          onClick={() => setSettings({ ...settings, admissionDeadline: "" })}
+                          className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
+                        >
+                          <X className="w-3 h-3" /> Clear
+                        </button>
+                      )}
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={settings.admissionDeadline}
+                        onChange={(e) => setSettings({ ...settings, admissionDeadline: e.target.value })}
+                        placeholder="e.g. September 30, 2026"
+                        className="w-full px-4 py-2.5 pr-8 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+                      />
+                      {settings.admissionDeadline && (
+                        <button
+                          type="button"
+                          onClick={() => setSettings({ ...settings, admissionDeadline: "" })}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
 
                 {/* Contact details */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Official Contact Phone</label>
-                    <input
-                      type="tel"
-                      value={settings.contactPhone}
-                      onChange={(e) => setSettings({ ...settings, contactPhone: e.target.value })}
-                      placeholder="+251 91 234 5678"
-                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                    />
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-semibold text-muted">Official Contact Phone</label>
+                      {settings.contactPhone && (
+                        <button
+                          type="button"
+                          onClick={() => setSettings({ ...settings, contactPhone: "" })}
+                          className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
+                        >
+                          <X className="w-3 h-3" /> Clear
+                        </button>
+                      )}
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="tel"
+                        value={settings.contactPhone}
+                        onChange={(e) => setSettings({ ...settings, contactPhone: e.target.value })}
+                        placeholder="+251 91 234 5678"
+                        className="w-full px-4 py-2.5 pr-8 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+                      />
+                      {settings.contactPhone && (
+                        <button
+                          type="button"
+                          onClick={() => setSettings({ ...settings, contactPhone: "" })}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Official Contact Email</label>
-                    <input
-                      type="email"
-                      value={settings.contactEmail}
-                      onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })}
-                      placeholder="admissions@pharoschool.edu.et"
-                      className="w-full px-4 py-2.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                    />
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs font-semibold text-muted">Official Contact Email</label>
+                      {settings.contactEmail && (
+                        <button
+                          type="button"
+                          onClick={() => setSettings({ ...settings, contactEmail: "" })}
+                          className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
+                        >
+                          <X className="w-3 h-3" /> Clear
+                        </button>
+                      )}
+                    </div>
+                    <div className="relative">
+                      <input
+                        type="email"
+                        value={settings.contactEmail}
+                        onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })}
+                        placeholder="admissions@pharoschool.edu.et"
+                        className="w-full px-4 py-2.5 pr-8 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
+                      />
+                      {settings.contactEmail && (
+                        <button
+                          type="button"
+                          onClick={() => setSettings({ ...settings, contactEmail: "" })}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSavingSettings}
-                  className="px-6 py-3 rounded-xl bg-scholarly text-white font-bold text-sm hover:bg-scholarly-light transition-colors shadow-sm disabled:opacity-50"
-                >
-                  {isSavingSettings ? "Saving..." : "Save Settings"}
-                </button>
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border">
+                  <button
+                    type="submit"
+                    disabled={isSavingSettings}
+                    className="px-6 py-3 rounded-xl bg-scholarly text-white font-bold text-sm hover:bg-scholarly-light transition-colors shadow-sm disabled:opacity-50"
+                  >
+                    {isSavingSettings ? "Saving..." : "Save Settings"}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleResetAllSettings}
+                    disabled={isSavingSettings}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-red-500/20 bg-red-500/10 hover:bg-red-500/20 text-red-500 font-semibold text-xs transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Delete / Reset All Settings
+                  </button>
+                </div>
               </form>
             </div>
           )}
