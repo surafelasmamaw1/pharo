@@ -17,91 +17,18 @@ export type NewsItem = {
   link?: string;
 };
 
-const defaultItems: NewsItem[] = [
-  {
-    title: "Inter-School Football Championship",
-    date: "August 10, 2026",
-    category: "Events",
-    description:
-      "Our school football team took to the field in the inter-school championship, delivering an outstanding performance and bringing home a memorable result for the whole Pharo Foundation community.",
-    imageTag: "Football",
-    image: "/ronaldo.jpg",
-    link: "#student-life",
-  },
-  {
-    title: "Open House & Campus Tour Day",
-    date: "September 20, 2026",
-    category: "Events",
-    description:
-      "Families are invited to tour the campus, meet faculty, and experience a day in the life of our students. Registration is open — contact the admissions office to reserve your place.",
-    imageTag: "Campus Visit",
-    image: "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop",
-    link: "#contact",
-  },
-  {
-    title: "End-of-Term Celebration",
-    date: "March 15, 2026",
-    category: "School News",
-    description:
-      "A wrap-up of another outstanding term — highlights from student work, performances, sports, and community projects throughout the semester.",
-    imageTag: "Term Highlights",
-    image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80&auto=format&fit=crop",
-    link: "#news-events",
-  },
-  {
-    title: "Students Recognised at Regional Competition",
-    date: "February 8, 2026",
-    category: "Student Achievements",
-    description:
-      "Pharo Foundation students earned top honours at the regional academic and creative competition, representing the school with excellence and pride.",
-    imageTag: "Achievements",
-    image: "https://images.unsplash.com/photo-1547496502-affa22d38842?w=800&q=80&auto=format&fit=crop",
-    link: "#news-events",
-  },
-  {
-    title: "Enrollment Season Now Open",
-    date: "January 5, 2026",
-    category: "Announcements",
-    description:
-      "Applications for the 2026–27 academic year are now being accepted. Visit the Admissions section or contact our team to begin your family's journey.",
-    imageTag: "Admissions",
-    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80&auto=format&fit=crop",
-    link: "#admissions",
-  },
-  {
-    title: "Community Service Day",
-    date: "November 22, 2025",
-    category: "Community",
-    description:
-      "Students, teachers, and families came together for a day of community service — planting trees, supporting local charities, and giving back to the neighbourhood.",
-    imageTag: "Service",
-    image: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80&auto=format&fit=crop",
-    link: "#news-events",
-  },
-  {
-    title: "Performing Arts Showcase",
-    date: "December 12, 2025",
-    category: "Events",
-    description:
-      "An evening of music, theatre, and dance performed by our talented students — a celebration of creativity, hard work, and the joy of artistic expression.",
-    imageTag: "Arts",
-    image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80&auto=format&fit=crop",
-    link: "#news-events",
-  },
-];
-
 const VISIBLE_COUNT = 6;
 
 export default function NewsEvents() {
   const [showAll, setShowAll] = useState(false);
-  const [items, setItems] = useState<NewsItem[]>(defaultItems);
+  const [items, setItems] = useState<NewsItem[]>([]);
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
         const res = await fetch("/api/news");
         const json = await res.json();
-        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+        if (json.success && Array.isArray(json.data)) {
           const apiItems: NewsItem[] = json.data.map((item: any) => ({
             title: item.title,
             date: item.date || new Date(item.createdAt).toLocaleDateString(),
@@ -111,14 +38,16 @@ export default function NewsEvents() {
             image: item.imageUrl || "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop",
             link: "#news-events",
           }));
-          setItems([...apiItems, ...defaultItems]);
+          setItems(apiItems);
         }
       } catch (err) {
-        // Fall back to default items
+        console.error("Failed to fetch news:", err);
       }
     };
     fetchNews();
   }, []);
+
+  if (items.length === 0) return null;
 
   const visibleItems = showAll ? items : items.slice(0, VISIBLE_COUNT);
   const hiddenCount = items.length - VISIBLE_COUNT;

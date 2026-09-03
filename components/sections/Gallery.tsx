@@ -14,37 +14,30 @@ type PhotoItem = {
   category: string;
 };
 
-const defaultPreviewPhotos: PhotoItem[] = [
-  { src: "/pharo-school.png",   alt: "Pharo School campus",   category: "Campus" },
-  { src: "/about-photo.png",    alt: "Students",               category: "Students" },
-  { src: "/classrooms.png",     alt: "Classrooms",             category: "Classrooms" },
-  { src: "/library.png",        alt: "Library",                category: "Library" },
-  { src: "/computer-labs.png",  alt: "Computer labs",          category: "Technology" },
-  { src: "/ronaldo.jpg",        alt: "Football event",         category: "Sports" },
-];
-
 export default function Gallery() {
-  const [photos, setPhotos] = useState<PhotoItem[]>(defaultPreviewPhotos);
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
 
   useEffect(() => {
     async function loadGallery() {
       try {
         const res = await fetch("/api/gallery");
         const json = await res.json();
-        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+        if (json.success && Array.isArray(json.data)) {
           const apiPhotos: PhotoItem[] = json.data.map((item: any) => ({
             src: item.imageUrl,
             alt: item.title,
             category: item.category,
           }));
-          setPhotos([...apiPhotos, ...defaultPreviewPhotos]);
+          setPhotos(apiPhotos);
         }
       } catch (e) {
-        // fallback
+        console.error("Failed to load gallery:", e);
       }
     }
     loadGallery();
   }, []);
+
+  if (photos.length === 0) return null;
   return (
     <section id="gallery" className="py-section-sm md:py-section-md relative overflow-hidden">
       <Container>

@@ -14,30 +14,6 @@ type Testimonial = {
   type: "Parent" | "Student" | "Teacher";
 };
 
-const defaultTestimonials: Testimonial[] = [
-  {
-    type: "Parent",
-    quote:
-      "From the very first visit, we felt a genuine sense of care. Teachers truly know each child individually, and the community has warmly welcomed our family. Our child looks forward to school every day, and we see growth — academically and personally — every term.",
-    name: "Amina Tesfaye",
-    role: "Parent of a Grade 4 student",
-  },
-  {
-    type: "Student",
-    quote:
-      "I love coming to school because of my friends and teachers. The classes are interesting and the activities are fun. I feel like I can be myself here, and I want to keep learning and trying new things.",
-    name: "Daniel Bekele",
-    role: "Class of 2027 — Student",
-  },
-  {
-    type: "Teacher",
-    quote:
-      "Teaching at Pharo Foundation means being part of a community that trusts teachers and values depth, not just speed. The collegiality is real, the students are inspiring, and families are true partners in learning. It is a very special place.",
-    name: "Sara Woldemichael",
-    role: "Mathematics & Sciences — Faculty",
-  },
-];
-
 const typeTagStyle: Record<Testimonial["type"], string> = {
   Parent: "!bg-gold !text-white !border-gold",
   Student: "!bg-scholarly-light !text-white !border-scholarly-light",
@@ -45,28 +21,24 @@ const typeTagStyle: Record<Testimonial["type"], string> = {
 };
 
 export default function Testimonials() {
-  const [items, setItems] = useState<Testimonial[]>(defaultTestimonials);
+  const [items, setItems] = useState<Testimonial[]>([]);
 
   useEffect(() => {
     async function loadTestimonials() {
       try {
         const res = await fetch("/api/testimonials");
         const json = await res.json();
-        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-          const apiItems: Testimonial[] = json.data.map((item: any) => ({
-            name: item.name,
-            role: item.role,
-            quote: item.quote,
-            type: (item.type as Testimonial["type"]) || "Parent",
-          }));
-          setItems([...apiItems, ...defaultTestimonials]);
+        if (json.success && Array.isArray(json.data)) {
+          setItems(json.data);
         }
       } catch (e) {
-        // use fallback
+        console.error("Failed to load testimonials:", e);
       }
     }
     loadTestimonials();
   }, []);
+
+  if (items.length === 0) return null;
   return (
     <section
       id="testimonials"
