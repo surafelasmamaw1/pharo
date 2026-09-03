@@ -79,7 +79,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${manrope.variable}`} suppressHydrationWarning>
       <body className="bg-background text-foreground font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false}>
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
       </body>

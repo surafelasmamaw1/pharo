@@ -28,43 +28,41 @@ async function main() {
   });
 
   // 2. Clear old hardcoded items if needed or add new ones
-  const existingNews = await prisma.newsEvent.count();
-  if (existingNews === 0) {
-    await prisma.newsEvent.createMany({
-      data: [
-        {
-          title: "Inter-School Football Championship",
-          slug: "inter-school-football-championship",
-          category: "Events",
-          snippet: "Our school football team took to the field in the championship, delivering an outstanding performance.",
-          content: "Our school football team took to the field in the inter-school championship, delivering an outstanding performance and bringing home a memorable result for the whole Pharo Foundation community.",
-          imageUrl: "/ronaldo.jpg",
-          date: "August 10, 2026",
-          published: true,
-        },
-        {
-          title: "Open House & Campus Tour Day",
-          slug: "open-house-campus-tour-day",
-          category: "Events",
-          snippet: "Families are invited to tour the campus, meet faculty, and experience a day in the life of our students.",
-          content: "Families are invited to tour the campus, meet faculty, and experience a day in the life of our students. Registration is open — contact the admissions office to reserve your place.",
-          imageUrl: "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80",
-          date: "September 20, 2026",
-          published: true,
-        },
-        {
-          title: "Annual Science & Technology Fair",
-          slug: "annual-science-technology-fair",
-          category: "Academic",
-          snippet: "Students showcase innovative engineering, robotics, and scientific research projects.",
-          content: "Our annual Science and Technology Fair brought together brilliant student projects spanning robotics, sustainable agriculture, and renewable energy experiments.",
-          imageUrl: "/computer-labs.png",
-          date: "October 5, 2026",
-          published: true,
-        },
-      ],
-    });
-  }
+  await prisma.newsEvent.deleteMany({});
+  await prisma.newsEvent.createMany({
+    data: [
+      {
+        title: "Inter-School Athletics & Sports Day",
+        slug: "inter-school-athletics-sports-day",
+        category: "Events",
+        snippet: "Pharo School Assosa scholars demonstrated athletic excellence and teamwork during the regional school games.",
+        content: "Our school sports contingent competed with distinction in the regional athletics meet, showcasing discipline, speed, and great sportsmanship across football, running, and volleyball competitions.",
+        imageUrl: "/about-photo.png",
+        date: "August 10, 2026",
+        published: true,
+      },
+      {
+        title: "Open House & Campus Tour Day",
+        slug: "open-house-campus-tour-day",
+        category: "Events",
+        snippet: "Prospective families are invited to tour the Assosa campus, inspect laboratories, and meet our faculty.",
+        content: "Families are invited to tour the campus, meet our department heads, and experience a day in the life of our scholars. Admissions registration is open for Grades 7 through 12.",
+        imageUrl: "/pharo-school.png",
+        date: "September 20, 2026",
+        published: true,
+      },
+      {
+        title: "Annual Science & Technology Fair",
+        slug: "annual-science-technology-fair",
+        category: "Academic",
+        snippet: "Scholars showcase innovative robotics, renewable energy, and agricultural research projects.",
+        content: "Our annual Science and Technology Fair brought together brilliant student projects spanning robotics, sustainable agriculture, and renewable energy experiments designed for the Benishangul-Gumuz region.",
+        imageUrl: "/computer-labs.png",
+        date: "October 5, 2026",
+        published: true,
+      },
+    ],
+  });
 
   // 3. Testimonials
   const existingTestimonials = await prisma.testimonial.count();
@@ -73,64 +71,62 @@ async function main() {
       data: [
         {
           name: "Amina Tesfaye",
-          role: "Parent of a Grade 4 student",
+          role: "Parent of a Grade 8 Boarding Scholar",
           type: "Parent",
-          quote: "From the very first visit, we felt a genuine sense of care. Teachers truly know each child individually, and the community has warmly welcomed our family. Our child looks forward to school every day.",
+          quote: "The discipline, academic rigour, and safe boarding environment in Assosa have transformed our child's confidence and national examination performance.",
         },
         {
           name: "Daniel Bekele",
-          role: "Class of 2027 — Student",
+          role: "Class of 2027 — Natural Sciences",
           type: "Student",
-          quote: "I love coming to school because of my friends and teachers. The classes are interesting and the activities are fun. I feel like I can be myself here, and I want to keep learning.",
+          quote: "The science laboratories and computer resources gave me the hands-on practice I needed. The teachers are dedicated and always available during evening prep.",
         },
         {
           name: "Sara Woldemichael",
-          role: "Mathematics & Sciences — Faculty",
+          role: "Faculty Head — Mathematics & STEM",
           type: "Teacher",
-          quote: "Teaching at Pharo Foundation means being part of a community that trusts teachers and values depth, not just speed. The collegiality is real and the students are inspiring.",
+          quote: "Teaching at Pharo School Assosa means shaping determined young minds who are committed to solving real challenges in Ethiopia through science and ethics.",
         },
       ],
     });
   }
 
   // 4. Gallery Photos
-  const existingGallery = await prisma.galleryItem.count();
-  if (existingGallery === 0) {
-    await prisma.galleryItem.createMany({
-      data: [
-        {
-          title: "Main Campus & Courtyard",
-          category: "Campus",
-          imageUrl: "/pharo-school.png",
-        },
-        {
-          title: "Students in Classroom",
-          category: "Students",
-          imageUrl: "/about-photo.png",
-        },
-        {
-          title: "Modern Learning Spaces",
-          category: "Classrooms",
-          imageUrl: "/classrooms.png",
-        },
-        {
-          title: "Library Resource Center",
-          category: "Campus",
-          imageUrl: "/library.png",
-        },
-        {
-          title: "Computer & Robotics Lab",
-          category: "Technology",
-          imageUrl: "/computer-labs.png",
-        },
-        {
-          title: "Football Championship",
-          category: "Sports",
-          imageUrl: "/ronaldo.jpg",
-        },
-      ],
-    });
-  }
+  await prisma.galleryItem.deleteMany({});
+  await prisma.galleryItem.createMany({
+    data: [
+      {
+        title: "Main Campus Grounds & Admin Block",
+        category: "Campus",
+        imageUrl: "/pharo-school.png",
+      },
+      {
+        title: "Scholars in Collaborative Learning",
+        category: "Students",
+        imageUrl: "/about-photo.png",
+      },
+      {
+        title: "Modern Purpose-Built Classrooms",
+        category: "Classrooms",
+        imageUrl: "/classrooms.png",
+      },
+      {
+        title: "Library Resource & Study Center",
+        category: "Campus",
+        imageUrl: "/library.png",
+      },
+      {
+        title: "Digital Computing & Technology Suite",
+        category: "Technology",
+        imageUrl: "/computer-labs.png",
+      },
+      {
+        title: "Sports & Athletics Training",
+        category: "Sports",
+        imageUrl: "/about-photo.png",
+      },
+    ],
+  });
 
   console.log("Database successfully seeded with 100% editable records!");
 }

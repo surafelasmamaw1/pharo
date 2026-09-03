@@ -1,235 +1,106 @@
 "use client";
 
-import { m } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
-import {
-  Dumbbell,
-  UsersRound,
-  Palette,
-  Cpu,
-  Trophy,
-  Crown,
-  HeartHandshake,
-} from "lucide-react";
+import { useState } from "react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
-import Tag from "../ui/Tag";
+import { Clock, ShieldCheck, Trophy, Users, HeartHandshake, Sparkles, BookOpen } from "lucide-react";
 
-type Activity = {
-  icon: LucideIcon;
-  title: string;
-  tag: string;
-  tagColor: string;
-  description: string;
-  examples: string[];
-  accent: string;
-  iconBg: string;
-  shadowGlow: string;
-  borderGlow: string;
-};
+const dailyRoutine = [
+  { time: "06:30", title: "Morning Rise & Breakfast", desc: "Boarding scholars awaken, prepare for the day, and enjoy breakfast in the campus dining hall." },
+  { time: "07:30", title: "School Assembly & Flag Ceremony", desc: "The whole school gathers for the Ethiopian national anthem, notices, and morning reflections." },
+  { time: "08:00 – 12:30", title: "Morning Academic Lessons", desc: "Intensive instruction in STEM, English, Natural and Social Sciences with hands-on laboratory work." },
+  { time: "12:30 – 13:45", title: "Lunch & Midday Fellowship", desc: "Nutritious hot lunch prepared on campus, social time, and library access." },
+  { time: "13:45 – 16:00", title: "Afternoon Labs & Humanities", desc: "Computer science, languages, project presentations, and remedial academic tutorials." },
+  { time: "16:15 – 17:45", title: "Co-Curriculars & Athletics", desc: "Inter-house football, track athletics, volleyball, debate society, robotics, and choir." },
+  { time: "19:15 – 21:00", title: "Supervised Evening Prep", desc: "Focused individual study and homework in classrooms guided by faculty duty teachers." },
+];
 
-const activities: Activity[] = [
+const pillars = [
   {
-    icon: Dumbbell,
-    title: "Sports",
-    tag: "Athletics",
-    tagColor: "bg-accent/10 text-accent border-accent/20",
-    description:
-      "Competitive and recreational athletic programs that build teamwork, resilience, fitness, and school spirit through every season.",
-    examples: ["Team Sports", "Individual Events", "PE Classes", "Tournaments"],
-    accent: "from-accent/25 via-orange-500/15 to-gold/10",
-    iconBg: "bg-accent",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(166,110,63,0.25)] hover:bg-accent/5 hover:border-accent/40",
-    borderGlow: "dark:hover:border-accent/40",
-  },
-  {
-    icon: UsersRound,
-    title: "Clubs",
-    tag: "Student Led",
-    tagColor: "bg-scholarly/10 text-scholarly border-scholarly/20",
-    description:
-      "A wide range of student clubs and organisations — so every student can pursue passions, find community, and take initiative.",
-    examples: ["Student Council", "Debate Club", "Robotics", "Model UN"],
-    accent: "from-scholarly/25 via-scholarly-light/15 to-blue-500/10",
-    iconBg: "bg-scholarly",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.25)] hover:bg-scholarly/5 hover:border-scholarly/40",
-    borderGlow: "dark:hover:border-scholarly/40",
-  },
-  {
-    icon: Palette,
-    title: "Arts",
-    tag: "Creative",
-    tagColor: "bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20",
-    description:
-      "Rich programs in visual arts, music, dance, and theatre — giving every student space to explore, create, perform, and grow.",
-    examples: ["Visual Arts", "Choir & Band", "Theatre", "Dance"],
-    accent: "from-purple-500/25 via-pink-500/15 to-rose-500/10",
-    iconBg: "bg-purple-500",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(120,40,200,0.22)] hover:bg-purple-500/5 hover:border-purple-400/40",
-    borderGlow: "dark:hover:border-purple-400/40",
-  },
-  {
-    icon: Cpu,
-    title: "Technology",
-    tag: "Digital",
-    tagColor: "bg-scholarly-light/10 text-scholarly-light border-scholarly-light/20",
-    description:
-      "Tech-focused activities that build creative confidence with digital tools — from coding and robotics to design and film.",
-    examples: ["Coding Clubs", "Robotics", "Digital Design", "Media"],
-    accent: "from-scholarly-light/25 via-cyan-500/15 to-sky-500/10",
-    iconBg: "bg-scholarly-light",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(45,79,122,0.25)] hover:bg-scholarly-light/5 hover:border-scholarly-light/40",
-    borderGlow: "dark:hover:border-scholarly-light/40",
+    icon: ShieldCheck,
+    title: "Residential Boarding & Welfare",
+    desc: "Dedicated dormitories with 24/7 security, continuous clean water, solar-backed power, on-site campus nurse, and caring house parents.",
   },
   {
     icon: Trophy,
-    title: "Competitions",
-    tag: "Excellence",
-    tagColor: "bg-gold/10 text-gold border-gold/20",
-    description:
-      "Academic, artistic, and athletic competitions that invite students to stretch themselves, represent our school, and celebrate achievement.",
-    examples: ["Academic Olympiads", "Sports Fixtures", "Arts Festivals", "Debate"],
-    accent: "from-gold/25 via-amber-500/15 to-yellow-500/10",
-    iconBg: "bg-gold",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(184,137,60,0.25)] hover:bg-gold/5 hover:border-gold/40",
-    borderGlow: "dark:hover:border-gold/40",
+    title: "House System & Athletics",
+    desc: "Scholars belong to competitive school houses fostering brotherhood, sisterhood, sportsmanship, and spirited annual sports day derbies.",
   },
   {
-    icon: Crown,
-    title: "Leadership",
-    tag: "Character",
-    tagColor: "bg-scholarly/10 text-scholarly border-scholarly/20",
-    description:
-      "Formal and informal student leadership programs that prepare young people to lead with integrity, empathy, and confidence.",
-    examples: ["Prefects", "House Captains", "Mentorship", "Events"],
-    accent: "from-scholarly/25 via-scholarly-light/15 to-emerald-500/10",
-    iconBg: "bg-scholarly",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(30,58,95,0.25)] hover:bg-scholarly/5 hover:border-scholarly/40",
-    borderGlow: "dark:hover:border-scholarly/40",
+    icon: BookOpen,
+    title: "STEM & Co-Curricular Societies",
+    desc: "Active clubs including Coding & Robotics, Model UN, Science Discovery, English Writers' Guild, and Environmental Stewardship.",
   },
   {
     icon: HeartHandshake,
-    title: "Community Activities",
-    tag: "Service",
-    tagColor: "bg-success/10 text-success border-success/20",
-    description:
-      "Meaningful service learning and community engagement that connects students to local and global challenges with compassion.",
-    examples: ["Community Service", "Charity Drives", "Global Projects", "Partnerships"],
-    accent: "from-success/25 via-emerald-500/15 to-teal-500/10",
-    iconBg: "bg-success",
-    shadowGlow: "hover:shadow-[0_0_32px_rgba(46,125,87,0.25)] hover:bg-success/5 hover:border-success/40",
-    borderGlow: "dark:hover:border-success/40",
+    title: "Leadership & Community Service",
+    desc: "Scholars participate in community outreach, tree planting, and peer tutoring across the Assosa town and surrounding woredas.",
   },
-];
-
-const featuredTags = [
-  "House System",
-  "School Traditions",
-  "Annual Events",
-  "Summer Programs",
-  "Global Exchange",
-  "Parent Partnership",
 ];
 
 export default function StudentLife() {
   return (
-    <section id="student-life" className="py-section-sm md:py-section-md relative overflow-hidden">
+    <section id="student-life" className="py-20 bg-slate-50 border-b border-border/70">
       <Container>
-        <m.div
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-        >
-          <div className="text-left max-w-3xl">
-            <SectionHeading className="text-left">Life Beyond the Classroom</SectionHeading>
-            <p className="mt-6 text-muted leading-relaxed text-base md:text-lg">
-              Student life at Pharo Foundation is rich, varied, and full of
-              opportunity. These are the experiences — with teammates,
-              classmates, mentors, and friends — that form memories for a
-              lifetime.
-            </p>
+        {/* Header */}
+        <div className="max-w-3xl mb-14 text-left">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded border border-scholarly/20 bg-scholarly-pale/60 mb-4">
+            <Users className="w-4 h-4 text-scholarly" />
+            <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-scholarly">
+              Life at Pharo School Assosa
+            </span>
           </div>
+          <SectionHeading className="text-left">A Structured, Inspiring Community</SectionHeading>
+          <p className="mt-4 text-slate-700 leading-relaxed text-base md:text-lg">
+            Education extends far beyond textbooks. At Pharo School Assosa, our scholars live and learn in a disciplined, supportive environment designed to instill habits of excellence, resilience, and ethical leadership.
+          </p>
+        </div>
 
-          <div className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
-            {activities.map((a, idx) => {
-              const Icon = a.icon;
-              const isLastWide =
-                idx === activities.length - 1; // 7th card spans 2 cols on large screens
-              return (
-                <m.article
-                  key={a.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.55, delay: idx * 0.07 }}
-                  whileHover={{ y: -6, scale: 1.018 }}
-                  className={`group relative flex flex-col p-7 md:p-8 rounded-[24px] border border-border bg-background overflow-hidden shadow-sm transition-all duration-300 ${a.shadowGlow} ${
-                    isLastWide ? "lg:col-span-2" : ""
-                  }`}
-                >
-                  {/* Background accent wash */}
-                  <div className={`absolute -top-16 -right-16 w-56 h-56 rounded-full bg-gradient-to-br ${a.accent} blur-3xl opacity-80`} />
+        {/* Pillars Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {pillars.map((p) => {
+            const Icon = p.icon;
+            return (
+              <div key={p.title} className="p-6 rounded-xl bg-white border border-slate-200 shadow-sm text-left">
+                <div className="w-11 h-11 rounded-lg bg-scholarly-pale text-scholarly flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">{p.title}</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">{p.desc}</p>
+              </div>
+            );
+          })}
+        </div>
 
-                  <div className="relative flex-1 flex flex-col">
-                    {/* Icon + tag row */}
-                    <div className="flex items-start justify-between gap-4 mb-6">
-                      <div
-                        className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl ${a.iconBg} flex items-center justify-center shadow-md flex-shrink-0`}
-                      >
-                        <Icon
-                          className="w-7 h-7 md:w-8 md:h-8 text-white"
-                          strokeWidth={1.8}
-                        />
-                      </div>
-                      <span
-                        className={`px-3 py-1 rounded-full border text-[10px] font-bold tracking-[0.2em] uppercase ${a.tagColor}`}
-                      >
-                        {a.tag}
-                      </span>
-                    </div>
-
-                    <h3 className="text-xl md:text-[22px] font-semibold text-foreground mb-3 leading-snug">
-                      {a.title}
-                    </h3>
-
-                    <p className="text-muted leading-relaxed text-sm md:text-base mb-5">
-                      {a.description}
-                    </p>
-
-                    {/* Example chips */}
-                    <div className="mt-auto flex flex-wrap gap-2.5">
-                      {a.examples.map((ex) => (
-                        <Tag key={ex} size="sm">
-                          {ex}
-                        </Tag>
-                      ))}
-                    </div>
-                  </div>
-                </m.article>
-              );
-            })}
-          </div>
-
-          {/* Signature student experiences strip */}
-          <div className="mt-10 pt-8 border-t border-border/60 flex flex-col md:flex-row md:items-center gap-5 md:gap-10 text-left">
-            <div className="md:max-w-sm flex-shrink-0">
-              <h4 className="font-serif text-xl md:text-2xl font-semibold text-foreground mb-1.5 leading-snug">
-                Signature Experiences
-              </h4>
-              <p className="text-muted text-sm md:text-base leading-relaxed">
-                A few of the things that make life at Pharo Foundation distinctive.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {featuredTags.map((t) => (
-                <Tag key={t} size="md">
-                  {t}
-                </Tag>
-              ))}
+        {/* Daily Schedule - Real School Timeline */}
+        <div className="rounded-2xl bg-white border border-slate-200 p-8 md:p-10 shadow-sm">
+          <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-200">
+            <Clock className="w-6 h-6 text-gold" />
+            <div>
+              <h3 className="font-serif text-2xl font-bold text-slate-900">A Day in the Life of a Scholar</h3>
+              <p className="text-xs text-slate-600">The daily operational timetable at Pharo School Assosa</p>
             </div>
           </div>
-        </m.div>
+
+          <div className="space-y-4">
+            {dailyRoutine.map((item, idx) => (
+              <div
+                key={item.time}
+                className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-6 p-4 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200"
+              >
+                <div className="sm:w-44 flex-shrink-0">
+                  <span className="font-mono text-xs font-bold text-scholarly px-2.5 py-1 rounded bg-scholarly-pale border border-scholarly/15">
+                    {item.time}
+                  </span>
+                </div>
+                <div className="flex-1 text-left">
+                  <h4 className="font-semibold text-sm text-slate-900 mb-0.5">{item.title}</h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </Container>
     </section>
   );

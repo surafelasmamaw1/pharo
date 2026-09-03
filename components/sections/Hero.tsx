@@ -1,181 +1,120 @@
 "use client";
 
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "../ui/Container";
-import Button from "../ui/Button";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, BookOpen, Award, CheckCircle2, ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section id="home" className="relative pt-24 md:pt-28 overflow-hidden">
-      {/* Background Image Layer — replaceable school campus photo */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-scholarly-pale via-background to-gold-pale dark:from-scholarly-pale dark:via-background dark:to-scholarly-pale" />
-        <div className="absolute inset-0 opacity-[0.08] dark:opacity-[0.06]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 20% 30%, rgba(30,58,95,0.6) 0, transparent 50%), radial-gradient(circle at 80% 70%, rgba(184,137,60,0.5) 0, transparent 50%)",
-          }}
-        />
-      </div>
-
+    <section id="home" className="relative pt-32 sm:pt-36 md:pt-40 pb-16 md:pb-24 bg-gradient-to-b from-slate-50 via-white to-slate-50/50 border-b border-border/70 overflow-hidden">
       <Container>
-        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center py-12 md:py-20 lg:py-28">
-          {/* Text Block (spans 7 cols on desktop) */}
-          <m.div
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="lg:col-span-7 text-left"
-          >
-            <m.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.08 }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-scholarly/15 bg-scholarly-pale/70 backdrop-blur-sm mb-8"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-scholarly" />
-              <span className="text-[11px] md:text-xs font-bold tracking-[0.2em] uppercase text-scholarly">
-                Welcome to Pharo School Assosa
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* Editorial Text Block */}
+          <div className="lg:col-span-7 text-left">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded border border-scholarly/20 bg-scholarly-pale/60 mb-6">
+              <span className="w-2 h-2 rounded-full bg-gold" />
+              <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-scholarly">
+                Assosa • Benishangul-Gumuz • Ethiopia
               </span>
-            </m.div>
+            </div>
 
-            <m.h1
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.16 }}
-              className="font-serif text-hero-mobile sm:text-hero-tablet lg:text-hero-desktop font-bold leading-tighter tracking-tighter mb-7 text-balance max-w-3xl"
-            >
-              Inspiring <span className="text-scholarly">Excellence.</span>{" "}
-              <span className="block sm:inline">Building <span className="text-gold">Futures.</span></span>
-            </m.h1>
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold text-scholarly leading-[1.14] tracking-tight mb-6 text-balance">
+              Excellence in Education.{" "}
+              <span className="text-foreground">Rooted in Assosa,</span>{" "}
+              <span className="text-gold">Inspiring Ethiopia.</span>
+            </h1>
 
-            <m.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.26 }}
-              className="text-body md:text-[19px] text-muted mb-10 leading-relaxed max-w-2xl text-left"
-            >
-              Located in Assosa, BGRS — we provide primary and secondary education
-              that combines the Ethiopian curriculum with international standards,
-              empowering students to become lifelong learners and productive global citizens.
-            </m.p>
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-2xl mb-8 font-normal">
+              Pharo School Assosa is a premier boarding and day secondary institution dedicated to academic rigour, character development, and scientific inquiry. We deliver the Ethiopian National Curriculum enriched with intensive STEM, English proficiency, and 70% philanthropic tuition subsidies.
+            </p>
 
-            <m.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.36 }}
-              className="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-12"
-            >
-              <Button href="#admissions" variant="secondary" size="lg">
-                Apply Now
-              </Button>
-              <Button variant="outline" size="lg" href="#about">
-                Explore Our School
-              </Button>
-            </m.div>
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3.5 sm:gap-4 mb-10">
+              <Link
+                href="/admissions"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-lg bg-scholarly text-white font-bold text-sm tracking-wide hover:bg-scholarly-light transition-all shadow-sm"
+              >
+                Apply for Admission 2026/27
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="#about"
+                className="inline-flex items-center justify-center px-7 py-3.5 rounded-lg border border-border bg-white text-slate-800 font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all"
+              >
+                School Overview &amp; Curriculum
+              </Link>
+            </div>
 
-            {/* Trust strip */}
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-6 border-t border-border/60 text-left"
-            >
-              {[
-                { k: "Excellence", v: "In Scholarship" },
-                { k: "Character", v: "In Community" },
-                { k: "Opportunity", v: "For Every Student" },
-              ].map((t) => (
-                <div key={t.k} className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl border border-scholarly/10 bg-scholarly-pale/60 flex items-center justify-center flex-shrink-0">
-                    <GraduationCap className="w-5 h-5 text-scholarly" strokeWidth={1.8} />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-sm font-bold tracking-tight text-foreground leading-tight">{t.k}</div>
-                    <div className="text-xs text-muted leading-tight">{t.v}</div>
-                  </div>
-                </div>
-              ))}
-            </m.div>
-          </m.div>
+            {/* Academic Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-border">
+              <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <span>Grades 7–12 Education</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <span>Boarding &amp; Day Scholars</span>
+              </div>
+              <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <span>70% Philanthropic Subsidy</span>
+              </div>
+            </div>
+          </div>
 
-          {/* Visual Block (spans 5 cols on desktop) — clearly replaceable image placeholder */}
-          <m.div
-            initial={{ opacity: 0, scale: 0.96, y: 14 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25, ease: "easeOut" }}
-            className="lg:col-span-5"
-          >
-            <div className="relative">
-              {/* Main image placeholder card */}
-              <div className="relative aspect-[4/5] md:aspect-[5/6] rounded-[28px] overflow-hidden border border-border shadow-xl group">
-                {/* Real school photo */}
+          {/* School Campus Visual */}
+          <div className="lg:col-span-5">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-lg bg-white p-2">
+              <div className="relative aspect-[4/5] rounded-xl overflow-hidden">
                 <Image
                   src="/pharo-school.png"
-                  alt="Pharo Foundation campus"
+                  alt="Pharo School Assosa Main Campus"
                   fill
                   sizes="(max-width: 1024px) 100vw, 42vw"
                   className="object-cover"
                   priority
                 />
-                {/* Overlay for text legibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/45" />
-
-                <div className="absolute inset-0 flex flex-col justify-end p-7 md:p-9 text-white">
-                  <div className="mb-4 inline-flex items-center gap-2 self-start px-4 py-2 rounded-full bg-scholarly border-0 shadow-md">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                    <span className="text-[10px] font-extrabold tracking-[0.2em] uppercase text-white">
-                      OUR CAMPUS
-                    </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white text-left">
+                  <div className="inline-block px-2.5 py-1 rounded bg-gold text-slate-950 text-[10px] font-bold uppercase tracking-wider mb-2">
+                    Our Assosa Campus
                   </div>
-                  <h3 className="font-serif text-2xl md:text-3xl font-bold leading-tight mb-2 drop-shadow-lg">
-                    A Campus Designed for Learning
+                  <h3 className="font-serif text-xl font-bold text-white mb-1">
+                    Modern Laboratories &amp; Classrooms
                   </h3>
-                  <p className="text-white/90 text-sm md:text-base leading-relaxed drop-shadow">
-                    Featuring state-of-the-art science labs, expansive athletic fields,
-                    and collaborative spaces built to inspire academic excellence.
+                  <p className="text-white/85 text-xs leading-relaxed">
+                    Purpose-built learning environment featuring science laboratories, computer suites, and full residential facilities.
                   </p>
                 </div>
-
-                {/* EST. Badge — top right */}
-                <m.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.7 }}
-                  className="absolute top-5 right-5 px-4 py-2.5 rounded-2xl bg-white shadow-xl border-0 z-10"
-                >
-                  <div className="text-[10px] font-extrabold tracking-[0.2em] uppercase text-scholarly mb-0.5">
-                    Est.
-                  </div>
-                  <div className="font-serif text-xl font-bold leading-none text-gray-900">2020</div>
-                </m.div>
-
-                {/* Programs pill — top left */}
-                <m.div
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.8 }}
-                  className="hidden sm:flex absolute left-5 top-5 items-center gap-3 px-4 py-3 rounded-2xl bg-white shadow-xl border-0 z-10 max-w-[220px]"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-scholarly flex items-center justify-center flex-shrink-0">
-                    <GraduationCap className="w-5 h-5 text-white" strokeWidth={1.8} />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-[10px] font-extrabold tracking-[0.18em] uppercase text-scholarly">
-                      Programs
-                    </div>
-                    <div className="text-sm font-bold truncate text-gray-900">Early Years → High School</div>
-                  </div>
-                </m.div>
               </div>
-
-              {/* Accent corner shapes — subtle, not futuristic */}
-              <div className="absolute -z-10 -bottom-5 -left-5 w-28 h-28 rounded-3xl bg-gold-pale dark:bg-gold-pale/60 -rotate-6" />
-              <div className="absolute -z-10 -top-5 -right-5 w-28 h-28 rounded-3xl bg-scholarly-pale dark:bg-scholarly-pale/60 rotate-6" />
             </div>
-          </m.div>
+          </div>
+        </div>
+
+        {/* Institutional Fact Strip */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 pt-8 border-t border-slate-200">
+          <div className="p-4 rounded-xl bg-white border border-slate-200 text-left">
+            <div className="text-2xl lg:text-3xl font-serif font-bold text-scholarly">100%</div>
+            <div className="text-xs font-semibold text-slate-800 mt-1">National Exam Pass Rate</div>
+            <div className="text-[11px] text-slate-500">Ministry of Education Benchmark</div>
+          </div>
+          <div className="p-4 rounded-xl bg-white border border-slate-200 text-left">
+            <div className="text-2xl lg:text-3xl font-serif font-bold text-scholarly">450+</div>
+            <div className="text-xs font-semibold text-slate-800 mt-1">Active Scholars</div>
+            <div className="text-[11px] text-slate-500">Across Grades 7 to 12</div>
+          </div>
+          <div className="p-4 rounded-xl bg-white border border-slate-200 text-left">
+            <div className="text-2xl lg:text-3xl font-serif font-bold text-scholarly">1:18</div>
+            <div className="text-xs font-semibold text-slate-800 mt-1">Teacher-Student Ratio</div>
+            <div className="text-[11px] text-slate-500">Individualised Academic Focus</div>
+          </div>
+          <div className="p-4 rounded-xl bg-white border border-slate-200 text-left">
+            <div className="text-2xl lg:text-3xl font-serif font-bold text-gold">70%</div>
+            <div className="text-xs font-semibold text-slate-800 mt-1">Tuition Subsidised</div>
+            <div className="text-[11px] text-slate-500">Philanthropic Foundation Grant</div>
+          </div>
         </div>
       </Container>
     </section>
