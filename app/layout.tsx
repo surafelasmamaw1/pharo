@@ -3,7 +3,6 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { MotionProvider } from "@/lib/motion";
 import { siteConfig } from "@/lib/siteConfig";
-import UrgentBanner from "@/components/layout/UrgentBanner";
 import "./globals.css";
 
 // Set up fonts with optimizations
@@ -81,7 +80,6 @@ export default function RootLayout({
     <html lang="en" className={`${cormorant.variable} ${manrope.variable}`} suppressHydrationWarning>
       <body className="bg-background text-foreground font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-          <UrgentBanner />
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
       </body>

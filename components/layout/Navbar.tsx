@@ -21,6 +21,7 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import Container from "../ui/Container";
 import Button from "../ui/Button";
+import UrgentBanner from "./UrgentBanner";
 
 const navItems = [
   { name: "Home",         href: "/",              id: "home",          icon: Home },
@@ -137,14 +138,19 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/85 dark:bg-background/92 backdrop-blur-xl border-b border-border/60 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
-          : "bg-transparent border-b border-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 flex flex-col"
     >
-      <Container>
-        <div className="flex items-center justify-between h-[76px] lg:h-20">
+      <UrgentBanner />
+
+      <div
+        className={`w-full transition-all duration-300 ${
+          isScrolled
+            ? "bg-background/85 dark:bg-background/92 backdrop-blur-xl border-b border-border/60 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <Container>
+          <div className="flex items-center justify-between h-[76px] lg:h-20">
           {/* Logo — pinned to the far-left viewport edge (offset container's inner padding) */}
           <motion.a
             href="#home"
@@ -275,6 +281,7 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </motion.header>
   );
 }
