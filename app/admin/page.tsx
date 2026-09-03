@@ -332,11 +332,39 @@ export default function AdminDashboard() {
       const data = await res.json();
       if (data.success) {
         setSettingsSuccessMsg("Site settings and announcement banner saved!");
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("settings-updated"));
+        }
       }
     } catch (err) {
       console.error("Failed to save settings:", err);
     } finally {
       setIsSavingSettings(false);
+    }
+  };
+
+  const handleToggleBanner = async (newActiveState: boolean) => {
+    const updated = { ...settings, urgentBannerActive: newActiveState };
+    setSettings(updated);
+    try {
+      const res = await fetch("/api/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSettingsSuccessMsg(
+          newActiveState
+            ? "Announcement banner is now ON (Visible on site)"
+            : "Announcement banner is now OFF (Hidden from site)"
+        );
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("settings-updated"));
+        }
+      }
+    } catch (err) {
+      console.error("Failed to toggle banner:", err);
     }
   };
 
@@ -354,6 +382,9 @@ export default function AdminDashboard() {
       const data = await res.json();
       if (data.success) {
         setSettingsSuccessMsg("Announcement banner has been deleted and disabled!");
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("settings-updated"));
+        }
       }
     } catch (err) {
       console.error("Failed to delete banner:", err);
@@ -970,7 +1001,16 @@ export default function AdminDashboard() {
                       </h4>
                       <p className="text-xs text-muted">Displays a high-visibility announcement across the top of all pages.</p>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span
+                        className={`text-xs font-bold px-2.5 py-1 rounded-full border ${
+                          settings.urgentBannerActive
+                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/30"
+                            : "bg-slate-100 text-slate-500 border-slate-300"
+                        }`}
+                      >
+                        {settings.urgentBannerActive ? "ON (VISIBLE)" : "OFF (HIDDEN)"}
+                      </span>
                       <button
                         type="button"
                         onClick={handleDeleteBanner}
@@ -981,11 +1021,11 @@ export default function AdminDashboard() {
                         <Trash2 className="w-3.5 h-3.5" />
                         Delete Banner
                       </button>
-                      <label className="relative inline-flex items-center cursor-pointer">
+                      <label className="relative inline-flex items-center cursor-pointer" title="Toggle Banner ON / OFF">
                         <input
                           type="checkbox"
                           checked={settings.urgentBannerActive}
-                          onChange={(e) => setSettings({ ...settings, urgentBannerActive: e.target.checked })}
+                          onChange={(e) => handleToggleBanner(e.target.checked)}
                           className="sr-only peer"
                         />
                         <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-scholarly"></div>

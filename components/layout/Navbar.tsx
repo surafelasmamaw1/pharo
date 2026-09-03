@@ -81,27 +81,20 @@ export default function Navbar() {
       <UrgentBanner />
 
       {/* Institutional Top Utility Bar */}
-      <div className="bg-scholarly text-white/90 text-[11px] md:text-xs py-1.5 px-4 border-b border-white/10 hidden sm:block">
+      <div className="bg-[#122339] text-white/85 text-[11px] md:text-xs py-2 px-4 border-b border-white/10 hidden sm:block">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-white/90 font-medium">
-              <MapPin className="w-3.5 h-3.5 text-gold-light" />
+          <div className="flex items-center gap-6">
+            <span className="flex items-center gap-1.5 text-white/95 font-medium">
+              <MapPin className="w-3.5 h-3.5 text-gold" />
               Assosa, Benishangul-Gumuz, Ethiopia
             </span>
-            <span className="hidden md:flex items-center gap-1.5 text-white/75">
-              <Phone className="w-3.5 h-3.5 text-gold-light" />
+            <span className="hidden md:flex items-center gap-1.5 text-white/80">
+              <Phone className="w-3.5 h-3.5 text-gold" />
               +251 91 234 5678
             </span>
           </div>
-          <div className="flex items-center gap-4 text-xs font-medium">
-            <Link href="/admissions" className="hover:text-gold-light transition-colors">
-              Admissions Open
-            </Link>
-            <span className="text-white/30">•</span>
-            <Link href="/admin" className="hover:text-gold-light transition-colors flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-gold-light" />
-              Admin Portal
-            </Link>
+          <div className="text-[11px] text-white/60 tracking-wider uppercase font-medium">
+            Ethiopian Ministry of Education Standards
           </div>
         </div>
       </div>

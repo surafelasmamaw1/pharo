@@ -13,7 +13,7 @@ export default function UrgentBanner() {
   useEffect(() => {
     async function loadBanner() {
       try {
-        const res = await fetch("/api/settings");
+        const res = await fetch("/api/settings", { cache: "no-store" });
         const json = await res.json();
         if (json.success && json.data) {
           setBanner({
@@ -26,20 +26,25 @@ export default function UrgentBanner() {
       }
     }
     loadBanner();
+
+    window.addEventListener("settings-updated", loadBanner);
+    return () => window.removeEventListener("settings-updated", loadBanner);
   }, []);
 
-  if (!banner.active || !banner.text || dismissed) return null;
+  if (!banner.active || !banner.text || banner.text.trim() === "" || dismissed) {
+    return null;
+  }
 
   return (
-    <div className="bg-gold text-slate-950 text-xs md:text-[13px] font-semibold py-2 px-4 border-b border-gold-dark/20 relative z-50 shadow-sm">
+    <div className="bg-[#162D4A] text-white text-xs md:text-[13px] font-medium py-2.5 px-4 border-b border-gold/40 relative z-50 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5 flex-1 justify-center text-center">
-          <Megaphone className="w-4 h-4 text-slate-950 flex-shrink-0" />
-          <span className="tracking-wide">{banner.text}</span>
+          <Megaphone className="w-4 h-4 text-gold flex-shrink-0" />
+          <span className="text-white/90 tracking-wide font-medium">{banner.text}</span>
         </div>
         <button
           onClick={() => setDismissed(true)}
-          className="p-1 rounded hover:bg-black/10 transition-colors flex-shrink-0 text-slate-950"
+          className="p-1 rounded hover:bg-white/10 transition-colors flex-shrink-0 text-white/70 hover:text-white"
           aria-label="Dismiss banner"
         >
           <X className="w-4 h-4" />
