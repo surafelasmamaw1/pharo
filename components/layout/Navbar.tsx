@@ -24,14 +24,14 @@ import Container from "../ui/Container";
 import UrgentBanner from "./UrgentBanner";
 
 const navItems = [
-  { name: "Home",         href: "/",              id: "home",          icon: Home },
-  { name: "About Us",     href: "#about",         id: "about",         icon: GraduationCap },
-  { name: "Academics",    href: "#academics",     id: "academics",     icon: BookOpen },
-  { name: "Student Life", href: "#student-life",  id: "student-life",  icon: Users },
-  { name: "News & Events",href: "#news-events",   id: "news-events",   icon: CalendarDays },
-  { name: "Admissions",   href: "/admissions",    id: "admissions",    icon: ClipboardList },
-  { name: "Contact",      href: "#contact",       id: "contact",       icon: Mail },
-  { name: "Gallery",      href: "/gallery",       id: "gallery",       icon: Images },
+  { name: "Home", href: "/", id: "home", icon: Home },
+  { name: "About Us", href: "#about", id: "about", icon: GraduationCap },
+  { name: "Academics", href: "#academics", id: "academics", icon: BookOpen },
+  { name: "Student Life", href: "#student-life", id: "student-life", icon: Users },
+  { name: "News & Events", href: "#news-events", id: "news-events", icon: CalendarDays },
+  { name: "Admissions", href: "/admissions", id: "admissions", icon: ClipboardList },
+  { name: "Contact", href: "#contact", id: "contact", icon: Mail },
+  { name: "Gallery", href: "/gallery", id: "gallery", icon: Images },
 ];
 
 export default function Navbar() {
@@ -94,18 +94,17 @@ export default function Navbar() {
             </span>
           </div>
           <div className="text-[11px] text-white/60 tracking-wider uppercase font-medium">
-            Ethiopian Ministry of Education Standards
+
           </div>
         </div>
       </div>
 
       {/* Main Navigation Bar */}
       <div
-        className={`w-full transition-all duration-300 ${
-          isScrolled
+        className={`w-full transition-all duration-300 ${isScrolled
             ? "bg-white/95 backdrop-blur-md border-b border-border shadow-sm text-foreground"
             : "bg-white/90 backdrop-blur-sm border-b border-border/60 text-foreground"
-        }`}
+          }`}
       >
         <Container>
           <div className="flex items-center justify-between h-[72px] lg:h-[78px]">
@@ -144,11 +143,10 @@ export default function Navbar() {
                     <Link
                       key={item.name}
                       href={resolveHref(item.href)}
-                      className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors duration-150 ${
-                        isActive
+                      className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors duration-150 ${isActive
                           ? "text-scholarly font-bold border-b-2 border-scholarly rounded-b-none"
                           : "text-foreground/80 hover:text-scholarly hover:bg-slate-50"
-                      }`}
+                        }`}
                     >
                       {item.name}
                     </Link>
