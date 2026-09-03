@@ -27,7 +27,7 @@ export default function Hero() {
             </h1>
 
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-2xl mb-8 font-normal">
-              Pharo School Assosa is a premier boarding and day secondary institution dedicated to academic rigour, character development, and scientific inquiry. We deliver the Ethiopian National Curriculum enriched with intensive STEM, English proficiency, and 70% philanthropic tuition subsidies.
+              Pharo School Assosa is a premier secondary day school dedicated to academic rigour, character development, and scientific inquiry. We deliver the Ethiopian National Curriculum enriched with intensive STEM, English proficiency, and 70% philanthropic tuition subsidies.
             </p>
 
             {/* CTAs */}
@@ -51,11 +51,11 @@ export default function Hero() {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-6 border-t border-border">
               <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Grades 7–12 Education</span>
+                <span>Grades 7–12 Secondary</span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                <span>Boarding &amp; Day Scholars</span>
+                <span>Full-Day Day School</span>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />

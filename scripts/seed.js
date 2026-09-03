@@ -65,31 +65,29 @@ async function main() {
   });
 
   // 3. Testimonials
-  const existingTestimonials = await prisma.testimonial.count();
-  if (existingTestimonials === 0) {
-    await prisma.testimonial.createMany({
-      data: [
-        {
-          name: "Amina Tesfaye",
-          role: "Parent of a Grade 8 Boarding Scholar",
-          type: "Parent",
-          quote: "The discipline, academic rigour, and safe boarding environment in Assosa have transformed our child's confidence and national examination performance.",
-        },
-        {
-          name: "Daniel Bekele",
-          role: "Class of 2027 — Natural Sciences",
-          type: "Student",
-          quote: "The science laboratories and computer resources gave me the hands-on practice I needed. The teachers are dedicated and always available during evening prep.",
-        },
-        {
-          name: "Sara Woldemichael",
-          role: "Faculty Head — Mathematics & STEM",
-          type: "Teacher",
-          quote: "Teaching at Pharo School Assosa means shaping determined young minds who are committed to solving real challenges in Ethiopia through science and ethics.",
-        },
-      ],
-    });
-  }
+  await prisma.testimonial.deleteMany({});
+  await prisma.testimonial.createMany({
+    data: [
+      {
+        name: "Amina Tesfaye",
+        role: "Parent of a Grade 8 Scholar",
+        type: "Parent",
+        quote: "The discipline, academic rigour, and caring teachers at Pharo School Assosa have transformed our child's confidence and national examination performance.",
+      },
+      {
+        name: "Daniel Bekele",
+        role: "Class of 2027 — Natural Sciences",
+        type: "Student",
+        quote: "The science laboratories and computer resources gave me the hands-on practice I needed. The teachers are dedicated and always available during after-school tutorial sessions.",
+      },
+      {
+        name: "Sara Woldemichael",
+        role: "Faculty Head — Mathematics & STEM",
+        type: "Teacher",
+        quote: "Teaching at Pharo School Assosa means shaping determined young minds who are committed to solving real challenges in Ethiopia through science and ethics.",
+      },
+    ],
+  });
 
   // 4. Gallery Photos
   await prisma.galleryItem.deleteMany({});

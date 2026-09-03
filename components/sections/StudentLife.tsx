@@ -6,35 +6,36 @@ import SectionHeading from "../ui/SectionHeading";
 import { Clock, ShieldCheck, Trophy, Users, HeartHandshake, Sparkles, BookOpen } from "lucide-react";
 
 const dailyRoutine = [
-  { time: "06:30", title: "Morning Rise & Breakfast", desc: "Boarding scholars awaken, prepare for the day, and enjoy breakfast in the campus dining hall." },
-  { time: "07:30", title: "School Assembly & Flag Ceremony", desc: "The whole school gathers for the Ethiopian national anthem, notices, and morning reflections." },
-  { time: "08:00 – 12:30", title: "Morning Academic Lessons", desc: "Intensive instruction in STEM, English, Natural and Social Sciences with hands-on laboratory work." },
-  { time: "12:30 – 13:45", title: "Lunch & Midday Fellowship", desc: "Nutritious hot lunch prepared on campus, social time, and library access." },
-  { time: "13:45 – 16:00", title: "Afternoon Labs & Humanities", desc: "Computer science, languages, project presentations, and remedial academic tutorials." },
-  { time: "16:15 – 17:45", title: "Co-Curriculars & Athletics", desc: "Inter-house football, track athletics, volleyball, debate society, robotics, and choir." },
-  { time: "19:15 – 21:00", title: "Supervised Evening Prep", desc: "Focused individual study and homework in classrooms guided by faculty duty teachers." },
+  { time: "07:30 – 08:00", title: "Arrival & Morning Assembly", desc: "Scholars arrive on campus, raise the national flag, sing the anthem, and receive morning announcements." },
+  { time: "08:00 – 10:15", title: "Morning Core Academic Periods", desc: "Rigorous instruction in Mathematics, Physics, Chemistry, Biology, and English language arts." },
+  { time: "10:15 – 10:40", title: "Mid-Morning Break & Refreshment", desc: "Rest, peer discussions in the courtyard, teacher check-ins, and library book loans." },
+  { time: "10:40 – 12:30", title: "Laboratory Science & Computing", desc: "Hands-on experiments in dedicated science laboratories and practical IT programming classes." },
+  { time: "12:30 – 13:30", title: "Lunch & Midday Fellowship", desc: "Nutritious campus meal, open library reading, and recreational games with friends." },
+  { time: "13:30 – 15:30", title: "Afternoon Humanities & Languages", desc: "Social studies, citizenship education, Amharic/regional languages, and collaborative group projects." },
+  { time: "15:45 – 17:00", title: "Co-Curricular Clubs & Athletics", desc: "Inter-house football, track athletics, volleyball, debate society, robotics club, or tutorial support." },
+  { time: "17:00", title: "Campus Dismissal & Safe Departure", desc: "End of the instructional day; scholars depart safely for home with guided study assignments." },
 ];
 
 const pillars = [
   {
     icon: ShieldCheck,
-    title: "Residential Boarding & Welfare",
-    desc: "Dedicated dormitories with 24/7 security, continuous clean water, solar-backed power, on-site campus nurse, and caring house parents.",
+    title: "Campus Safety & Student Welfare",
+    desc: "A secure, walled campus with 24/7 security personnel, continuous clean drinking water, modern sanitation, and an on-site first-aid clinic.",
   },
   {
     icon: Trophy,
     title: "House System & Athletics",
-    desc: "Scholars belong to competitive school houses fostering brotherhood, sisterhood, sportsmanship, and spirited annual sports day derbies.",
+    desc: "Scholars belong to competitive school houses fostering teamwork, discipline, sportsmanship, and lively annual sports day competitions.",
   },
   {
     icon: BookOpen,
-    title: "STEM & Co-Curricular Societies",
-    desc: "Active clubs including Coding & Robotics, Model UN, Science Discovery, English Writers' Guild, and Environmental Stewardship.",
+    title: "STEM & Innovation Societies",
+    desc: "Active clubs including Coding & Robotics, Science Fair Research, Model United Nations, and English Language Writers' Guild.",
   },
   {
     icon: HeartHandshake,
-    title: "Leadership & Community Service",
-    desc: "Scholars participate in community outreach, tree planting, and peer tutoring across the Assosa town and surrounding woredas.",
+    title: "Character & Community Service",
+    desc: "Civic engagement projects, tree planting initiatives, and peer tutoring across the Assosa community and regional schools.",
   },
 ];
 
@@ -50,9 +51,9 @@ export default function StudentLife() {
               Life at Pharo School Assosa
             </span>
           </div>
-          <SectionHeading className="text-left">A Structured, Inspiring Community</SectionHeading>
+          <SectionHeading className="text-left">A Structured, Inspiring Day School</SectionHeading>
           <p className="mt-4 text-slate-700 leading-relaxed text-base md:text-lg">
-            Education extends far beyond textbooks. At Pharo School Assosa, our scholars live and learn in a disciplined, supportive environment designed to instill habits of excellence, resilience, and ethical leadership.
+            Education extends far beyond textbooks. At Pharo School Assosa, our scholars learn and grow in a disciplined, supportive day-school environment designed to instill habits of excellence, resilience, and ethical leadership.
           </p>
         </div>
 
