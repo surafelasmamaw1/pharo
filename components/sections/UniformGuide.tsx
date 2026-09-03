@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
-import { Shirt, Sparkles, MapPin, Clock, ShieldCheck, CheckCircle2, Award } from "lucide-react";
+import { Shirt, CheckCircle2 } from "lucide-react";
 
 export default function UniformGuide() {
   const [activeTab, setActiveTab] = useState<"academic" | "pe">("academic");
@@ -165,39 +165,6 @@ export default function UniformGuide() {
             </div>
           </div>
         )}
-
-        {/* Campus Issuance & Subsidy Banner */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 md:p-8 rounded-2xl bg-scholarly-pale/60 border border-scholarly/20 text-left">
-          <div className="flex items-start gap-3.5">
-            <Award className="w-5 h-5 text-scholarly flex-shrink-0 mt-0.5" />
-            <div>
-              <h4 className="font-bold text-sm text-scholarly">Philanthropic Grant</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                The first 2 complete uniform sets are provided 100% free of charge under the Pharo Foundation enrollment grant.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3.5">
-            <MapPin className="w-5 h-5 text-scholarly flex-shrink-0 mt-0.5" />
-            <div>
-              <h4 className="font-bold text-sm text-scholarly">Campus Issuance Desk</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                Administration Wing, Ground Floor, Assosa Campus. Sizing fittings conducted during orientation week.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3.5">
-            <Clock className="w-5 h-5 text-scholarly flex-shrink-0 mt-0.5" />
-            <div>
-              <h4 className="font-bold text-sm text-scholarly">Bursar Store Hours</h4>
-              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
-                Monday to Friday: 08:30 – 16:30. Additional replacement pieces available at direct non-profit cost.
-              </p>
-            </div>
-          </div>
-        </div>
       </Container>
     </section>
   );
