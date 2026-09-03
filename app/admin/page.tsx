@@ -1845,17 +1845,17 @@ export default function AdminDashboard() {
 
           {/* EDIT FACULTY MODAL DIALOG */}
           {editingFaculty && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]">
-              <div className="bg-card border border-border rounded-3xl p-6 md:p-8 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative">
-                <div className="flex items-center justify-between pb-4 mb-6 border-b border-border">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md animate-[fadeIn_0.15s_ease-out]">
+              <div className="bg-white text-slate-900 border border-slate-200 rounded-3xl p-6 md:p-8 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative z-50">
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200">
                   <div>
-                    <h3 className="font-serif text-xl font-bold text-foreground">Edit Faculty Member</h3>
-                    <p className="text-xs text-muted">Update profile details, biography, credentials, and portrait photo.</p>
+                    <h3 className="font-serif text-2xl font-bold text-slate-900">Edit Faculty Member</h3>
+                    <p className="text-xs text-slate-500 mt-1">Update profile details, biography, credentials, and portrait photo.</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setEditingFaculty(null)}
-                    className="p-1.5 rounded-full hover:bg-border/40 text-muted hover:text-foreground transition-colors"
+                    className="p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-800 transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -1863,78 +1863,78 @@ export default function AdminDashboard() {
 
                 <form onSubmit={handleUpdateFaculty} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Full Name &amp; Title</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Full Name &amp; Title</label>
                     <input
                       type="text"
                       required
                       value={editingFaculty.name}
                       onChange={(e) => setEditingFaculty({ ...editingFaculty, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-scholarly focus:border-scholarly"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Role / Position</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Role / Position</label>
                     <input
                       type="text"
                       required
                       value={editingFaculty.role}
                       onChange={(e) => setEditingFaculty({ ...editingFaculty, role: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-scholarly focus:border-scholarly"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Academic Credentials</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Academic Credentials</label>
                     <input
                       type="text"
                       required
                       value={editingFaculty.credentials}
                       onChange={(e) => setEditingFaculty({ ...editingFaculty, credentials: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-scholarly focus:border-scholarly"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Biography / Overview</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Biography / Overview</label>
                     <textarea
                       required
                       rows={3}
                       value={editingFaculty.bio}
                       onChange={(e) => setEditingFaculty({ ...editingFaculty, bio: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-scholarly focus:border-scholarly"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
                       Key Areas of Expertise (Comma-separated)
                     </label>
                     <input
                       type="text"
                       value={editingFaculty.expertise || ""}
                       onChange={(e) => setEditingFaculty({ ...editingFaculty, expertise: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-scholarly focus:border-scholarly"
                     />
                   </div>
 
                   {/* Photo Upload for Edit Modal */}
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1.5">Staff Portrait Photo (Passport Size)</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Staff Portrait Photo (Passport Size)</label>
                     {editingFaculty.imageUrl ? (
-                      <div className="relative rounded-2xl border border-border p-2.5 bg-background flex items-center gap-3">
-                        <div className="w-16 h-20 rounded-xl overflow-hidden bg-border/40 flex-shrink-0 relative border-2 border-border shadow-xs aspect-[3/4]">
+                      <div className="relative rounded-2xl border border-slate-200 p-3 bg-slate-50 flex items-center gap-4">
+                        <div className="w-16 h-20 rounded-xl overflow-hidden bg-white flex-shrink-0 relative border-2 border-slate-300 shadow-sm aspect-[3/4]">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={editingFaculty.imageUrl} alt="Passport preview" className="w-full h-full object-cover object-top" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-foreground truncate">Passport Photo Attached</p>
-                          <p className="text-[10px] text-muted">3:4 portrait ratio • Click X to replace</p>
+                          <p className="text-xs font-bold text-slate-900 truncate">Passport Photo Attached</p>
+                          <p className="text-[11px] text-slate-500">3:4 portrait ratio • Click ✕ to replace</p>
                         </div>
                         <button
                           type="button"
                           onClick={() => setEditingFaculty({ ...editingFaculty, imageUrl: "" })}
-                          className="p-1.5 rounded-full hover:bg-red-500/10 text-red-500 transition-colors"
+                          className="p-1.5 rounded-full hover:bg-red-50 text-red-500 transition-colors"
                           title="Remove photo"
                         >
                           <X className="w-4 h-4" />
@@ -1955,7 +1955,7 @@ export default function AdminDashboard() {
                             reader.readAsDataURL(file);
                           }
                         }}
-                        className="border-2 border-dashed border-border rounded-2xl p-4 text-center cursor-pointer hover:border-scholarly transition-colors bg-background"
+                        className="border-2 border-dashed border-slate-300 rounded-2xl p-5 text-center cursor-pointer hover:border-scholarly transition-colors bg-slate-50"
                       >
                         <input
                           type="file"
@@ -1974,26 +1974,26 @@ export default function AdminDashboard() {
                           }}
                         />
                         <label htmlFor="faculty-edit-photo-input" className="cursor-pointer flex flex-col items-center">
-                          <UploadCloud className="w-6 h-6 text-muted mb-1" />
-                          <span className="text-xs font-semibold text-foreground">Click to upload new photo</span>
-                          <span className="text-[10px] text-muted">or drag &amp; drop file here</span>
+                          <UploadCloud className="w-7 h-7 text-slate-400 mb-1.5" />
+                          <span className="text-xs font-bold text-slate-800">Click to upload new passport photo</span>
+                          <span className="text-[11px] text-slate-500">or drag &amp; drop 3:4 portrait file here</span>
                         </label>
                       </div>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+                  <div className="flex items-center justify-end gap-3 pt-5 border-t border-slate-200">
                     <button
                       type="button"
                       onClick={() => setEditingFaculty(null)}
-                      className="px-5 py-2.5 rounded-xl border border-border hover:bg-border/30 text-foreground font-semibold text-sm transition-colors"
+                      className="px-5 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-sm transition-colors"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={isSubmittingFaculty}
-                      className="px-6 py-2.5 rounded-xl bg-scholarly hover:bg-scholarly-dark text-white font-semibold text-sm transition-colors shadow-sm disabled:opacity-50"
+                      className="px-6 py-2.5 rounded-xl bg-scholarly hover:bg-scholarly-dark text-white font-semibold text-sm transition-colors shadow-md disabled:opacity-50"
                     >
                       {isSubmittingFaculty ? "Saving Changes..." : "Save Changes"}
                     </button>
