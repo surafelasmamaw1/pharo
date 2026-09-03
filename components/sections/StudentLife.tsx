@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
-import { Clock, ShieldCheck, Trophy, Users, HeartHandshake, Sparkles, BookOpen } from "lucide-react";
+import { Clock, Users } from "lucide-react";
 
 const dailyRoutine = [
   { time: "07:30 – 08:00", title: "Arrival & Morning Assembly", desc: "Scholars arrive on campus, raise the national flag, sing the anthem, and receive morning announcements." },
@@ -14,29 +13,6 @@ const dailyRoutine = [
   { time: "13:30 – 15:30", title: "Afternoon Humanities & Languages", desc: "Social studies, citizenship education, Amharic/regional languages, and collaborative group projects." },
   { time: "15:45 – 17:00", title: "Co-Curricular Clubs & Athletics", desc: "Inter-house football, track athletics, volleyball, debate society, robotics club, or tutorial support." },
   { time: "17:00", title: "Campus Dismissal & Safe Departure", desc: "End of the instructional day; scholars depart safely for home with guided study assignments." },
-];
-
-const pillars = [
-  {
-    icon: ShieldCheck,
-    title: "Campus Safety & Student Welfare",
-    desc: "A secure, walled campus with 24/7 security personnel, continuous clean drinking water, modern sanitation, and an on-site first-aid clinic.",
-  },
-  {
-    icon: Trophy,
-    title: "House System & Athletics",
-    desc: "Scholars belong to competitive school houses fostering teamwork, discipline, sportsmanship, and lively annual sports day competitions.",
-  },
-  {
-    icon: BookOpen,
-    title: "STEM & Innovation Societies",
-    desc: "Active clubs including Coding & Robotics, Science Fair Research, Model United Nations, and English Language Writers' Guild.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Character & Community Service",
-    desc: "Civic engagement projects, tree planting initiatives, and peer tutoring across the Assosa community and regional schools.",
-  },
 ];
 
 export default function StudentLife() {
@@ -57,22 +33,6 @@ export default function StudentLife() {
           </p>
         </div>
 
-        {/* Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {pillars.map((p) => {
-            const Icon = p.icon;
-            return (
-              <div key={p.title} className="p-6 rounded-xl bg-white border border-slate-200 shadow-sm text-left">
-                <div className="w-11 h-11 rounded-lg bg-scholarly-pale text-scholarly flex items-center justify-center mb-4">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="font-serif text-lg font-bold text-slate-900 mb-2">{p.title}</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">{p.desc}</p>
-              </div>
-            );
-          })}
-        </div>
-
         {/* Daily Schedule - Real School Timeline */}
         <div className="rounded-2xl bg-white border border-slate-200 p-8 md:p-10 shadow-sm">
           <div className="flex items-center gap-3 mb-8 pb-4 border-b border-slate-200">
@@ -84,7 +44,7 @@ export default function StudentLife() {
           </div>
 
           <div className="space-y-4">
-            {dailyRoutine.map((item, idx) => (
+            {dailyRoutine.map((item) => (
               <div
                 key={item.time}
                 className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-6 p-4 rounded-xl hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-200"
