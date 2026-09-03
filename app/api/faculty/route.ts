@@ -58,6 +58,43 @@ export async function POST(req: NextRequest) {
   }
 }
 
+export async function PUT(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { id, ...data } = body;
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: "Faculty member ID is required for editing." },
+        { status: 400 }
+      );
+    }
+
+    const validated = facultySchema.parse(data);
+
+    const updated = await db.facultyMember.update({
+      where: { id },
+      data: validated,
+    });
+
+    return NextResponse.json({
+      success: true,
+      message: "Faculty member updated successfully!",
+      data: updated,
+    });
+  } catch (error: any) {
+    if (error instanceof z.ZodError) {
+      const msg = error.errors.map((e) => e.message).join(", ");
+      return NextResponse.json({ success: false, message: msg }, { status: 400 });
+    }
+    console.error("Update faculty error:", error);
+    return NextResponse.json(
+      { success: false, message: "Failed to update faculty member." },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);

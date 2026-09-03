@@ -26,6 +26,7 @@ import {
   Heart,
   Images,
   GraduationCap,
+  Pencil,
 } from "lucide-react";
 
 interface ApplicationItem {
@@ -170,6 +171,7 @@ export default function AdminDashboard() {
     expertise: "",
     imageUrl: "",
   });
+  const [editingFacultyId, setEditingFacultyId] = useState<string | null>(null);
   const [isSubmittingFaculty, setIsSubmittingFaculty] = useState<boolean>(false);
   const [facultySuccessMsg, setFacultySuccessMsg] = useState<string>("");
 
@@ -521,20 +523,29 @@ export default function AdminDashboard() {
   };
 
   // Faculty & Leadership handlers
-  const handleCreateFaculty = async (e: React.FormEvent) => {
+  const handleSaveFaculty = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingFaculty(true);
     setFacultySuccessMsg("");
 
     try {
-      const res = await fetch("/api/faculty", {
-        method: "POST",
+      const isEditing = Boolean(editingFacultyId);
+      const url = "/api/faculty";
+      const method = isEditing ? "PUT" : "POST";
+      const payload = isEditing ? { id: editingFacultyId, ...newFaculty } : newFaculty;
+
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newFaculty),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (data.success) {
-        setFacultySuccessMsg("Faculty member added successfully!");
+        setFacultySuccessMsg(
+          isEditing
+            ? "Faculty member updated successfully!"
+            : "Faculty member added successfully!"
+        );
         setNewFaculty({
           name: "",
           role: "",
@@ -543,20 +554,50 @@ export default function AdminDashboard() {
           expertise: "",
           imageUrl: "",
         });
+        setEditingFacultyId(null);
         fetchData();
       } else {
-        alert(data.message || "Failed to add faculty member");
+        alert(data.message || "Failed to save faculty member");
       }
     } catch (err) {
-      console.error("Failed to add faculty member:", err);
+      console.error("Failed to save faculty member:", err);
     } finally {
       setIsSubmittingFaculty(false);
     }
   };
 
+  const handleStartEditFaculty = (faculty: FacultyItem) => {
+    setEditingFacultyId(faculty.id);
+    setNewFaculty({
+      name: faculty.name,
+      role: faculty.role,
+      credentials: faculty.credentials,
+      bio: faculty.bio,
+      expertise: faculty.expertise || "",
+      imageUrl: faculty.imageUrl || "",
+    });
+    setFacultySuccessMsg("");
+  };
+
+  const handleCancelEditFaculty = () => {
+    setEditingFacultyId(null);
+    setNewFaculty({
+      name: "",
+      role: "",
+      credentials: "",
+      bio: "",
+      expertise: "",
+      imageUrl: "",
+    });
+    setFacultySuccessMsg("");
+  };
+
   const handleDeleteFaculty = async (id: string) => {
     if (!confirm("Are you sure you want to remove this faculty member?")) return;
     try {
+      if (editingFacultyId === id) {
+        handleCancelEditFaculty();
+      }
       await fetch(`/api/faculty?id=${id}`, { method: "DELETE" });
       fetchData();
     } catch (err) {
@@ -1579,9 +1620,24 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Form */}
               <div className="p-6 rounded-3xl border border-border bg-card shadow-sm h-fit">
-                <h3 className="text-lg font-bold text-foreground mb-1">Add Faculty or Leadership</h3>
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="text-lg font-bold text-foreground">
+                    {editingFacultyId ? "Edit Faculty Member" : "Add Faculty or Leadership"}
+                  </h3>
+                  {editingFacultyId && (
+                    <button
+                      type="button"
+                      onClick={handleCancelEditFaculty}
+                      className="text-xs text-muted hover:text-foreground font-medium underline"
+                    >
+                      Cancel Edit
+                    </button>
+                  )}
+                </div>
                 <p className="text-xs text-muted mb-6">
-                  Add administrators, department leads, or instructors to the public directory.
+                  {editingFacultyId
+                    ? "Update credentials, biography, or photo for this faculty member."
+                    : "Add administrators, department leads, or instructors to the public directory."}
                 </p>
 
                 {facultySuccessMsg && (
@@ -1590,7 +1646,7 @@ export default function AdminDashboard() {
                   </div>
                 )}
 
-                <form onSubmit={handleCreateFaculty} className="space-y-4">
+                <form onSubmit={handleSaveFaculty} className="space-y-4">
                   <div>
                     <label className="block text-xs font-semibold text-muted mb-1">Full Name &amp; Title</label>
                     <input
@@ -1663,13 +1719,28 @@ export default function AdminDashboard() {
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmittingFaculty}
-                    className="w-full py-2.5 rounded-xl bg-scholarly hover:bg-scholarly-dark text-white font-semibold text-sm transition-colors shadow-sm disabled:opacity-50"
-                  >
-                    {isSubmittingFaculty ? "Adding..." : "Add Faculty Member"}
-                  </button>
+                  <div className="flex items-center gap-2 pt-2">
+                    <button
+                      type="submit"
+                      disabled={isSubmittingFaculty}
+                      className="flex-1 py-2.5 rounded-xl bg-scholarly hover:bg-scholarly-dark text-white font-semibold text-sm transition-colors shadow-sm disabled:opacity-50"
+                    >
+                      {isSubmittingFaculty
+                        ? "Saving..."
+                        : editingFacultyId
+                        ? "Save Changes"
+                        : "Add Faculty Member"}
+                    </button>
+                    {editingFacultyId && (
+                      <button
+                        type="button"
+                        onClick={handleCancelEditFaculty}
+                        className="px-4 py-2.5 rounded-xl border border-border hover:bg-border/30 text-foreground font-medium text-sm transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
                 </form>
               </div>
 
@@ -1688,23 +1759,45 @@ export default function AdminDashboard() {
                     {facultyList.map((faculty) => (
                       <div
                         key={faculty.id}
-                        className="p-5 rounded-2xl border border-border bg-card shadow-sm flex flex-col justify-between"
+                        className={`p-5 rounded-2xl border bg-card shadow-sm flex flex-col justify-between transition-all ${
+                          editingFacultyId === faculty.id
+                            ? "ring-2 ring-scholarly border-scholarly bg-scholarly-pale/20"
+                            : "border-border"
+                        }`}
                       >
                         <div>
                           <div className="flex items-start justify-between gap-3 mb-2">
                             <div>
-                              <h4 className="font-serif text-lg font-bold text-foreground">{faculty.name}</h4>
+                              <div className="flex items-center gap-2">
+                                <h4 className="font-serif text-lg font-bold text-foreground">{faculty.name}</h4>
+                                {editingFacultyId === faculty.id && (
+                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-scholarly text-white">
+                                    Editing
+                                  </span>
+                                )}
+                              </div>
                               <span className="text-xs font-bold text-scholarly uppercase tracking-wider block mt-0.5">
                                 {faculty.role}
                               </span>
                             </div>
-                            <button
-                              onClick={() => handleDeleteFaculty(faculty.id)}
-                              className="p-1.5 rounded-lg hover:bg-red-500/10 text-muted hover:text-red-500 transition-colors flex-shrink-0"
-                              title="Delete faculty member"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
+                            <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                onClick={() => handleStartEditFaculty(faculty)}
+                                className="p-1.5 rounded-lg hover:bg-scholarly/10 text-muted hover:text-scholarly transition-colors flex-shrink-0"
+                                title="Edit faculty member"
+                              >
+                                <Pencil className="w-4 h-4" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteFaculty(faculty.id)}
+                                className="p-1.5 rounded-lg hover:bg-red-500/10 text-muted hover:text-red-500 transition-colors flex-shrink-0"
+                                title="Delete faculty member"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
                           </div>
 
                           <p className="text-[11px] font-medium text-muted bg-border/20 p-2 rounded-lg mb-2">
