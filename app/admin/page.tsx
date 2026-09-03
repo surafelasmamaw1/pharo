@@ -542,19 +542,19 @@ export default function AdminDashboard() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16 bg-background text-foreground">
+      <main className="min-h-screen pt-44 md:pt-48 pb-24 bg-background text-foreground">
         <Container>
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 mb-8 border-b border-border">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 mb-10 border-b border-border">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-scholarly-pale border border-scholarly/20 text-xs font-semibold text-scholarly mb-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-scholarly-pale border border-scholarly/20 text-xs font-semibold text-scholarly mb-2.5">
                 <UserCheck className="w-3.5 h-3.5" />
                 AUTHENTICATED ADMIN SESSION
               </div>
-              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground tracking-tight">
                 Pharo Foundation Dashboard
               </h1>
-              <p className="text-muted text-sm mt-1">
+              <p className="text-muted text-sm mt-1.5 leading-relaxed">
                 Manage admissions, announcements, site settings, testimonials, and gallery.
               </p>
             </div>
@@ -562,14 +562,14 @@ export default function AdminDashboard() {
               <button
                 onClick={fetchData}
                 disabled={isLoading}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-border/40 hover:bg-border text-foreground font-medium text-sm transition-colors border border-border"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-border/40 hover:bg-border text-foreground font-medium text-sm transition-colors border border-border"
               >
                 <RefreshCw className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`} />
                 Refresh Data
               </button>
               <button
                 onClick={handleLogout}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 font-semibold text-sm transition-colors border border-red-500/20"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 font-semibold text-sm transition-colors border border-red-500/20"
               >
                 <LogOut className="w-4 h-4" />
                 Log Out
@@ -578,10 +578,10 @@ export default function AdminDashboard() {
           </div>
 
           {/* Navigation Tabs */}
-          <div className="flex flex-wrap items-center gap-2 mb-8 p-1.5 rounded-2xl bg-border/30 border border-border">
+          <div className="flex flex-wrap items-center gap-2.5 mb-10 p-2 rounded-2xl bg-border/25 border border-border">
             <button
               onClick={() => setActiveTab("applications")}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === "applications"
                   ? "bg-scholarly text-white shadow-sm"
                   : "text-muted hover:text-foreground hover:bg-border/40"
@@ -593,7 +593,7 @@ export default function AdminDashboard() {
 
             <button
               onClick={() => setActiveTab("inquiries")}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 activeTab === "inquiries"
                   ? "bg-scholarly text-white shadow-sm"
                   : "text-muted hover:text-foreground hover:bg-border/40"

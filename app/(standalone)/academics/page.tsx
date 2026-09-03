@@ -72,7 +72,7 @@ export default function AcademicsPage() {
   return (
     <>
       {/* Hero banner */}
-      <div className="relative pt-28 pb-16 md:pb-20 overflow-hidden bg-gradient-to-br from-scholarly-pale via-background to-gold-pale/40">
+      <div className="relative pt-44 md:pt-48 pb-16 md:pb-20 overflow-hidden bg-gradient-to-br from-scholarly-pale via-background to-gold-pale/40">
         <div className="absolute inset-0 -z-10 opacity-[0.07] bg-[radial-gradient(circle_at_20%_30%,rgba(30,58,95,0.8),transparent_60%),radial-gradient(circle_at_80%_70%,rgba(184,137,60,0.6),transparent_60%)]" />
         <Container>
           <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>

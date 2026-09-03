@@ -43,7 +43,7 @@ export default function GalleryPage() {
   return (
     <>
       {/* Minimal header */}
-      <div className="pt-28 pb-8 border-b border-border/50">
+      <div className="pt-44 md:pt-48 pb-10 border-b border-border/50">
         <Container>
           <div className="flex items-center justify-between gap-6">
             <Link href="/" className="inline-flex items-center gap-2 text-sm font-semibold text-scholarly hover:gap-3 transition-all group">

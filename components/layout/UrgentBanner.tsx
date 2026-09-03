@@ -31,18 +31,18 @@ export default function UrgentBanner() {
   if (!banner.active || !banner.text || dismissed) return null;
 
   return (
-    <div className="bg-gradient-to-r from-scholarly via-scholarly-light to-gold text-white text-xs md:text-sm font-medium py-2 px-4 relative z-50 shadow-md">
+    <div className="bg-gold text-slate-950 text-xs md:text-[13px] font-semibold py-2 px-4 border-b border-gold-dark/20 relative z-50 shadow-sm">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2 flex-1 justify-center text-center">
-          <Megaphone className="w-4 h-4 text-gold-light animate-pulse flex-shrink-0" />
-          <span>{banner.text}</span>
+        <div className="flex items-center gap-2.5 flex-1 justify-center text-center">
+          <Megaphone className="w-4 h-4 text-slate-950 flex-shrink-0" />
+          <span className="tracking-wide">{banner.text}</span>
         </div>
         <button
           onClick={() => setDismissed(true)}
-          className="p-1 rounded-full hover:bg-white/20 transition-colors flex-shrink-0"
+          className="p-1 rounded hover:bg-black/10 transition-colors flex-shrink-0 text-slate-950"
           aria-label="Dismiss banner"
         >
-          <X className="w-3.5 h-3.5" />
+          <X className="w-4 h-4" />
         </button>
       </div>
     </div>
