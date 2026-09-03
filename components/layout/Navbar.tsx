@@ -46,9 +46,21 @@ export default function Navbar() {
     return isHomePage ? href : `/${href}`;
   };
 
-  // Smooth scroll handler for hash links
+  // Smooth scroll handler for hash links and home
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (!href.startsWith("#")) return; // let Next.js handle regular routes
+    setIsMenuOpen(false);
+
+    if (href === "/") {
+      // Home link: scroll to top if already on the home page
+      if (isHomePage) {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setActiveSection("home");
+      }
+      return;
+    }
+
+    if (!href.startsWith("#")) return; // let Next.js handle other regular routes
     if (!isHomePage) return; // will navigate to /#section via resolveHref
 
     e.preventDefault();
@@ -60,7 +72,6 @@ export default function Navbar() {
       window.scrollTo({ top, behavior: "smooth" });
       setActiveSection(id);
     }
-    setIsMenuOpen(false);
   };
 
   const handleScroll = useCallback(() => {
