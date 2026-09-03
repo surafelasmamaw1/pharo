@@ -171,7 +171,7 @@ export default function AdminDashboard() {
     expertise: "",
     imageUrl: "",
   });
-  const [editingFacultyId, setEditingFacultyId] = useState<string | null>(null);
+  const [editingFaculty, setEditingFaculty] = useState<FacultyItem | null>(null);
   const [isSubmittingFaculty, setIsSubmittingFaculty] = useState<boolean>(false);
   const [facultySuccessMsg, setFacultySuccessMsg] = useState<string>("");
 
@@ -523,29 +523,20 @@ export default function AdminDashboard() {
   };
 
   // Faculty & Leadership handlers
-  const handleSaveFaculty = async (e: React.FormEvent) => {
+  const handleCreateFaculty = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingFaculty(true);
     setFacultySuccessMsg("");
 
     try {
-      const isEditing = Boolean(editingFacultyId);
-      const url = "/api/faculty";
-      const method = isEditing ? "PUT" : "POST";
-      const payload = isEditing ? { id: editingFacultyId, ...newFaculty } : newFaculty;
-
-      const res = await fetch(url, {
-        method,
+      const res = await fetch("/api/faculty", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(newFaculty),
       });
       const data = await res.json();
       if (data.success) {
-        setFacultySuccessMsg(
-          isEditing
-            ? "Faculty member updated successfully!"
-            : "Faculty member added successfully!"
-        );
+        setFacultySuccessMsg("Faculty member added successfully!");
         setNewFaculty({
           name: "",
           role: "",
@@ -554,49 +545,48 @@ export default function AdminDashboard() {
           expertise: "",
           imageUrl: "",
         });
-        setEditingFacultyId(null);
         fetchData();
       } else {
-        alert(data.message || "Failed to save faculty member");
+        alert(data.message || "Failed to add faculty member");
       }
     } catch (err) {
-      console.error("Failed to save faculty member:", err);
+      console.error("Failed to add faculty member:", err);
     } finally {
       setIsSubmittingFaculty(false);
     }
   };
 
-  const handleStartEditFaculty = (faculty: FacultyItem) => {
-    setEditingFacultyId(faculty.id);
-    setNewFaculty({
-      name: faculty.name,
-      role: faculty.role,
-      credentials: faculty.credentials,
-      bio: faculty.bio,
-      expertise: faculty.expertise || "",
-      imageUrl: faculty.imageUrl || "",
-    });
-    setFacultySuccessMsg("");
-  };
+  const handleUpdateFaculty = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingFaculty) return;
+    setIsSubmittingFaculty(true);
 
-  const handleCancelEditFaculty = () => {
-    setEditingFacultyId(null);
-    setNewFaculty({
-      name: "",
-      role: "",
-      credentials: "",
-      bio: "",
-      expertise: "",
-      imageUrl: "",
-    });
-    setFacultySuccessMsg("");
+    try {
+      const res = await fetch("/api/faculty", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editingFaculty),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setEditingFaculty(null);
+        setFacultySuccessMsg("Faculty member updated successfully!");
+        fetchData();
+      } else {
+        alert(data.message || "Failed to update faculty member");
+      }
+    } catch (err) {
+      console.error("Failed to update faculty member:", err);
+    } finally {
+      setIsSubmittingFaculty(false);
+    }
   };
 
   const handleDeleteFaculty = async (id: string) => {
     if (!confirm("Are you sure you want to remove this faculty member?")) return;
     try {
-      if (editingFacultyId === id) {
-        handleCancelEditFaculty();
+      if (editingFaculty?.id === id) {
+        setEditingFaculty(null);
       }
       await fetch(`/api/faculty?id=${id}`, { method: "DELETE" });
       fetchData();
@@ -1618,26 +1608,11 @@ export default function AdminDashboard() {
           {/* TAB 7: Faculty & Staff */}
           {activeTab === "faculty" && (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Form */}
+              {/* Add Faculty Form */}
               <div className="p-6 rounded-3xl border border-border bg-card shadow-sm h-fit">
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="text-lg font-bold text-foreground">
-                    {editingFacultyId ? "Edit Faculty Member" : "Add Faculty or Leadership"}
-                  </h3>
-                  {editingFacultyId && (
-                    <button
-                      type="button"
-                      onClick={handleCancelEditFaculty}
-                      className="text-xs text-muted hover:text-foreground font-medium underline"
-                    >
-                      Cancel Edit
-                    </button>
-                  )}
-                </div>
+                <h3 className="text-lg font-bold text-foreground mb-1">Add Faculty or Leadership</h3>
                 <p className="text-xs text-muted mb-6">
-                  {editingFacultyId
-                    ? "Update credentials, biography, or photo for this faculty member."
-                    : "Add administrators, department leads, or instructors to the public directory."}
+                  Add administrators, department leads, or instructors to the public directory.
                 </p>
 
                 {facultySuccessMsg && (
@@ -1646,7 +1621,7 @@ export default function AdminDashboard() {
                   </div>
                 )}
 
-                <form onSubmit={handleSaveFaculty} className="space-y-4">
+                <form onSubmit={handleCreateFaculty} className="space-y-4">
                   <div>
                     <label className="block text-xs font-semibold text-muted mb-1">Full Name &amp; Title</label>
                     <input
@@ -1708,43 +1683,81 @@ export default function AdminDashboard() {
                     />
                   </div>
 
+                  {/* Photo Upload (Drag & Drop or Click) */}
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1">Staff Photo URL (Optional)</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. /about-photo.png or https://..."
-                      value={newFaculty.imageUrl}
-                      onChange={(e) => setNewFaculty({ ...newFaculty, imageUrl: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
-                    />
-                  </div>
-
-                  <div className="flex items-center gap-2 pt-2">
-                    <button
-                      type="submit"
-                      disabled={isSubmittingFaculty}
-                      className="flex-1 py-2.5 rounded-xl bg-scholarly hover:bg-scholarly-dark text-white font-semibold text-sm transition-colors shadow-sm disabled:opacity-50"
-                    >
-                      {isSubmittingFaculty
-                        ? "Saving..."
-                        : editingFacultyId
-                        ? "Save Changes"
-                        : "Add Faculty Member"}
-                    </button>
-                    {editingFacultyId && (
-                      <button
-                        type="button"
-                        onClick={handleCancelEditFaculty}
-                        className="px-4 py-2.5 rounded-xl border border-border hover:bg-border/30 text-foreground font-medium text-sm transition-colors"
+                    <label className="block text-xs font-semibold text-muted mb-1.5">Staff Portrait Photo</label>
+                    {newFaculty.imageUrl ? (
+                      <div className="relative rounded-2xl border border-border p-2.5 bg-background flex items-center gap-3">
+                        <div className="w-14 h-14 rounded-xl overflow-hidden bg-border/40 flex-shrink-0 relative border border-border">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={newFaculty.imageUrl} alt="Staff preview" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-semibold text-foreground truncate">Photo Attached</p>
+                          <p className="text-[10px] text-muted">Ready to save</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setNewFaculty({ ...newFaculty, imageUrl: "" })}
+                          className="p-1.5 rounded-full hover:bg-red-500/10 text-red-500 transition-colors"
+                          title="Remove photo"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div
+                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const file = e.dataTransfer.files?.[0];
+                          if (file && file.type.startsWith("image/")) {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                              setNewFaculty((prev) => ({ ...prev, imageUrl: reader.result as string }));
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="border-2 border-dashed border-border rounded-2xl p-4 text-center cursor-pointer hover:border-scholarly transition-colors bg-background"
                       >
-                        Cancel
-                      </button>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          id="faculty-new-photo-input"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onload = () => {
+                                setNewFaculty((prev) => ({ ...prev, imageUrl: reader.result as string }));
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                        />
+                        <label htmlFor="faculty-new-photo-input" className="cursor-pointer flex flex-col items-center">
+                          <UploadCloud className="w-6 h-6 text-muted mb-1" />
+                          <span className="text-xs font-semibold text-foreground">Click to upload photo</span>
+                          <span className="text-[10px] text-muted">or drag &amp; drop file here</span>
+                        </label>
+                      </div>
                     )}
                   </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmittingFaculty}
+                    className="w-full py-2.5 rounded-xl bg-scholarly hover:bg-scholarly-dark text-white font-semibold text-sm transition-colors shadow-sm disabled:opacity-50"
+                  >
+                    {isSubmittingFaculty ? "Adding..." : "Add Faculty Member"}
+                  </button>
                 </form>
               </div>
 
-              {/* Grid */}
+              {/* Faculty Cards Grid */}
               <div className="lg:col-span-2">
                 <h3 className="text-lg font-bold text-foreground mb-4">
                   Current Faculty &amp; Staff ({facultyList.length})
@@ -1759,31 +1772,32 @@ export default function AdminDashboard() {
                     {facultyList.map((faculty) => (
                       <div
                         key={faculty.id}
-                        className={`p-5 rounded-2xl border bg-card shadow-sm flex flex-col justify-between transition-all ${
-                          editingFacultyId === faculty.id
-                            ? "ring-2 ring-scholarly border-scholarly bg-scholarly-pale/20"
-                            : "border-border"
-                        }`}
+                        className="p-5 rounded-2xl border border-border bg-card shadow-sm flex flex-col justify-between"
                       >
                         <div>
-                          <div className="flex items-start justify-between gap-3 mb-2">
-                            <div>
-                              <div className="flex items-center gap-2">
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <div className="flex items-center gap-3">
+                              {faculty.imageUrl ? (
+                                <div className="w-11 h-11 rounded-xl overflow-hidden relative border border-border flex-shrink-0">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={faculty.imageUrl} alt={faculty.name} className="w-full h-full object-cover" />
+                                </div>
+                              ) : (
+                                <div className="w-10 h-10 rounded-xl bg-scholarly-pale text-scholarly flex items-center justify-center flex-shrink-0">
+                                  <UserCheck className="w-5 h-5" />
+                                </div>
+                              )}
+                              <div>
                                 <h4 className="font-serif text-lg font-bold text-foreground">{faculty.name}</h4>
-                                {editingFacultyId === faculty.id && (
-                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-scholarly text-white">
-                                    Editing
-                                  </span>
-                                )}
+                                <span className="text-xs font-bold text-scholarly uppercase tracking-wider block mt-0.5">
+                                  {faculty.role}
+                                </span>
                               </div>
-                              <span className="text-xs font-bold text-scholarly uppercase tracking-wider block mt-0.5">
-                                {faculty.role}
-                              </span>
                             </div>
                             <div className="flex items-center gap-1">
                               <button
                                 type="button"
-                                onClick={() => handleStartEditFaculty(faculty)}
+                                onClick={() => setEditingFaculty({ ...faculty })}
                                 className="p-1.5 rounded-lg hover:bg-scholarly/10 text-muted hover:text-scholarly transition-colors flex-shrink-0"
                                 title="Edit faculty member"
                               >
@@ -1824,6 +1838,166 @@ export default function AdminDashboard() {
                     ))}
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+
+          {/* EDIT FACULTY MODAL DIALOG */}
+          {editingFaculty && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]">
+              <div className="bg-card border border-border rounded-3xl p-6 md:p-8 max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative">
+                <div className="flex items-center justify-between pb-4 mb-6 border-b border-border">
+                  <div>
+                    <h3 className="font-serif text-xl font-bold text-foreground">Edit Faculty Member</h3>
+                    <p className="text-xs text-muted">Update profile details, biography, credentials, and portrait photo.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setEditingFaculty(null)}
+                    className="p-1.5 rounded-full hover:bg-border/40 text-muted hover:text-foreground transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <form onSubmit={handleUpdateFaculty} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Full Name &amp; Title</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingFaculty.name}
+                      onChange={(e) => setEditingFaculty({ ...editingFaculty, name: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Role / Position</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingFaculty.role}
+                      onChange={(e) => setEditingFaculty({ ...editingFaculty, role: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Academic Credentials</label>
+                    <input
+                      type="text"
+                      required
+                      value={editingFaculty.credentials}
+                      onChange={(e) => setEditingFaculty({ ...editingFaculty, credentials: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Biography / Overview</label>
+                    <textarea
+                      required
+                      rows={3}
+                      value={editingFaculty.bio}
+                      onChange={(e) => setEditingFaculty({ ...editingFaculty, bio: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">
+                      Key Areas of Expertise (Comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      value={editingFaculty.expertise || ""}
+                      onChange={(e) => setEditingFaculty({ ...editingFaculty, expertise: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  {/* Photo Upload for Edit Modal */}
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1.5">Staff Portrait Photo</label>
+                    {editingFaculty.imageUrl ? (
+                      <div className="relative rounded-2xl border border-border p-2.5 bg-background flex items-center gap-3">
+                        <div className="w-14 h-14 rounded-xl overflow-hidden bg-border/40 flex-shrink-0 relative border border-border">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={editingFaculty.imageUrl} alt="Staff preview" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-semibold text-foreground truncate">Photo Attached</p>
+                          <p className="text-[10px] text-muted">Click X to remove or choose a new photo</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setEditingFaculty({ ...editingFaculty, imageUrl: "" })}
+                          className="p-1.5 rounded-full hover:bg-red-500/10 text-red-500 transition-colors"
+                          title="Remove photo"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div
+                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const file = e.dataTransfer.files?.[0];
+                          if (file && file.type.startsWith("image/")) {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                              setEditingFaculty((prev: any) => ({ ...prev, imageUrl: reader.result as string }));
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="border-2 border-dashed border-border rounded-2xl p-4 text-center cursor-pointer hover:border-scholarly transition-colors bg-background"
+                      >
+                        <input
+                          type="file"
+                          accept="image/*"
+                          id="faculty-edit-photo-input"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onload = () => {
+                                setEditingFaculty((prev: any) => ({ ...prev, imageUrl: reader.result as string }));
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                        />
+                        <label htmlFor="faculty-edit-photo-input" className="cursor-pointer flex flex-col items-center">
+                          <UploadCloud className="w-6 h-6 text-muted mb-1" />
+                          <span className="text-xs font-semibold text-foreground">Click to upload new photo</span>
+                          <span className="text-[10px] text-muted">or drag &amp; drop file here</span>
+                        </label>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+                    <button
+                      type="button"
+                      onClick={() => setEditingFaculty(null)}
+                      className="px-5 py-2.5 rounded-xl border border-border hover:bg-border/30 text-foreground font-semibold text-sm transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmittingFaculty}
+                      className="px-6 py-2.5 rounded-xl bg-scholarly hover:bg-scholarly-dark text-white font-semibold text-sm transition-colors shadow-sm disabled:opacity-50"
+                    >
+                      {isSubmittingFaculty ? "Saving Changes..." : "Save Changes"}
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           )}
