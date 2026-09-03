@@ -1,41 +1,47 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
-import { GraduationCap, Award, BookOpen, UserCheck } from "lucide-react";
+import { GraduationCap, Award, UserCheck } from "lucide-react";
+import Image from "next/image";
 
-const leaders = [
-  {
-    name: "Ato Berhanu Tadesse",
-    role: "Head of School & Principal",
-    credentials: "M.Ed. Educational Leadership (Addis Ababa University) • B.Sc. Pedagogical Sciences",
-    bio: "With over 18 years of secondary school governance across Ethiopia, Ato Berhanu steers Pharo School Assosa’s academic standards, character development, and regional partnerships.",
-    expertise: ["Institutional Leadership", "Curriculum Governance", "Community Engagement"],
-  },
-  {
-    name: "Dr. Genet Haile",
-    role: "Head of Natural Sciences & Laboratory Director",
-    credentials: "Ph.D. Applied Chemistry • M.Sc. Molecular Biology",
-    bio: "Dr. Genet directs our purpose-built physics, chemistry, and biology laboratories, championing hands-on experimental inquiry, STEM research, and regional science fairs.",
-    expertise: ["Laboratory Sciences", "Inquiry-Based Learning", "STEM Mentorship"],
-  },
-  {
-    name: "Ato Solomon Mengistu",
-    role: "Head of Mathematics & Computing",
-    credentials: "M.Sc. Computational Mathematics • B.Ed. Mathematics Education",
-    bio: "Ato Solomon leads our national assessment preparation committees and student robotics society, maintaining an unbroken record of distinction in national STEM evaluations.",
-    expertise: ["Pure Mathematics", "Algorithmics & Coding", "Exam Strategy"],
-  },
-  {
-    name: "W/ro Tigist Alemu",
-    role: "Dean of Students & Guidance Counselor",
-    credentials: "M.A. Counseling Psychology • B.A. Sociology",
-    bio: "Dedicated to holistic student welfare, W/ro Tigist coordinates pastoral care, university career pathways, and active parent-teacher collaborative forums.",
-    expertise: ["Pastoral Care", "University Advising", "Student Mentorship"],
-  },
-];
+interface FacultyItem {
+  id: string;
+  name: string;
+  role: string;
+  credentials: string;
+  bio: string;
+  expertise: string;
+  imageUrl?: string | null;
+  order: number;
+}
 
 export default function FacultyLeadership() {
+  const [faculty, setFaculty] = useState<FacultyItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadFaculty() {
+      try {
+        const res = await fetch("/api/faculty", { cache: "no-store" });
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          setFaculty(json.data);
+        }
+      } catch (err) {
+        console.error("Failed to load faculty:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadFaculty();
+  }, []);
+
+  if (!isLoading && faculty.length === 0) {
+    return null;
+  }
+
   return (
     <section id="faculty" className="py-20 bg-slate-50 border-b border-border/70">
       <Container>
@@ -55,47 +61,67 @@ export default function FacultyLeadership() {
 
         {/* Leadership Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {leaders.map((leader) => (
-            <div
-              key={leader.name}
-              className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-left flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-start justify-between gap-4 mb-3">
-                  <div>
-                    <h3 className="font-serif text-2xl font-bold text-slate-900 tracking-tight">
-                      {leader.name}
-                    </h3>
-                    <p className="text-xs font-bold text-scholarly uppercase tracking-wider mt-0.5">
-                      {leader.role}
-                    </p>
+          {faculty.map((leader) => {
+            const expertiseTags = leader.expertise
+              ? leader.expertise.split(",").map((t) => t.trim()).filter(Boolean)
+              : [];
+
+            return (
+              <div
+                key={leader.id}
+                className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-left flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div>
+                      <h3 className="font-serif text-2xl font-bold text-slate-900 tracking-tight">
+                        {leader.name}
+                      </h3>
+                      <p className="text-xs font-bold text-scholarly uppercase tracking-wider mt-0.5">
+                        {leader.role}
+                      </p>
+                    </div>
+
+                    {leader.imageUrl ? (
+                      <div className="w-12 h-12 rounded-xl overflow-hidden border border-slate-200 relative flex-shrink-0">
+                        <Image
+                          src={leader.imageUrl}
+                          alt={leader.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-10 h-10 rounded-xl bg-scholarly-pale text-scholarly flex items-center justify-center flex-shrink-0">
+                        <UserCheck className="w-5 h-5" />
+                      </div>
+                    )}
                   </div>
-                  <div className="w-10 h-10 rounded-xl bg-scholarly-pale text-scholarly flex items-center justify-center flex-shrink-0">
-                    <UserCheck className="w-5 h-5" />
+
+                  <div className="text-xs font-medium text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200 mb-4">
+                    {leader.credentials}
                   </div>
+
+                  <p className="text-sm text-slate-700 leading-relaxed mb-6 font-normal">
+                    {leader.bio}
+                  </p>
                 </div>
 
-                <div className="text-xs font-medium text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200 mb-4">
-                  {leader.credentials}
-                </div>
-
-                <p className="text-sm text-slate-700 leading-relaxed mb-6 font-normal">
-                  {leader.bio}
-                </p>
+                {expertiseTags.length > 0 && (
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                    {expertiseTags.map((exp) => (
+                      <span
+                        key={exp}
+                        className="text-[11px] font-semibold px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200"
+                      >
+                        {exp}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
-
-              <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2">
-                {leader.expertise.map((exp) => (
-                  <span
-                    key={exp}
-                    className="text-[11px] font-semibold px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200"
-                  >
-                    {exp}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Academic Faculty Benchmark Banner */}

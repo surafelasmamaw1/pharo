@@ -126,6 +126,47 @@ async function main() {
     ],
   });
 
+  // 5. Faculty & Academic Leadership
+  const existingFaculty = await prisma.facultyMember.count();
+  if (existingFaculty === 0) {
+    await prisma.facultyMember.createMany({
+      data: [
+        {
+          name: "Ato Berhanu Tadesse",
+          role: "Head of School & Principal",
+          credentials: "M.Ed. Educational Leadership (Addis Ababa University) • B.Sc. Pedagogical Sciences",
+          bio: "With over 18 years of secondary school governance across Ethiopia, Ato Berhanu steers Pharo School Assosa’s academic standards, character development, and regional partnerships.",
+          expertise: "Institutional Leadership, Curriculum Governance, Community Engagement",
+          order: 1,
+        },
+        {
+          name: "Dr. Genet Haile",
+          role: "Head of Natural Sciences & Laboratory Director",
+          credentials: "Ph.D. Applied Chemistry • M.Sc. Molecular Biology",
+          bio: "Dr. Genet directs our purpose-built physics, chemistry, and biology laboratories, championing hands-on experimental inquiry, STEM research, and regional science fairs.",
+          expertise: "Laboratory Sciences, Inquiry-Based Learning, STEM Mentorship",
+          order: 2,
+        },
+        {
+          name: "Ato Solomon Mengistu",
+          role: "Head of Mathematics & Computing",
+          credentials: "M.Sc. Computational Mathematics • B.Ed. Mathematics Education",
+          bio: "Ato Solomon leads our national assessment preparation committees and student robotics society, maintaining an unbroken record of distinction in national STEM evaluations.",
+          expertise: "Pure Mathematics, Algorithmics & Coding, Exam Strategy",
+          order: 3,
+        },
+        {
+          name: "W/ro Tigist Alemu",
+          role: "Dean of Students & Guidance Counselor",
+          credentials: "M.A. Counseling Psychology • B.A. Sociology",
+          bio: "Dedicated to holistic student welfare, W/ro Tigist coordinates pastoral care, university career pathways, and active parent-teacher collaborative forums.",
+          expertise: "Pastoral Care, University Advising, Student Mentorship",
+          order: 4,
+        },
+      ],
+    });
+  }
+
   console.log("Database successfully seeded with 100% editable records!");
 }
 

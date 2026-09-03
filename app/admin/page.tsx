@@ -25,6 +25,7 @@ import {
   Megaphone,
   Heart,
   Images,
+  GraduationCap,
 } from "lucide-react";
 
 interface ApplicationItem {
@@ -91,6 +92,18 @@ interface GalleryPhotoItem {
   createdAt: string;
 }
 
+interface FacultyItem {
+  id: string;
+  name: string;
+  role: string;
+  credentials: string;
+  bio: string;
+  expertise: string;
+  imageUrl?: string;
+  order: number;
+  createdAt: string;
+}
+
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [passwordInput, setPasswordInput] = useState<string>("");
@@ -99,7 +112,7 @@ export default function AdminDashboard() {
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
   const [activeTab, setActiveTab] = useState<
-    "applications" | "inquiries" | "news" | "settings" | "testimonials" | "gallery"
+    "applications" | "inquiries" | "news" | "settings" | "testimonials" | "gallery" | "faculty"
   >("applications");
 
   // Data lists
@@ -116,6 +129,7 @@ export default function AdminDashboard() {
   });
   const [testimonials, setTestimonials] = useState<TestimonialItem[]>([]);
   const [galleryPhotos, setGalleryPhotos] = useState<GalleryPhotoItem[]>([]);
+  const [facultyList, setFacultyList] = useState<FacultyItem[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -147,6 +161,17 @@ export default function AdminDashboard() {
   });
   const [isSubmittingGallery, setIsSubmittingGallery] = useState<boolean>(false);
   const [gallerySuccessMsg, setGallerySuccessMsg] = useState<string>("");
+
+  const [newFaculty, setNewFaculty] = useState({
+    name: "",
+    role: "",
+    credentials: "",
+    bio: "",
+    expertise: "",
+    imageUrl: "",
+  });
+  const [isSubmittingFaculty, setIsSubmittingFaculty] = useState<boolean>(false);
+  const [facultySuccessMsg, setFacultySuccessMsg] = useState<string>("");
 
   const [isSavingSettings, setIsSavingSettings] = useState<boolean>(false);
   const [settingsSuccessMsg, setSettingsSuccessMsg] = useState<string>("");
@@ -204,22 +229,24 @@ export default function AdminDashboard() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const [appRes, inqRes, newsRes, settingsRes, testRes, gallRes] = await Promise.all([
+      const [appRes, inqRes, newsRes, settingsRes, testRes, gallRes, facRes] = await Promise.all([
         fetch("/api/admissions"),
         fetch("/api/contact"),
         fetch("/api/news"),
         fetch("/api/settings"),
         fetch("/api/testimonials"),
         fetch("/api/gallery"),
+        fetch("/api/faculty"),
       ]);
 
-      const [appData, inqData, newsData, settingsData, testData, gallData] = await Promise.all([
+      const [appData, inqData, newsData, settingsData, testData, gallData, facData] = await Promise.all([
         appRes.json(),
         inqRes.json(),
         newsRes.json(),
         settingsRes.json(),
         testRes.json(),
         gallRes.json(),
+        facRes.json(),
       ]);
 
       if (appData.success) setApplications(appData.data || []);
@@ -237,6 +264,7 @@ export default function AdminDashboard() {
       }
       if (testData.success) setTestimonials(testData.data || []);
       if (gallData.success) setGalleryPhotos(gallData.data || []);
+      if (facData.success) setFacultyList(facData.data || []);
     } catch (err) {
       console.error("Failed to load admin data:", err);
     } finally {
@@ -492,6 +520,50 @@ export default function AdminDashboard() {
     }
   };
 
+  // Faculty & Leadership handlers
+  const handleCreateFaculty = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingFaculty(true);
+    setFacultySuccessMsg("");
+
+    try {
+      const res = await fetch("/api/faculty", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newFaculty),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setFacultySuccessMsg("Faculty member added successfully!");
+        setNewFaculty({
+          name: "",
+          role: "",
+          credentials: "",
+          bio: "",
+          expertise: "",
+          imageUrl: "",
+        });
+        fetchData();
+      } else {
+        alert(data.message || "Failed to add faculty member");
+      }
+    } catch (err) {
+      console.error("Failed to add faculty member:", err);
+    } finally {
+      setIsSubmittingFaculty(false);
+    }
+  };
+
+  const handleDeleteFaculty = async (id: string) => {
+    if (!confirm("Are you sure you want to remove this faculty member?")) return;
+    try {
+      await fetch(`/api/faculty?id=${id}`, { method: "DELETE" });
+      fetchData();
+    } catch (err) {
+      console.error("Failed to delete faculty member:", err);
+    }
+  };
+
   // Loading state
   if (isAuthenticated === null) {
     return (
@@ -680,6 +752,18 @@ export default function AdminDashboard() {
             >
               <Images className="w-4 h-4" />
               Photo Gallery ({galleryPhotos.length})
+            </button>
+
+            <button
+              onClick={() => setActiveTab("faculty")}
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
+                activeTab === "faculty"
+                  ? "bg-scholarly text-white shadow-sm"
+                  : "text-muted hover:text-foreground hover:bg-border/40"
+              }`}
+            >
+              <GraduationCap className="w-4 h-4" />
+              Faculty &amp; Staff ({facultyList.length})
             </button>
           </div>
 
@@ -1482,6 +1566,167 @@ export default function AdminDashboard() {
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* TAB 7: Faculty & Staff */}
+          {activeTab === "faculty" && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Form */}
+              <div className="p-6 rounded-3xl border border-border bg-card shadow-sm h-fit">
+                <h3 className="text-lg font-bold text-foreground mb-1">Add Faculty or Leadership</h3>
+                <p className="text-xs text-muted mb-6">
+                  Add administrators, department leads, or instructors to the public directory.
+                </p>
+
+                {facultySuccessMsg && (
+                  <div className="p-3 mb-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 text-xs font-medium">
+                    {facultySuccessMsg}
+                  </div>
+                )}
+
+                <form onSubmit={handleCreateFaculty} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Full Name &amp; Title</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Ato Berhanu Tadesse"
+                      value={newFaculty.name}
+                      onChange={(e) => setNewFaculty({ ...newFaculty, name: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Role / Position</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Head of School &amp; Principal"
+                      value={newFaculty.role}
+                      onChange={(e) => setNewFaculty({ ...newFaculty, role: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Academic Credentials</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. M.Ed. Educational Leadership • B.Sc. Physics"
+                      value={newFaculty.credentials}
+                      onChange={(e) => setNewFaculty({ ...newFaculty, credentials: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Biography / Overview</label>
+                    <textarea
+                      required
+                      rows={3}
+                      placeholder="Brief background on educational experience and leadership..."
+                      value={newFaculty.bio}
+                      onChange={(e) => setNewFaculty({ ...newFaculty, bio: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">
+                      Key Areas of Expertise (Comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Curriculum Governance, STEM, Mentorship"
+                      value={newFaculty.expertise}
+                      onChange={(e) => setNewFaculty({ ...newFaculty, expertise: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-muted mb-1">Staff Photo URL (Optional)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. /about-photo.png or https://..."
+                      value={newFaculty.imageUrl}
+                      onChange={(e) => setNewFaculty({ ...newFaculty, imageUrl: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-scholarly"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmittingFaculty}
+                    className="w-full py-2.5 rounded-xl bg-scholarly hover:bg-scholarly-dark text-white font-semibold text-sm transition-colors shadow-sm disabled:opacity-50"
+                  >
+                    {isSubmittingFaculty ? "Adding..." : "Add Faculty Member"}
+                  </button>
+                </form>
+              </div>
+
+              {/* Grid */}
+              <div className="lg:col-span-2">
+                <h3 className="text-lg font-bold text-foreground mb-4">
+                  Current Faculty &amp; Staff ({facultyList.length})
+                </h3>
+
+                {facultyList.length === 0 ? (
+                  <div className="p-8 text-center rounded-2xl border border-dashed border-border text-muted">
+                    No faculty members listed yet. Add one using the form on the left.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {facultyList.map((faculty) => (
+                      <div
+                        key={faculty.id}
+                        className="p-5 rounded-2xl border border-border bg-card shadow-sm flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-start justify-between gap-3 mb-2">
+                            <div>
+                              <h4 className="font-serif text-lg font-bold text-foreground">{faculty.name}</h4>
+                              <span className="text-xs font-bold text-scholarly uppercase tracking-wider block mt-0.5">
+                                {faculty.role}
+                              </span>
+                            </div>
+                            <button
+                              onClick={() => handleDeleteFaculty(faculty.id)}
+                              className="p-1.5 rounded-lg hover:bg-red-500/10 text-muted hover:text-red-500 transition-colors flex-shrink-0"
+                              title="Delete faculty member"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+
+                          <p className="text-[11px] font-medium text-muted bg-border/20 p-2 rounded-lg mb-2">
+                            {faculty.credentials}
+                          </p>
+                          <p className="text-xs text-foreground/80 line-clamp-3 mb-3 leading-relaxed">
+                            {faculty.bio}
+                          </p>
+                        </div>
+
+                        {faculty.expertise && (
+                          <div className="flex flex-wrap gap-1 pt-2 border-t border-border/40">
+                            {faculty.expertise.split(",").map((t, idx) => (
+                              <span
+                                key={idx}
+                                className="text-[10px] font-medium px-2 py-0.5 rounded bg-border/40 text-muted"
+                              >
+                                {t.trim()}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

@@ -85,3 +85,16 @@ model GalleryItem {
   createdAt DateTime @default(now())
 }
 
+// Faculty & Academic Leadership Model
+model FacultyMember {
+  id          String   @id @default(uuid())
+  name        String
+  role        String
+  credentials String
+  bio         String
+  expertise   String   @default("") // Comma-separated tags
+  imageUrl    String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
