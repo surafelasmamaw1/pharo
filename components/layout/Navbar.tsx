@@ -46,6 +46,23 @@ export default function Navbar() {
     return isHomePage ? href : `/${href}`;
   };
 
+  // Smooth scroll handler for hash links
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith("#")) return; // let Next.js handle regular routes
+    if (!isHomePage) return; // will navigate to /#section via resolveHref
+
+    e.preventDefault();
+    const id = href.slice(1); // strip the "#"
+    const target = document.getElementById(id);
+    if (target) {
+      const navbarHeight = 130; // account for fixed navbar height
+      const top = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+      window.scrollTo({ top, behavior: "smooth" });
+      setActiveSection(id);
+    }
+    setIsMenuOpen(false);
+  };
+
   const handleScroll = useCallback(() => {
     setIsScrolled(window.scrollY > 20);
 
@@ -138,15 +155,29 @@ export default function Navbar() {
             <div className="flex items-center gap-4 lg:gap-6">
               <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
                 {navItems.map((item) => {
-                  const isActive = activeSection === item.id;
+                  const isHashLink = item.href.startsWith("#");
+                  const isRouteLink = !isHashLink;
+
+                  // Home ("/"): only active when scrolled to top of home page
+                  // Other routes (/admissions, /gallery): active when pathname matches
+                  // Hash links (#about, #contact etc): active when scroll position matches
+                  const isActive =
+                    item.href === "/"
+                      ? isHomePage && activeSection === "home"
+                      : isRouteLink
+                      ? pathname.startsWith(item.href)
+                      : isHomePage && activeSection === item.id;
+
                   return (
                     <Link
                       key={item.name}
                       href={resolveHref(item.href)}
-                      className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors duration-150 ${isActive
+                      onClick={(e) => handleNavClick(e, item.href)}
+                      className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors duration-150 ${
+                        isActive
                           ? "text-scholarly font-bold border-b-2 border-scholarly rounded-b-none"
                           : "text-foreground/80 hover:text-scholarly hover:bg-slate-50"
-                        }`}
+                      }`}
                     >
                       {item.name}
                     </Link>
@@ -185,16 +216,31 @@ export default function Navbar() {
             >
               <Container>
                 <div className="py-4 space-y-1">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={resolveHref(item.href)}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="block px-4 py-2.5 rounded-lg text-sm font-semibold text-foreground hover:bg-slate-50 hover:text-scholarly"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
+                  {navItems.map((item) => {
+                    const isHashLink = item.href.startsWith("#");
+                    const isRouteLink = !isHashLink;
+                    const isActive =
+                      item.href === "/"
+                        ? isHomePage && activeSection === "home"
+                        : isRouteLink
+                        ? pathname.startsWith(item.href)
+                        : isHomePage && activeSection === item.id;
+
+                    return (
+                      <Link
+                        key={item.name}
+                        href={resolveHref(item.href)}
+                        onClick={(e) => handleNavClick(e, item.href)}
+                        className={`block px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                          isActive
+                            ? "text-scholarly bg-scholarly-pale border-l-2 border-scholarly"
+                            : "text-foreground hover:bg-slate-50 hover:text-scholarly"
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
                   <div className="pt-3 border-t border-border/60">
                     <Link
                       href="/admissions"
