@@ -83,17 +83,18 @@ export default function FacultyLeadership() {
                     </div>
 
                     {leader.imageUrl ? (
-                      <div className="w-12 h-12 rounded-xl overflow-hidden border border-slate-200 relative flex-shrink-0">
-                        <Image
+                      <div className="w-20 h-26 sm:w-24 sm:h-32 rounded-xl overflow-hidden border-2 border-slate-200 shadow-sm relative flex-shrink-0 bg-slate-100 aspect-[3/4]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
                           src={leader.imageUrl}
                           alt={leader.name}
-                          fill
-                          className="object-cover"
+                          className="w-full h-full object-cover object-top"
                         />
                       </div>
                     ) : (
-                      <div className="w-10 h-10 rounded-xl bg-scholarly-pale text-scholarly flex items-center justify-center flex-shrink-0">
-                        <UserCheck className="w-5 h-5" />
+                      <div className="w-16 h-20 sm:w-20 sm:h-26 rounded-xl bg-scholarly-pale border border-scholarly/20 text-scholarly flex flex-col items-center justify-center flex-shrink-0 aspect-[3/4]">
+                        <UserCheck className="w-6 h-6 mb-1 text-scholarly" />
+                        <span className="text-[9px] font-bold uppercase tracking-wider text-scholarly/70">Faculty</span>
                       </div>
                     )}
                   </div>

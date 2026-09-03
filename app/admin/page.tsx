@@ -1685,16 +1685,16 @@ export default function AdminDashboard() {
 
                   {/* Photo Upload (Drag & Drop or Click) */}
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1.5">Staff Portrait Photo</label>
+                    <label className="block text-xs font-semibold text-muted mb-1.5">Staff Portrait Photo (Passport Size)</label>
                     {newFaculty.imageUrl ? (
                       <div className="relative rounded-2xl border border-border p-2.5 bg-background flex items-center gap-3">
-                        <div className="w-14 h-14 rounded-xl overflow-hidden bg-border/40 flex-shrink-0 relative border border-border">
+                        <div className="w-16 h-20 rounded-xl overflow-hidden bg-border/40 flex-shrink-0 relative border-2 border-border shadow-xs aspect-[3/4]">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={newFaculty.imageUrl} alt="Staff preview" className="w-full h-full object-cover" />
+                          <img src={newFaculty.imageUrl} alt="Passport preview" className="w-full h-full object-cover object-top" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-foreground truncate">Photo Attached</p>
-                          <p className="text-[10px] text-muted">Ready to save</p>
+                          <p className="text-xs font-semibold text-foreground truncate">Passport Photo Attached</p>
+                          <p className="text-[10px] text-muted">3:4 portrait ratio ready</p>
                         </div>
                         <button
                           type="button"
@@ -1740,8 +1740,8 @@ export default function AdminDashboard() {
                         />
                         <label htmlFor="faculty-new-photo-input" className="cursor-pointer flex flex-col items-center">
                           <UploadCloud className="w-6 h-6 text-muted mb-1" />
-                          <span className="text-xs font-semibold text-foreground">Click to upload photo</span>
-                          <span className="text-[10px] text-muted">or drag &amp; drop file here</span>
+                          <span className="text-xs font-semibold text-foreground">Click to upload passport photo</span>
+                          <span className="text-[10px] text-muted">or drag &amp; drop 3:4 portrait file</span>
                         </label>
                       </div>
                     )}
@@ -1778,13 +1778,14 @@ export default function AdminDashboard() {
                           <div className="flex items-start justify-between gap-3 mb-3">
                             <div className="flex items-center gap-3">
                               {faculty.imageUrl ? (
-                                <div className="w-11 h-11 rounded-xl overflow-hidden relative border border-border flex-shrink-0">
+                                <div className="w-12 h-16 rounded-xl overflow-hidden relative border-2 border-border flex-shrink-0 aspect-[3/4] shadow-xs">
                                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img src={faculty.imageUrl} alt={faculty.name} className="w-full h-full object-cover" />
+                                  <img src={faculty.imageUrl} alt={faculty.name} className="w-full h-full object-cover object-top" />
                                 </div>
                               ) : (
-                                <div className="w-10 h-10 rounded-xl bg-scholarly-pale text-scholarly flex items-center justify-center flex-shrink-0">
-                                  <UserCheck className="w-5 h-5" />
+                                <div className="w-12 h-16 rounded-xl bg-scholarly-pale text-scholarly flex flex-col items-center justify-center flex-shrink-0 aspect-[3/4] border border-scholarly/20">
+                                  <UserCheck className="w-5 h-5 mb-0.5" />
+                                  <span className="text-[8px] font-bold uppercase text-scholarly/70">Staff</span>
                                 </div>
                               )}
                               <div>
@@ -1919,16 +1920,16 @@ export default function AdminDashboard() {
 
                   {/* Photo Upload for Edit Modal */}
                   <div>
-                    <label className="block text-xs font-semibold text-muted mb-1.5">Staff Portrait Photo</label>
+                    <label className="block text-xs font-semibold text-muted mb-1.5">Staff Portrait Photo (Passport Size)</label>
                     {editingFaculty.imageUrl ? (
                       <div className="relative rounded-2xl border border-border p-2.5 bg-background flex items-center gap-3">
-                        <div className="w-14 h-14 rounded-xl overflow-hidden bg-border/40 flex-shrink-0 relative border border-border">
+                        <div className="w-16 h-20 rounded-xl overflow-hidden bg-border/40 flex-shrink-0 relative border-2 border-border shadow-xs aspect-[3/4]">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={editingFaculty.imageUrl} alt="Staff preview" className="w-full h-full object-cover" />
+                          <img src={editingFaculty.imageUrl} alt="Passport preview" className="w-full h-full object-cover object-top" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-foreground truncate">Photo Attached</p>
-                          <p className="text-[10px] text-muted">Click X to remove or choose a new photo</p>
+                          <p className="text-xs font-semibold text-foreground truncate">Passport Photo Attached</p>
+                          <p className="text-[10px] text-muted">3:4 portrait ratio • Click X to replace</p>
                         </div>
                         <button
                           type="button"
