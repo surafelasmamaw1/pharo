@@ -1772,11 +1772,11 @@ export default function AdminDashboard() {
                     {facultyList.map((faculty) => (
                       <div
                         key={faculty.id}
-                        className="p-5 rounded-2xl border border-border bg-card shadow-sm flex flex-col justify-between"
+                        className="p-5 rounded-2xl border border-border bg-white shadow-sm flex flex-col justify-between overflow-hidden"
                       >
                         <div>
                           <div className="flex items-start justify-between gap-3 mb-3">
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 min-w-0 flex-1">
                               {faculty.imageUrl ? (
                                 <div className="w-12 h-16 rounded-xl overflow-hidden relative border-2 border-border flex-shrink-0 aspect-[3/4] shadow-xs">
                                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -1788,14 +1788,14 @@ export default function AdminDashboard() {
                                   <span className="text-[8px] font-bold uppercase text-scholarly/70">Staff</span>
                                 </div>
                               )}
-                              <div>
-                                <h4 className="font-serif text-lg font-bold text-foreground">{faculty.name}</h4>
-                                <span className="text-xs font-bold text-scholarly uppercase tracking-wider block mt-0.5">
+                              <div className="min-w-0 flex-1">
+                                <h4 className="font-serif text-lg font-bold text-foreground break-words">{faculty.name}</h4>
+                                <span className="text-xs font-bold text-scholarly uppercase tracking-wider block mt-0.5 break-words">
                                   {faculty.role}
                                 </span>
                               </div>
                             </div>
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 flex-shrink-0">
                               <button
                                 type="button"
                                 onClick={() => setEditingFaculty({ ...faculty })}
@@ -1815,10 +1815,10 @@ export default function AdminDashboard() {
                             </div>
                           </div>
 
-                          <p className="text-[11px] font-medium text-muted bg-border/20 p-2 rounded-lg mb-2">
+                          <p className="text-[11px] font-medium text-muted bg-border/20 p-2 rounded-lg mb-2 break-words [overflow-wrap:anywhere]">
                             {faculty.credentials}
                           </p>
-                          <p className="text-xs text-foreground/80 line-clamp-3 mb-3 leading-relaxed">
+                          <p className="text-xs text-foreground/80 line-clamp-3 mb-3 leading-relaxed break-words [overflow-wrap:anywhere]">
                             {faculty.bio}
                           </p>
                         </div>
@@ -1828,7 +1828,7 @@ export default function AdminDashboard() {
                             {faculty.expertise.split(",").map((t, idx) => (
                               <span
                                 key={idx}
-                                className="text-[10px] font-medium px-2 py-0.5 rounded bg-border/40 text-muted"
+                                className="text-[10px] font-medium px-2 py-0.5 rounded bg-border/40 text-muted break-words"
                               >
                                 {t.trim()}
                               </span>

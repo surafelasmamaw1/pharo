@@ -69,15 +69,15 @@ export default function FacultyLeadership() {
             return (
               <div
                 key={leader.id}
-                className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-left flex flex-col justify-between"
+                className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow text-left flex flex-col justify-between overflow-hidden"
               >
                 <div>
                   <div className="flex items-start justify-between gap-4 mb-3">
-                    <div>
-                      <h3 className="font-serif text-2xl font-bold text-slate-900 tracking-tight">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-serif text-2xl font-bold text-slate-900 tracking-tight break-words">
                         {leader.name}
                       </h3>
-                      <p className="text-xs font-bold text-scholarly uppercase tracking-wider mt-0.5">
+                      <p className="text-xs font-bold text-scholarly uppercase tracking-wider mt-0.5 break-words">
                         {leader.role}
                       </p>
                     </div>
@@ -99,11 +99,11 @@ export default function FacultyLeadership() {
                     )}
                   </div>
 
-                  <div className="text-xs font-medium text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200 mb-4">
+                  <div className="text-xs font-medium text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200 mb-4 break-words [overflow-wrap:anywhere]">
                     {leader.credentials}
                   </div>
 
-                  <p className="text-sm text-slate-700 leading-relaxed mb-6 font-normal">
+                  <p className="text-sm text-slate-700 leading-relaxed mb-6 font-normal break-words [overflow-wrap:anywhere]">
                     {leader.bio}
                   </p>
                 </div>
