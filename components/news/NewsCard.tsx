@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { CalendarDays, ArrowRight, Tag as TagIcon, X } from "lucide-react";
 import Button from "../ui/Button";
 import type { NewsItem } from "../sections/NewsEvents";
@@ -28,7 +29,7 @@ const categoryImageStyles: Record<NewsItem["category"], string> = {
     "from-accent via-orange-500 to-amber-200 dark:from-accent dark:via-orange-700 dark:to-amber-950",
 };
 
-export default function ProjectCard({
+export default function NewsCard({
   project,
   index,
 }: {
@@ -98,13 +99,23 @@ export default function ProjectCard({
             {project.description}
           </p>
           <div className="mt-auto">
-            <button
-              onClick={() => setIsOpen(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-semibold text-foreground hover:bg-scholarly hover:text-white hover:border-scholarly transition-all duration-200 group/btn"
-            >
-              Read More
-              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" strokeWidth={2} />
-            </button>
+            {project.slug ? (
+              <Link
+                href={`/news/${project.slug}`}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-semibold text-foreground hover:bg-scholarly hover:text-white hover:border-scholarly transition-all duration-200 group/btn"
+              >
+                Read Full Article
+                <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" strokeWidth={2} />
+              </Link>
+            ) : (
+              <button
+                onClick={() => setIsOpen(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-semibold text-foreground hover:bg-scholarly hover:text-white hover:border-scholarly transition-all duration-200 group/btn"
+              >
+                Read More
+                <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform duration-200" strokeWidth={2} />
+              </button>
+            )}
           </div>
         </div>
       </motion.article>

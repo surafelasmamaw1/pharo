@@ -122,7 +122,13 @@ export default function Navbar() {
             </span>
           </div>
           <div className="text-[11px] text-white/60 tracking-wider uppercase font-medium">
-
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 text-white/70 hover:text-white transition-colors"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-gold" />
+              Staff Portal
+            </Link>
           </div>
         </div>
       </div>
@@ -252,13 +258,21 @@ export default function Navbar() {
                       </Link>
                     );
                   })}
-                  <div className="pt-3 border-t border-border/60">
+                  <div className="pt-3 border-t border-border/60 space-y-2">
                     <Link
                       href="/admissions"
                       onClick={() => setIsMenuOpen(false)}
                       className="block w-full py-2.5 text-center rounded-lg bg-scholarly text-white font-bold text-xs uppercase tracking-wider shadow-sm"
                     >
                       Apply Now
+                    </Link>
+                    <Link
+                      href="/admin"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center justify-center gap-1.5 w-full py-2 text-center rounded-lg border border-border/80 text-muted hover:text-scholarly font-semibold text-xs transition-colors"
+                    >
+                      <ShieldCheck className="w-3.5 h-3.5 text-gold" />
+                      Staff / Admin Portal
                     </Link>
                   </div>
                 </div>

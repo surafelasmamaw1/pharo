@@ -31,7 +31,7 @@ export default function UniformGuide() {
                 B
               </div>
               <div>
-                <h3 className="font-serif text-xl font-bold text-slate-900">Boys' Academic Attire</h3>
+                <h3 className="font-serif text-xl font-bold text-slate-900">Boys&apos; Academic Attire</h3>
                 <p className="text-xs text-slate-500">Grades 7 through 12</p>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function UniformGuide() {
                 G
               </div>
               <div>
-                <h3 className="font-serif text-xl font-bold text-slate-900">Girls' Academic Attire</h3>
+                <h3 className="font-serif text-xl font-bold text-slate-900">Girls&apos; Academic Attire</h3>
                 <p className="text-xs text-slate-500">Grades 7 through 12</p>
               </div>
             </div>

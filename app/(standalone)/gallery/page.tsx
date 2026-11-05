@@ -20,7 +20,7 @@ const galleryItems: GalleryItem[] = [
   { id: 3, src: "/classrooms.png",    alt: "Pharo School classrooms",      category: "Classrooms" },
   { id: 4, src: "/library.png",       alt: "Pharo School library",         category: "Library" },
   { id: 5, src: "/computer-labs.png", alt: "Computer labs",                category: "Classrooms" },
-  { id: 6, src: "/ronaldo.jpg",       alt: "Football championship",        category: "Sports" },
+  { id: 6, src: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80&auto=format&fit=crop", alt: "School athletics and sports", category: "Sports" },
 ];
 
 const categories = ["All", "Campus", "Students", "Classrooms", "Library", "Sports", "Events"] as const;

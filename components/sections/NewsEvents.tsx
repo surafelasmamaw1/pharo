@@ -15,6 +15,7 @@ export type NewsItem = {
   imageTag?: string;
   image?: string;
   link?: string;
+  slug?: string;
 };
 
 const VISIBLE_COUNT = 6;
@@ -36,7 +37,8 @@ export default function NewsEvents() {
             description: item.snippet || item.content,
             imageTag: item.category,
             image: item.imageUrl || "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80&auto=format&fit=crop",
-            link: "#news-events",
+            link: item.slug ? `/news/${item.slug}` : "#news-events",
+            slug: item.slug,
           }));
           setItems(apiItems);
         }

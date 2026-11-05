@@ -31,7 +31,7 @@ function AdmissionsForm() {
     age: "7",
     gender: "Male",
     previousSchool: "",
-    city: "Hargeisa",
+    city: "Assosa",
     program: "Primary Education",
     notes: "",
   });
@@ -64,7 +64,7 @@ function AdmissionsForm() {
           age: "7",
           gender: "Male",
           previousSchool: "",
-          city: "Hargeisa",
+          city: "Assosa",
           program: "Primary Education",
           notes: "",
         });
@@ -165,7 +165,7 @@ function AdmissionsForm() {
             type="text"
             value={formData.city}
             onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-            placeholder="e.g. Hargeisa, Addis Ababa"
+            placeholder="e.g. Assosa, Bambasi, Addis Ababa"
             className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
           />
         </div>

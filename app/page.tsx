@@ -34,6 +34,7 @@ export default function Home() {
         <UniformGuide />
         <NewsEvents />
         <Testimonials />
+        <Gallery />
         <Admissions />
         <Contact />
       </main>

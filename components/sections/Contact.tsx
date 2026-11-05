@@ -3,7 +3,20 @@
 import { useState } from "react";
 import { m } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+const zodResolver = (schema: z.ZodTypeAny) => async (values: any) => {
+  const result = schema.safeParse(values);
+  if (result.success) {
+    return { values: result.data, errors: {} };
+  }
+  const errors: Record<string, any> = {};
+  for (const issue of result.error.issues) {
+    const field = issue.path[0];
+    if (field && !errors[field]) {
+      errors[field] = { type: issue.code, message: issue.message };
+    }
+  }
+  return { values: {}, errors };
+};
 import { Mail, Phone, MapPin, Clock, Navigation } from "lucide-react";
 import { z } from "zod";
 import Container from "../ui/Container";

@@ -22,11 +22,11 @@ export const siteConfig = {
   },
 
   social: {
-    facebook: "#",
-    x: "#",
-    instagram: "#",
-    linkedin: "#",
-    youtube: "#",
+    facebook: "https://www.facebook.com/pharofoundation",
+    x: "https://x.com/PharoFoundation",
+    instagram: "https://www.instagram.com/pharofoundation",
+    linkedin: "https://www.linkedin.com/company/the-pharo-foundation",
+    youtube: "https://www.youtube.com/@ThePharoFoundation",
   },
 
   foundingYear: 2020,
@@ -45,7 +45,7 @@ export const siteConfig = {
       "Pharo Foundation",
       "quality education Africa",
     ] as string[],
-    ogImage: "/og-image.png",
+    ogImage: "/og-image.svg",
   },
 
   timeline: [

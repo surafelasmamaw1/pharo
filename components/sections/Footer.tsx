@@ -8,6 +8,7 @@ import {
   Instagram,
   Linkedin,
   Youtube,
+  Lock,
 } from "lucide-react";
 
 function XLogo({ className }: { className?: string }) {
@@ -230,6 +231,14 @@ export default function Footer() {
             </Link>
             <Link href="#contact" className="text-muted hover:text-scholarly transition-colors">
               Contact
+            </Link>
+            <Link
+              href="/admin"
+              className="inline-flex items-center gap-1.5 text-muted/70 hover:text-scholarly transition-colors font-medium border-l border-border/60 pl-4"
+              title="Staff & Admin Portal"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              Admin Portal
             </Link>
           </div>
         </div>

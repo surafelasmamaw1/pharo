@@ -146,7 +146,7 @@ export default function About() {
                 What Pharo Schools Stand For
               </h2>
               <p className="text-muted leading-relaxed text-base md:text-lg mb-4">
-                In a continent where 40% of the population is aged 15 years and younger, schools are by definition the point of maximum development impact. The challenge is to create schools that do more than boost enrolment rate statistics and find creative ways of engaging the child, leveraging the school and home environments, in order to improve the quality of learning. With this approach, we create tomorrow's local and global leaders, from kindergarten all the way to secondary school education.
+                In a continent where 40% of the population is aged 15 years and younger, schools are by definition the point of maximum development impact. The challenge is to create schools that do more than boost enrolment rate statistics and find creative ways of engaging the child, leveraging the school and home environments, in order to improve the quality of learning. With this approach, we create tomorrow&apos;s local and global leaders, from kindergarten all the way to secondary school education.
               </p>
               <p className="text-muted leading-relaxed text-base md:text-lg">
                 All Pharo Schools have a common identity, which is rooted in our commitment to excellent education and our values which guide all our students and teachers. Therefore Pharo Schools have developed a comprehensive quality management framework focusing on quality teaching, learning and school management.

@@ -28,6 +28,10 @@ import {
   GraduationCap,
   Pencil,
 } from "lucide-react";
+import ApplicationsTab from "./components/ApplicationsTab";
+import InquiriesTab from "./components/InquiriesTab";
+import SettingsTab from "./components/SettingsTab";
+import { useToast, ToastContainer } from "@/components/ui/Toast";
 
 interface ApplicationItem {
   id: string;
@@ -106,6 +110,7 @@ interface FacultyItem {
 }
 
 export default function AdminDashboard() {
+  const { toasts, addToast, removeToast } = useToast();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [passwordInput, setPasswordInput] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -547,7 +552,7 @@ export default function AdminDashboard() {
         });
         fetchData();
       } else {
-        alert(data.message || "Failed to add faculty member");
+        addToast(data.message || "Failed to add faculty member", "error");
       }
     } catch (err) {
       console.error("Failed to add faculty member:", err);
@@ -573,7 +578,7 @@ export default function AdminDashboard() {
         setFacultySuccessMsg("Faculty member updated successfully!");
         fetchData();
       } else {
-        alert(data.message || "Failed to update faculty member");
+        addToast(data.message || "Failed to update faculty member", "error");
       }
     } catch (err) {
       console.error("Failed to update faculty member:", err);
@@ -661,9 +666,7 @@ export default function AdminDashboard() {
                   {isLoggingIn ? "Authenticating..." : "Unlock Dashboard"}
                 </button>
               </form>
-              <p className="text-[11px] text-muted mt-6">
-                Default password: <code className="bg-border/40 px-1.5 py-0.5 rounded font-mono text-foreground">pharo2026</code> (configured in <code className="bg-border/40 px-1.5 py-0.5 rounded font-mono text-foreground">.env.local</code>)
-              </p>
+              
             </div>
           </Container>
         </main>
@@ -800,90 +803,16 @@ export default function AdminDashboard() {
 
           {/* TAB 1: Applications */}
           {activeTab === "applications" && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold text-foreground mb-4">Student Applications</h2>
-              {applications.length === 0 ? (
-                <div className="p-8 text-center rounded-2xl border border-dashed border-border text-muted">
-                  No applications received yet.
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {applications.map((app) => (
-                    <div key={app.id} className="p-5 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow">
-                      <div className="flex items-start justify-between gap-2 mb-3">
-                        <div>
-                          <h3 className="font-semibold text-lg text-foreground">{app.applicantName}</h3>
-                          <p className="text-xs text-muted">Grade/Level: <span className="font-medium text-foreground">{app.gradeLevel}</span></p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <select
-                            value={app.status}
-                            onChange={(e) => handleUpdateAppStatus(app.id, e.target.value)}
-                            className="px-2.5 py-1 rounded-full text-xs font-semibold bg-border/40 border border-border text-foreground focus:outline-none focus:ring-1 focus:ring-scholarly cursor-pointer"
-                          >
-                            <option value="PENDING">⏳ PENDING</option>
-                            <option value="REVIEWED">👀 REVIEWED</option>
-                            <option value="ACCEPTED">✅ ACCEPTED</option>
-                            <option value="REJECTED">❌ REJECTED</option>
-                          </select>
-                          <button
-                            onClick={() => handleDeleteApp(app.id)}
-                            className="p-1.5 rounded-lg hover:bg-red-500/10 text-muted hover:text-red-500 transition-colors"
-                            title="Delete application"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                      <div className="text-xs text-muted space-y-1 mb-3 pt-2 border-t border-border/50">
-                        <p><strong className="text-foreground">Email:</strong> {app.email}</p>
-                        <p><strong className="text-foreground">Phone:</strong> {app.phone} {app.emergencyPhone ? `(Emergency: ${app.emergencyPhone})` : ""}</p>
-                        {app.parentName && <p><strong className="text-foreground">Parent/Guardian:</strong> {app.parentName}</p>}
-                        {(app.age || app.gender || app.city) && (
-                          <p><strong className="text-foreground">Student Info:</strong> {[app.age ? `${app.age} yrs` : "", app.gender, app.city].filter(Boolean).join(" • ")}</p>
-                        )}
-                        {app.previousSchool && <p><strong className="text-foreground">Previous School:</strong> {app.previousSchool}</p>}
-                        {app.program && <p><strong className="text-foreground">Program:</strong> {app.program}</p>}
-                        {app.notes && <p className="mt-2 text-foreground/80 italic">"{app.notes}"</p>}
-                      </div>
-                      <div className="text-[11px] text-muted text-right">
-                        Submitted: {new Date(app.createdAt).toLocaleString()}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            <ApplicationsTab
+              applications={applications}
+              onUpdateStatus={handleUpdateAppStatus}
+              onDelete={handleDeleteApp}
+            />
           )}
 
           {/* TAB 2: Inquiries */}
           {activeTab === "inquiries" && (
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold text-foreground mb-4">Contact Inquiries</h2>
-              {inquiries.length === 0 ? (
-                <div className="p-8 text-center rounded-2xl border border-dashed border-border text-muted">
-                  No contact messages received yet.
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {inquiries.map((inq) => (
-                    <div key={inq.id} className="p-5 rounded-2xl border border-border bg-card shadow-sm">
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold text-foreground">{inq.name}</h3>
-                          <span className="text-xs text-muted">&lt;{inq.email}&gt;</span>
-                        </div>
-                        <span className="text-xs text-muted">{new Date(inq.createdAt).toLocaleDateString()}</span>
-                      </div>
-                      {inq.subject && <p className="text-sm font-medium text-scholarly mb-2">Subject: {inq.subject}</p>}
-                      <p className="text-sm text-foreground/90 bg-border/20 p-3 rounded-xl border border-border/40 whitespace-pre-wrap">
-                        {inq.message}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            <InquiriesTab inquiries={inquiries} />
           )}
 
           {/* TAB 3: News & Announcements */}
@@ -997,7 +926,7 @@ export default function AdminDashboard() {
                     <div className="flex flex-wrap gap-1 mt-2">
                       <span className="text-[10px] text-muted self-center">Presets:</span>
                       {[
-                        { label: "Football", url: "/ronaldo.jpg" },
+                        { label: "Students", url: "/about-photo.png" },
                         { label: "Classrooms", url: "/classrooms.png" },
                         { label: "Library", url: "/library.png" },
                         { label: "Campus", url: "https://images.unsplash.com/photo-1562774053-701939374585?w=800&q=80" },
@@ -1087,264 +1016,16 @@ export default function AdminDashboard() {
 
           {/* TAB 4: Site Settings & Urgent Banner */}
           {activeTab === "settings" && (
-            <div className="max-w-2xl bg-card border border-border rounded-3xl p-8 shadow-sm">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
-                <div className="w-10 h-10 rounded-xl bg-scholarly-pale text-scholarly flex items-center justify-center">
-                  <Sliders className="w-5 h-5" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-foreground">Site Settings &amp; Announcement Banner</h2>
-                  <p className="text-xs text-muted">Control the top urgent notification banner, tuition fees, and deadlines.</p>
-                </div>
-              </div>
-
-              {settingsSuccessMsg && (
-                <div className="p-3 mb-6 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 text-xs flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  {settingsSuccessMsg}
-                </div>
-              )}
-
-              <form onSubmit={handleSaveSettings} className="space-y-6">
-                {/* Urgent Banner Switch, Text, and Delete Button */}
-                <div className="p-5 rounded-2xl border border-border bg-background space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                      <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                        <Megaphone className="w-4 h-4 text-gold" />
-                        Top Urgent Announcement Banner
-                      </h4>
-                      <p className="text-xs text-muted">Displays a high-visibility announcement across the top of all pages.</p>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span
-                        className={`text-xs font-bold px-2.5 py-1 rounded-full border ${
-                          settings.urgentBannerActive
-                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/30"
-                            : "bg-slate-100 text-slate-500 border-slate-300"
-                        }`}
-                      >
-                        {settings.urgentBannerActive ? "ON (VISIBLE)" : "OFF (HIDDEN)"}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={handleDeleteBanner}
-                        disabled={isSavingSettings}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 text-xs font-semibold transition-colors border border-red-500/20"
-                        title="Delete and disable banner"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                        Delete Banner
-                      </button>
-                      <label className="relative inline-flex items-center cursor-pointer" title="Toggle Banner ON / OFF">
-                        <input
-                          type="checkbox"
-                          checked={settings.urgentBannerActive}
-                          onChange={(e) => handleToggleBanner(e.target.checked)}
-                          className="sr-only peer"
-                        />
-                        <div className="w-11 h-6 bg-border peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-scholarly"></div>
-                      </label>
-                    </div>
-                  </div>
-
-                  {settings.urgentBannerActive && (
-                    <div>
-                      <div className="flex items-center justify-between mb-1">
-                        <label className="block text-xs font-semibold text-muted">Banner Announcement Text</label>
-                        {settings.urgentBannerText && (
-                          <button
-                            type="button"
-                            onClick={() => setSettings({ ...settings, urgentBannerText: "" })}
-                            className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
-                          >
-                            <X className="w-3 h-3" /> Clear Text
-                          </button>
-                        )}
-                      </div>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={settings.urgentBannerText}
-                          onChange={(e) => setSettings({ ...settings, urgentBannerText: e.target.value })}
-                          placeholder="e.g. 📢 School reopens Monday, September 15 for the new academic semester!"
-                          className="w-full px-4 py-2.5 pr-10 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                        />
-                        {settings.urgentBannerText && (
-                          <button
-                            type="button"
-                            onClick={() => setSettings({ ...settings, urgentBannerText: "" })}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
-                            title="Clear input"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Fees & Deadlines */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="block text-xs font-semibold text-muted">Tuition Fee Display Text</label>
-                      {settings.tuitionFeeText && (
-                        <button
-                          type="button"
-                          onClick={() => setSettings({ ...settings, tuitionFeeText: "" })}
-                          className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
-                        >
-                          <X className="w-3 h-3" /> Clear
-                        </button>
-                      )}
-                    </div>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        value={settings.tuitionFeeText}
-                        onChange={(e) => setSettings({ ...settings, tuitionFeeText: e.target.value })}
-                        placeholder="e.g. ETB 9,700"
-                        className="w-full px-4 py-2.5 pr-8 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                      />
-                      {settings.tuitionFeeText && (
-                        <button
-                          type="button"
-                          onClick={() => setSettings({ ...settings, tuitionFeeText: "" })}
-                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                    <p className="text-[11px] text-muted mt-1">Displayed in the Admissions section on the homepage.</p>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="block text-xs font-semibold text-muted">Admissions Deadline</label>
-                      {settings.admissionDeadline && (
-                        <button
-                          type="button"
-                          onClick={() => setSettings({ ...settings, admissionDeadline: "" })}
-                          className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
-                        >
-                          <X className="w-3 h-3" /> Clear
-                        </button>
-                      )}
-                    </div>
-                    <div className="relative">
-                      <input
-                        type="text"
-                        value={settings.admissionDeadline}
-                        onChange={(e) => setSettings({ ...settings, admissionDeadline: e.target.value })}
-                        placeholder="e.g. September 30, 2026"
-                        className="w-full px-4 py-2.5 pr-8 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                      />
-                      {settings.admissionDeadline && (
-                        <button
-                          type="button"
-                          onClick={() => setSettings({ ...settings, admissionDeadline: "" })}
-                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Contact details */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="block text-xs font-semibold text-muted">Official Contact Phone</label>
-                      {settings.contactPhone && (
-                        <button
-                          type="button"
-                          onClick={() => setSettings({ ...settings, contactPhone: "" })}
-                          className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
-                        >
-                          <X className="w-3 h-3" /> Clear
-                        </button>
-                      )}
-                    </div>
-                    <div className="relative">
-                      <input
-                        type="tel"
-                        value={settings.contactPhone}
-                        onChange={(e) => setSettings({ ...settings, contactPhone: e.target.value })}
-                        placeholder="+251 91 234 5678"
-                        className="w-full px-4 py-2.5 pr-8 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                      />
-                      {settings.contactPhone && (
-                        <button
-                          type="button"
-                          onClick={() => setSettings({ ...settings, contactPhone: "" })}
-                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="block text-xs font-semibold text-muted">Official Contact Email</label>
-                      {settings.contactEmail && (
-                        <button
-                          type="button"
-                          onClick={() => setSettings({ ...settings, contactEmail: "" })}
-                          className="text-[11px] text-red-500 hover:underline flex items-center gap-1"
-                        >
-                          <X className="w-3 h-3" /> Clear
-                        </button>
-                      )}
-                    </div>
-                    <div className="relative">
-                      <input
-                        type="email"
-                        value={settings.contactEmail}
-                        onChange={(e) => setSettings({ ...settings, contactEmail: e.target.value })}
-                        placeholder="admissions@pharoschool.edu.et"
-                        className="w-full px-4 py-2.5 pr-8 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-scholarly text-sm"
-                      />
-                      {settings.contactEmail && (
-                        <button
-                          type="button"
-                          onClick={() => setSettings({ ...settings, contactEmail: "" })}
-                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted hover:text-red-500"
-                        >
-                          <X className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border">
-                  <button
-                    type="submit"
-                    disabled={isSavingSettings}
-                    className="px-6 py-3 rounded-xl bg-scholarly text-white font-bold text-sm hover:bg-scholarly-light transition-colors shadow-sm disabled:opacity-50"
-                  >
-                    {isSavingSettings ? "Saving..." : "Save Settings"}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleResetAllSettings}
-                    disabled={isSavingSettings}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-red-500/20 bg-red-500/10 hover:bg-red-500/20 text-red-500 font-semibold text-xs transition-colors"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                    Delete / Reset All Settings
-                  </button>
-                </div>
-              </form>
-            </div>
+            <SettingsTab
+              settings={settings}
+              onSettingsChange={setSettings}
+              onSave={handleSaveSettings}
+              onToggleBanner={handleToggleBanner}
+              onDeleteBanner={handleDeleteBanner}
+              onResetAll={handleResetAllSettings}
+              isSaving={isSavingSettings}
+              successMsg={settingsSuccessMsg}
+            />
           )}
 
           {/* TAB 5: Testimonials */}
@@ -1436,7 +1117,7 @@ export default function AdminDashboard() {
                           <span className="font-semibold text-foreground text-sm">{item.name}</span>
                           <span className="text-xs text-muted">— {item.role}</span>
                         </div>
-                        <p className="text-xs text-muted italic">"{item.quote}"</p>
+                        <p className="text-xs text-muted italic">&ldquo;{item.quote}&rdquo;</p>
                       </div>
                       <button
                         onClick={() => handleDeleteTestimonial(item.id)}
@@ -2003,6 +1684,7 @@ export default function AdminDashboard() {
             </div>
           )}
         </Container>
+        <ToastContainer toasts={toasts} onRemove={removeToast} />
       </main>
       <Footer />
     </>

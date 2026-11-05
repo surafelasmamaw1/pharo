@@ -55,7 +55,7 @@ export default function FacultyLeadership() {
           </div>
           <SectionHeading className="text-left">Experienced Educators Inspiring Excellence</SectionHeading>
           <p className="mt-4 text-slate-700 leading-relaxed text-base md:text-lg">
-            Our faculty brings together accomplished educators with advanced post-graduate credentials from leading universities in Ethiopia and abroad. Their shared commitment is to unlock each scholar's highest potential through rigor, mentorship, and personal care.
+            Our faculty brings together accomplished educators with advanced post-graduate credentials from leading universities in Ethiopia and abroad. Their shared commitment is to unlock each scholar&apos;s highest potential through rigor, mentorship, and personal care.
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export default function FacultyLeadership() {
             <div>
               <h4 className="font-serif text-lg font-bold text-slate-900">100% Certified Secondary Faculty</h4>
               <p className="text-xs text-slate-600 mt-0.5 max-w-xl">
-                All instructional staff hold specialized bachelor's degrees or higher in their respective academic fields, certified by the Ethiopian Ministry of Education.
+                All instructional staff hold specialized bachelor&apos;s degrees or higher in their respective academic fields, certified by the Ethiopian Ministry of Education.
               </p>
             </div>
           </div>

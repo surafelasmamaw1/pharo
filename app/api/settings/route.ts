@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { isAdminAuthenticated } from "@/app/api/admin/login/route";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -37,6 +38,10 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  if (!isAdminAuthenticated(req)) {
+    return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const body = await req.json();
     const {

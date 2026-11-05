@@ -1,140 +1,68 @@
-# Pharo Foundation Website & Admin Backend
+# Pharo School Assosa — Official Website
 
-Official website and administrative portal for **Pharo Foundation** — *Unlocking Africa's potential* — built with Next.js, Prisma ORM, SQLite, Tailwind CSS, and Framer Motion.
+The official website for **Pharo School Assosa**, located in Assosa, BGRS, Ethiopia. Built with Next.js 16, Prisma, and Tailwind CSS.
 
----
+## Tech Stack
 
-## 🚀 Tech Stack & Infrastructure
+- **Framework**: Next.js 16 (App Router)
+- **Database**: SQLite via Prisma (switch to PostgreSQL for production)
+- **Styling**: Tailwind CSS v3
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Forms**: React Hook Form + Zod validation
 
-- **Next.js 16 (App Router & Turbopack)** — Fullstack React framework
-- **React 19** — UI library
-- **Prisma ORM (v5.22.0)** — Database ORM & schema management
-- **SQLite (`prisma/dev.db`)** — Local lightweight database engine
-- **TypeScript** — End-to-end type safety
-- **Tailwind CSS** — Utility-first responsive design
-- **Framer Motion** — Smooth animations and modal transitions
-- **Lucide React** — Modern UI icons
-- **Next Themes** — Light/dark theme provider
-
----
-
-## 🔒 Admin Portal & Backend Architecture
-
-| Route / Feature | Method | Description |
-|---|---|---|
-| **`/admin`** | `GET` | Administrative portal to manage student applications, read contact form inquiries, and publish news announcements. |
-| **`/api/admin/login`** | `POST`, `GET`, `DELETE` | Passcode authentication gate (`pharo2026`) with HTTP-only session cookies and logout functionality. |
-| **`/api/admissions`** | `POST`, `GET`, `PATCH`, `DELETE` | Online admissions API: receives applications, updates status (`PENDING`, `REVIEWED`, `ACCEPTED`, `REJECTED`), and handles record deletion. |
-| **`/api/contact`** | `POST`, `GET` | Receives contact form submissions, stores them in SQLite DB, and falls back to Web3Forms. |
-| **`/api/news`** | `POST`, `GET`, `DELETE` | Dynamic news publishing API with image support and 1-click deletion. |
-
----
-
-## 🛠️ Key Features
-
-- **🔒 Passcode-Protected Admin Portal (`/admin`)**:
-  - Protected with a passcode lock screen (`ADMIN_PASSWORD` in `.env.local`).
-  - Session cookie handling and logout button.
-- **📝 Comprehensive Student Admissions Form (`/admissions`)**:
-  - Accepts Student Name, Parent Name, Email, Phone Number, Emergency Contact Phone, Age, Gender (Male/Female), City/Region, Previous School Attended, Grade Level, and Notes.
-  - Interactive status review in Admin Portal.
-- **🖼️ Drag & Drop News & Event Publisher**:
-  - Interactive Drag & Drop image file picker or local computer file browser.
-  - Instant live image preview, quick preset buttons, and 1-click article removal.
-  - Live dynamic news feed on the main website (`/api/news`).
-- **🌙 Theme Switcher**: Full Light / Dark mode support.
-
----
-
-## 💻 Getting Started
-
-### 1. Installation
+## Getting Started
 
 ```bash
+# Install dependencies
 npm install
-```
 
-### 2. Database Sync & Client Generation
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local with your values
 
-```bash
-npx prisma db push
+# Generate Prisma client
 npx prisma generate
-```
 
-### 3. Launch Development Server
+# Run database migrations
+npx prisma db push
 
-```bash
+# Seed the database (optional)
+node scripts/seed.js
+
+# Start development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.  
-Access the Admin Portal at [http://localhost:3000/admin](http://localhost:3000/admin) *(Passcode: `pharo2026`)*.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
+## Environment Variables
 
-## 📁 Project Structure
+Create a `.env.local` file with:
 
-```text
-.
-├── app/
-│   ├── (standalone)/
-│   │   └── admissions/page.tsx   # Interactive Online Admissions Form
-│   ├── admin/
-│   │   └── page.tsx              # Passcode-Protected Admin Dashboard
-│   ├── api/
-│   │   ├── admin/login/route.ts  # Admin session authentication API
-│   │   ├── admissions/route.ts   # Student admissions CRUD API
-│   │   ├── contact/route.ts      # Contact form submission API
-│   │   └── news/route.ts         # Announcement publishing & deletion API
-│   ├── layout.tsx                # Root layout + metadata
-│   ├── not-found.tsx             # 404 page
-│   └── page.tsx                  # Home page
-├── components/
-│   ├── layout/
-│   │   ├── Navbar.tsx            # Responsive navigation bar
-│   │   ├── BackToTop.tsx         # Scroll to top button
-│   │   └── ThemeProvider.tsx     # Next-themes provider
-│   ├── sections/
-│   │   ├── Hero.tsx              # Hero section
-│   │   ├── About.tsx             # Mission & vision
-│   │   ├── Academics.tsx         # Educational programs
-│   │   ├── Facilities.tsx        # Campus facilities grid
-│   │   ├── StudentLife.tsx       # Student activities
-│   │   ├── NewsEvents.tsx        # Dynamic news & announcements list
-│   │   ├── Admissions.tsx        # Admissions overview
-│   │   ├── Contact.tsx           # Contact form
-│   │   └── Footer.tsx            # Footer navigation & social links
-│   └── ui/                       # Reusable UI components
-├── lib/
-│   └── prisma.ts                 # Global Prisma Client instance
-├── prisma/
-│   ├── dev.db                    # SQLite database file
-│   └── schema.prisma             # Database models (Application, Inquiry, NewsEvent)
-├── .env.local                    # Local environment secrets (ADMIN_PASSWORD, WEB3FORMS_KEY)
-└── README.md
+```env
+# Web3Forms API key for contact/admissions email notifications
+WEB3FORMS_ACCESS_KEY=your_key_here
+
+# Admin dashboard password
+ADMIN_PASSWORD=your_secure_password_here
+
+# Session signing secret (use a long random string in production)
+SESSION_SECRET=your_very_long_random_secret_here
 ```
 
----
+## Admin Dashboard
 
-## 📦 Scripts
+Navigate to `/admin` to access the admin dashboard. The default password is set via `ADMIN_PASSWORD` in `.env.local`.
 
-```bash
-npm run dev       # Start development server on localhost:3000
-npm run build     # Build production bundle & verify TypeScript types
-npm run start     # Run production build server
-npm run lint      # Run ESLint validation
-```
+## OG Image
 
----
+The file `public/og-image.svg` is a placeholder. Replace it with a proper 1200×630 PNG for best social sharing results.
 
-## 🌐 Deployment to Production
+## Deployment
 
-1. **Database**: To connect to a cloud database (PostgreSQL, Supabase, Neon), update `provider = "postgresql"` and `url = env("DATABASE_URL")` in `prisma/schema.prisma`.
-2. **Environment Variables**: Set `ADMIN_PASSWORD` and `DATABASE_URL` in your hosting dashboard (e.g. Vercel, Railway, Render).
-3. **Repository**: [github.com/surafelasmamaw1/pharo](https://github.com/surafelasmamaw1/pharo)
-
----
-
-## 📄 License
-
-MIT © Pharo Foundation
+For production deployment:
+1. Switch from SQLite to PostgreSQL (Neon, Supabase, or Railway)
+2. Update `prisma/schema.prisma` datasource to `postgresql`
+3. Set all environment variables in your hosting provider
+4. Run `npx prisma migrate deploy`

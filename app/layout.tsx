@@ -25,9 +25,13 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.meta.title,
     template: `%s | ${siteConfig.name}`,
+  },
+  alternates: {
+    canonical: siteConfig.url,
   },
   description: siteConfig.meta.description,
   keywords: siteConfig.meta.keywords,
