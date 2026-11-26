@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { MotionProvider } from "@/lib/motion";
 import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
@@ -81,11 +80,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${manrope.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${cormorant.variable} ${manrope.variable}`}>
       <body className="bg-background text-foreground font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false}>
-          <MotionProvider>{children}</MotionProvider>
-        </ThemeProvider>
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

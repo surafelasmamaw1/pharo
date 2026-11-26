@@ -48,39 +48,6 @@ export const siteConfig = {
     ogImage: "/og-image.svg",
   },
 
-  timeline: [
-    {
-      year: "2020",
-      title: "Pharo School Assosa Established",
-      description:
-        "Pharo School Assosa was founded on the western edge of Ethiopia, in the capital of BGRS state — with a vision to provide access to high-quality education for the local community.",
-    },
-    {
-      year: "2021",
-      title: "Growing Enrolment & Community Trust",
-      description:
-        "Rapid growth in student enrolment as families across Assosa recognised the school's commitment to academic excellence and holistic development.",
-    },
-    {
-      year: "2022",
-      title: "Curriculum Expansion",
-      description:
-        "Introduction of a blended curriculum combining the Ethiopian national curriculum with international standards — preparing students to become productive global citizens.",
-    },
-    {
-      year: "2023",
-      title: "New Facilities & Programmes",
-      description:
-        "Opening of expanded classrooms, computer labs, library, and science facilities — supporting rigorous learning and co-curricular growth across all year groups.",
-    },
-    {
-      year: "Today & Beyond",
-      title: "A Centre of Excellence for the Region",
-      description:
-        "Continuing to grow as a regional centre of educational excellence — deepening community partnerships, broadening access, and empowering students to realise their future goals.",
-    },
-  ],
-
   services: [
     {
       title: "Quality Education",

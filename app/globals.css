@@ -19,22 +19,6 @@
   --color-warning: #B8893C;
 }
 
-.dark {
-  --color-background: #0F1117;
-  --color-foreground: #F0EDE8;
-  --color-primary: #F0EDE8;
-  --color-accent: #C8874A;
-  --color-scholarly: #5B8FC7;
-  --color-scholarly-light: #7AA7D6;
-  --color-scholarly-pale: #1A2438;
-  --color-gold: #D4A75E;
-  --color-gold-pale: #2A241A;
-  --color-muted: #8A8A9A;
-  --color-border: #2A2A35;
-  --color-success: #4CAF7D;
-  --color-warning: #D4A75E;
-}
-
 /* Base styles */
 @layer base {
   html {

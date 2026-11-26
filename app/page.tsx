@@ -5,12 +5,10 @@ import Footer from "@/components/sections/Footer";
 const BackToTop = dynamic(() => import("@/components/layout/BackToTop"));
 const Hero = dynamic(() => import("@/components/sections/Hero"));
 const About = dynamic(() => import("@/components/sections/About"));
-const TimelineSection = dynamic(() => import("@/components/sections/TimelineSection"));
 const Services = dynamic(() => import("@/components/sections/Services"));
 const Academics = dynamic(() => import("@/components/sections/Academics"));
 const FacultyLeadership = dynamic(() => import("@/components/sections/FacultyLeadership"));
 const Facilities = dynamic(() => import("@/components/sections/Facilities"));
-const UniformGuide = dynamic(() => import("@/components/sections/UniformGuide"));
 const Admissions = dynamic(() => import("@/components/sections/Admissions"));
 const NewsEvents = dynamic(() => import("@/components/sections/NewsEvents"));
 const Testimonials = dynamic(() => import("@/components/sections/Testimonials"));
@@ -24,12 +22,10 @@ export default function Home() {
       <main className="bg-background text-foreground animate-[fadeIn_0.5s_ease-out]">
         <Hero />
         <About />
-        <TimelineSection />
         <Services />
         <Academics />
         <FacultyLeadership />
         <Facilities />
-        <UniformGuide />
         <NewsEvents />
         <Testimonials />
         <Gallery />
