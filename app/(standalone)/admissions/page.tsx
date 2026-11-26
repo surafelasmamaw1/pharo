@@ -498,8 +498,14 @@ export default function AdmissionsPage() {
                   </a>
                 </div>
               </div>
-              <div className="relative min-h-[280px] md:min-h-0">
-                <Image src="/classrooms.png" alt="Students in classroom" fill className="object-cover" />
+              <div className="relative min-h-[280px] md:min-h-[360px] w-full">
+                <Image
+                  src="/classrooms.png"
+                  alt="Students in classroom"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                />
               </div>
             </div>
           </motion.div>

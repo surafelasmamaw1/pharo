@@ -17,6 +17,8 @@ import {
   MapPin,
   Phone,
   ShieldCheck,
+  Info,
+  Building2,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,13 +27,13 @@ import UrgentBanner from "./UrgentBanner";
 
 const navItems = [
   { name: "Home", href: "/", id: "home", icon: Home },
-  { name: "About Us", href: "#about", id: "about", icon: GraduationCap },
-  { name: "Academics", href: "#academics", id: "academics", icon: BookOpen },
+  { name: "About Us", href: "#about", id: "about", icon: Info },
+  { name: "Academics", href: "#academics", id: "academics", icon: GraduationCap },
+  { name: "Facilities", href: "#facilities", id: "facilities", icon: Building2 },
   { name: "Student Life", href: "#student-life", id: "student-life", icon: Users },
   { name: "News & Events", href: "#news-events", id: "news-events", icon: CalendarDays },
-  { name: "Admissions", href: "/admissions", id: "admissions", icon: ClipboardList },
-  { name: "Contact", href: "#contact", id: "contact", icon: Mail },
   { name: "Gallery", href: "/gallery", id: "gallery", icon: Images },
+  { name: "Contact", href: "#contact", id: "contact", icon: Mail },
 ];
 
 export default function Navbar() {
@@ -175,9 +177,6 @@ export default function Navbar() {
                   const isHashLink = item.href.startsWith("#");
                   const isRouteLink = !isHashLink;
 
-                  // Home ("/"): only active when scrolled to top of home page
-                  // Other routes (/admissions, /gallery): active when pathname matches
-                  // Hash links (#about, #contact etc): active when scroll position matches
                   const isActive =
                     item.href === "/"
                       ? isHomePage && activeSection === "home"
@@ -190,7 +189,7 @@ export default function Navbar() {
                       key={item.name}
                       href={resolveHref(item.href)}
                       onClick={(e) => handleNavClick(e, item.href)}
-                      className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors duration-150 ${
+                      className={`px-3 xl:px-3.5 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors duration-150 ${
                         isActive
                           ? "text-scholarly font-bold border-b-2 border-scholarly rounded-b-none"
                           : "text-foreground/80 hover:text-scholarly hover:bg-slate-50"
