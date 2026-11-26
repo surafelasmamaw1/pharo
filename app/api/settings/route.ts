@@ -5,16 +5,15 @@ import { isAdminAuthenticated } from "@/app/api/admin/login/route";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const db = prisma as any;
 
 export async function GET() {
   try {
-    let settings = await db.siteSetting.findUnique({
+    let settings = await prisma.siteSetting.findUnique({
       where: { id: "default" },
     });
 
     if (!settings) {
-      settings = await db.siteSetting.create({
+      settings = await prisma.siteSetting.create({
         data: {
           id: "default",
           urgentBannerActive: false,
@@ -53,7 +52,7 @@ export async function POST(req: NextRequest) {
       contactEmail,
     } = body ?? {};
 
-    const updated = await db.siteSetting.upsert({
+    const updated = await prisma.siteSetting.upsert({
       where: { id: "default" },
       update: {
         urgentBannerActive: Boolean(urgentBannerActive),

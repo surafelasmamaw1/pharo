@@ -39,8 +39,6 @@ const applicationSchema = z.object({
   notes: z.string().optional(),
 });
 
-// Safe database reference to prevent VS Code TS cache warnings
-const db = prisma as any;
 
 export async function POST(req: NextRequest) {
   try {
@@ -55,7 +53,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validated = applicationSchema.parse(body);
 
-    const application = await db.application.create({
+    const application = await prisma.application.create({
       data: validated,
     });
 
@@ -119,7 +117,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const applications = await db.application.findMany({
+    const applications = await prisma.application.findMany({
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json({ success: true, data: applications });
@@ -145,7 +143,7 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: false, message: "ID and status are required" }, { status: 400 });
     }
 
-    const updated = await db.application.update({
+    const updated = await prisma.application.update({
       where: { id },
       data: { status },
     });
@@ -170,7 +168,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, message: "ID is required" }, { status: 400 });
     }
 
-    await db.application.delete({ where: { id } });
+    await prisma.application.delete({ where: { id } });
     return NextResponse.json({ success: true, message: "Application deleted successfully" });
   } catch (error) {
     console.error("Delete application error:", error);

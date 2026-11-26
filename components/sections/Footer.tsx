@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Container from "../ui/Container";
 import Image from "next/image";
 import {
@@ -30,7 +33,6 @@ const schoolLinks = [
   { name: "About Us", href: "#about" },
   { name: "Academics", href: "#academics" },
   { name: "Admissions", href: "#admissions" },
-  { name: "Student Life", href: "#student-life" },
 ];
 
 const infoLinks = [
@@ -89,6 +91,27 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const [contactPhone, setContactPhone] = useState<string>(siteConfig.contact.phone);
+  const [contactEmail, setContactEmail] = useState<string>(siteConfig.contact.email);
+
+  useEffect(() => {
+    async function loadContactSettings() {
+      try {
+        const res = await fetch("/api/settings", { cache: "no-store" });
+        const json = await res.json();
+        if (json.success && json.data) {
+          if (json.data.contactPhone) setContactPhone(json.data.contactPhone);
+          if (json.data.contactEmail) setContactEmail(json.data.contactEmail);
+        }
+      } catch {
+        // fallback to siteConfig
+      }
+    }
+    loadContactSettings();
+    window.addEventListener("settings-updated", loadContactSettings);
+    return () => window.removeEventListener("settings-updated", loadContactSettings);
+  }, []);
+
   return (
     <footer className="pt-20 pb-10 border-t border-border/80 bg-background">
       <Container>
@@ -195,10 +218,10 @@ export default function Footer() {
                   strokeWidth={1.8}
                 />
                 <a
-                  href={siteConfig.contact.emailHref}
+                  href={`mailto:${contactEmail}`}
                   className="text-muted hover:text-scholarly transition-colors text-sm md:text-base"
                 >
-                  {siteConfig.contact.email}
+                  {contactEmail}
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
@@ -207,10 +230,10 @@ export default function Footer() {
                   strokeWidth={1.8}
                 />
                 <a
-                  href={siteConfig.contact.phoneHref}
+                  href={`tel:${contactPhone.replace(/\s+/g, "")}`}
                   className="text-muted hover:text-scholarly transition-colors text-sm md:text-base"
                 >
-                  {siteConfig.contact.phone}
+                  {contactPhone}
                 </a>
               </li>
             </ul>
@@ -223,10 +246,10 @@ export default function Footer() {
             © {new Date().getFullYear()} Pharo Foundation. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
-            <Link href="#" className="text-muted hover:text-scholarly transition-colors">
+            <Link href="/privacy" className="text-muted hover:text-scholarly transition-colors">
               Privacy Policy
             </Link>
-            <Link href="#" className="text-muted hover:text-scholarly transition-colors">
+            <Link href="/terms" className="text-muted hover:text-scholarly transition-colors">
               Terms of Use
             </Link>
             <Link href="#contact" className="text-muted hover:text-scholarly transition-colors">

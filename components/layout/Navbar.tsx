@@ -8,7 +8,6 @@ import {
   GraduationCap,
   BookOpen,
   ClipboardList,
-  Users,
   CalendarDays,
   Mail,
   Menu,
@@ -30,7 +29,6 @@ const navItems = [
   { name: "About Us", href: "#about", id: "about", icon: Info },
   { name: "Academics", href: "#academics", id: "academics", icon: GraduationCap },
   { name: "Facilities", href: "#facilities", id: "facilities", icon: Building2 },
-  { name: "Student Life", href: "#student-life", id: "student-life", icon: Users },
   { name: "News & Events", href: "#news-events", id: "news-events", icon: CalendarDays },
   { name: "Gallery", href: "/gallery", id: "gallery", icon: Images },
   { name: "Contact", href: "#contact", id: "contact", icon: Mail },
@@ -40,8 +38,26 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [contactPhone, setContactPhone] = useState("+251 91 234 5678");
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+
+  useEffect(() => {
+    async function loadPhone() {
+      try {
+        const res = await fetch("/api/settings", { cache: "no-store" });
+        const json = await res.json();
+        if (json.success && json.data?.contactPhone) {
+          setContactPhone(json.data.contactPhone);
+        }
+      } catch {
+        // use fallback
+      }
+    }
+    loadPhone();
+    window.addEventListener("settings-updated", loadPhone);
+    return () => window.removeEventListener("settings-updated", loadPhone);
+  }, []);
 
   const resolveHref = (href: string) => {
     if (!href.startsWith("#")) return href;
@@ -120,7 +136,7 @@ export default function Navbar() {
             </span>
             <span className="hidden md:flex items-center gap-1.5 text-white/80">
               <Phone className="w-3.5 h-3.5 text-gold" />
-              +251 91 234 5678
+              {contactPhone}
             </span>
           </div>
           <div className="text-[11px] text-white/60 tracking-wider uppercase font-medium">

@@ -3,7 +3,6 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { isAdminAuthenticated } from "@/app/api/admin/login/route";
 
-const db = prisma as any;
 
 const gallerySchema = z.object({
   title: z.string().min(2, "Title is required"),
@@ -13,7 +12,7 @@ const gallerySchema = z.object({
 
 export async function GET() {
   try {
-    const items = await db.galleryItem.findMany({
+    const items = await prisma.galleryItem.findMany({
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json({ success: true, data: items });
@@ -34,7 +33,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validated = gallerySchema.parse(body);
 
-    const item = await db.galleryItem.create({
+    const item = await prisma.galleryItem.create({
       data: validated,
     });
 
@@ -67,7 +66,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, message: "ID is required" }, { status: 400 });
     }
 
-    await db.galleryItem.delete({ where: { id } });
+    await prisma.galleryItem.delete({ where: { id } });
     return NextResponse.json({ success: true, message: "Photo deleted from gallery" });
   } catch (error: any) {
     console.error("Delete gallery error:", error);

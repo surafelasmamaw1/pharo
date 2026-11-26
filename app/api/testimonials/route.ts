@@ -3,7 +3,6 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { isAdminAuthenticated } from "@/app/api/admin/login/route";
 
-const db = prisma as any;
 
 const testimonialSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -14,7 +13,7 @@ const testimonialSchema = z.object({
 
 export async function GET() {
   try {
-    const testimonials = await db.testimonial.findMany({
+    const testimonials = await prisma.testimonial.findMany({
       orderBy: { createdAt: "desc" },
     });
     return NextResponse.json({ success: true, data: testimonials });
@@ -35,7 +34,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validated = testimonialSchema.parse(body);
 
-    const testimonial = await db.testimonial.create({
+    const testimonial = await prisma.testimonial.create({
       data: validated,
     });
 
@@ -68,7 +67,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, message: "ID is required" }, { status: 400 });
     }
 
-    await db.testimonial.delete({ where: { id } });
+    await prisma.testimonial.delete({ where: { id } });
     return NextResponse.json({ success: true, message: "Testimonial deleted successfully" });
   } catch (error: any) {
     console.error("Delete testimonial error:", error);

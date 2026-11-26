@@ -6,7 +6,6 @@ import { isAdminAuthenticated } from "@/app/api/admin/login/route";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const db = prisma as any;
 
 const facultySchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -20,7 +19,7 @@ const facultySchema = z.object({
 
 export async function GET() {
   try {
-    const faculty = await db.facultyMember.findMany({
+    const faculty = await prisma.facultyMember.findMany({
       orderBy: [{ order: "asc" }, { createdAt: "asc" }],
     });
     return NextResponse.json({ success: true, data: faculty });
@@ -42,7 +41,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validated = facultySchema.parse(body);
 
-    const faculty = await db.facultyMember.create({
+    const faculty = await prisma.facultyMember.create({
       data: validated,
     });
 
@@ -81,7 +80,7 @@ export async function PUT(req: NextRequest) {
 
     const validated = facultySchema.parse(data);
 
-    const updated = await db.facultyMember.update({
+    const updated = await prisma.facultyMember.update({
       where: { id },
       data: validated,
     });
@@ -117,7 +116,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, message: "ID is required" }, { status: 400 });
     }
 
-    await db.facultyMember.delete({ where: { id } });
+    await prisma.facultyMember.delete({ where: { id } });
     return NextResponse.json({ success: true, message: "Faculty member deleted successfully" });
   } catch (error: any) {
     console.error("Delete faculty error:", error);

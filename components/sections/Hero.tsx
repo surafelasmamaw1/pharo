@@ -85,7 +85,7 @@ export default function Hero() {
                     Modern Laboratories &amp; Classrooms
                   </h3>
                   <p className="text-white/85 text-xs leading-relaxed">
-                    Purpose-built learning environment featuring science laboratories, computer suites, and full residential facilities.
+                    Purpose-built learning environment featuring science laboratories, computer suites, and modern library spaces.
                   </p>
                 </div>
               </div>

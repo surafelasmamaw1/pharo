@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,27 +8,53 @@ import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Container from "@/components/ui/Container";
 
 type GalleryItem = {
-  id: number;
+  id: string;
   src: string;
   alt: string;
-  category: "Campus" | "Classrooms" | "Students" | "Events" | "Sports" | "Library";
+  category: string;
 };
 
-const galleryItems: GalleryItem[] = [
-  { id: 1, src: "/pharo-school.png",  alt: "Pharo School Assosa campus",  category: "Campus" },
-  { id: 2, src: "/about-photo.png",   alt: "Students at Pharo School",     category: "Students" },
-  { id: 3, src: "/classrooms.png",    alt: "Pharo School classrooms",      category: "Classrooms" },
-  { id: 4, src: "/library.png",       alt: "Pharo School library",         category: "Library" },
-  { id: 5, src: "/computer-labs.png", alt: "Computer labs",                category: "Classrooms" },
-  { id: 6, src: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80&auto=format&fit=crop", alt: "School athletics and sports", category: "Sports" },
+const defaultGalleryItems: GalleryItem[] = [
+  { id: "default-1", src: "/pharo-school.png", alt: "Pharo School Assosa campus", category: "Campus" },
+  { id: "default-2", src: "/about-photo.png", alt: "Students at Pharo School", category: "Students" },
+  { id: "default-3", src: "/classrooms.png", alt: "Pharo School classrooms", category: "Classrooms" },
+  { id: "default-4", src: "/library.png", alt: "Pharo School library", category: "Library" },
+  { id: "default-5", src: "/computer-labs.png", alt: "Computer labs", category: "Classrooms" },
+  {
+    id: "default-6",
+    src: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80&auto=format&fit=crop",
+    alt: "School athletics and sports",
+    category: "Sports",
+  },
 ];
 
-const categories = ["All", "Campus", "Students", "Classrooms", "Library", "Sports", "Events"] as const;
-type Category = typeof categories[number];
+const categories = ["All", "Campus", "Students", "Classrooms", "Library", "Sports", "Events", "Academics"] as const;
 
 export default function GalleryPage() {
-  const [activeCategory, setActiveCategory] = useState<Category>("All");
-  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(defaultGalleryItems);
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function loadGallery() {
+      try {
+        const res = await fetch("/api/gallery");
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const dbItems: GalleryItem[] = json.data.map((item: { id: string; imageUrl: string; title: string; category: string }) => ({
+            id: item.id,
+            src: item.imageUrl,
+            alt: item.title,
+            category: item.category || "Campus",
+          }));
+          setGalleryItems([...dbItems, ...defaultGalleryItems]);
+        }
+      } catch {
+        // Fallback to default gallery items
+      }
+    }
+    loadGallery();
+  }, []);
 
   const filtered = activeCategory === "All"
     ? galleryItems
@@ -99,6 +125,7 @@ export default function GalleryPage() {
                     src={item.src}
                     alt={item.alt}
                     fill
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
@@ -140,7 +167,7 @@ export default function GalleryPage() {
                 </button>
 
                 {/* Image only */}
-                <div className="relative w-full max-h-[85vh]">
+                <div className="relative w-full h-[75vh] max-h-[85vh]">
                   <Image
                     src={currentItem.src}
                     alt={currentItem.alt}

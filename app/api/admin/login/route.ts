@@ -5,6 +5,26 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "pharo2026";
 const SESSION_SECRET = process.env.SESSION_SECRET || "pharo-session-secret-change-in-production";
 const COOKIE_NAME = "admin_session";
 
+// Simple in-memory rate limiter for login attempts
+const LOGIN_WINDOW_MS = 60_000;
+const LOGIN_MAX_ATTEMPTS = 10;
+const loginAttempts = new Map<string, { count: number; expiresAt: number }>();
+
+function isLoginRateLimited(req: NextRequest): boolean {
+  const forwarded = req.headers.get("x-forwarded-for");
+  const key = forwarded?.split(",")[0]?.trim() ?? "unknown";
+  const now = Date.now();
+  const entry = loginAttempts.get(key);
+
+  if (!entry || now > entry.expiresAt) {
+    loginAttempts.set(key, { count: 1, expiresAt: now + LOGIN_WINDOW_MS });
+    return false;
+  }
+
+  entry.count++;
+  return entry.count > LOGIN_MAX_ATTEMPTS;
+}
+
 function signToken(payload: string): string {
   const hmac = crypto.createHmac("sha256", SESSION_SECRET);
   hmac.update(payload);
@@ -39,6 +59,13 @@ export function isAdminAuthenticated(req: NextRequest): boolean {
 }
 
 export async function POST(req: NextRequest) {
+  if (isLoginRateLimited(req)) {
+    return NextResponse.json(
+      { success: false, message: "Too many login attempts. Please wait a minute and try again." },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await req.json();
     const { password } = body ?? {};

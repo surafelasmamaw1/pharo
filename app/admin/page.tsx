@@ -352,6 +352,61 @@ export default function AdminDashboard() {
     }
   };
 
+  // Inquiries handlers
+  const handleUpdateInquiryStatus = async (id: string, newStatus: string) => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status: newStatus }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        addToast(`Inquiry marked as ${newStatus}`, "success");
+        fetchData();
+      } else {
+        addToast(data.message || "Failed to update inquiry", "error");
+      }
+    } catch {
+      addToast("Failed to update inquiry", "error");
+    }
+  };
+
+  const handleDeleteInquiry = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this inquiry?")) return;
+    try {
+      const res = await fetch(`/api/contact?id=${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        addToast("Inquiry deleted", "success");
+        fetchData();
+      } else {
+        addToast(data.message || "Failed to delete inquiry", "error");
+      }
+    } catch {
+      addToast("Failed to delete inquiry", "error");
+    }
+  };
+
+  // Shared image upload helper (/api/upload)
+  const uploadImageFile = async (file: File): Promise<string | null> => {
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body });
+      const data = await res.json();
+      if (data.success && data.url) {
+        addToast("Image uploaded!", "success");
+        return data.url;
+      }
+      addToast(data.message || "Image upload failed", "error");
+      return null;
+    } catch {
+      addToast("Image upload failed", "error");
+      return null;
+    }
+  };
+
   // Site Settings handler
   const handleSaveSettings = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -812,7 +867,11 @@ export default function AdminDashboard() {
 
           {/* TAB 2: Inquiries */}
           {activeTab === "inquiries" && (
-            <InquiriesTab inquiries={inquiries} />
+            <InquiriesTab
+              inquiries={inquiries}
+              onUpdateStatus={handleUpdateInquiryStatus}
+              onDelete={handleDeleteInquiry}
+            />
           )}
 
           {/* TAB 3: News & Announcements */}
@@ -882,16 +941,13 @@ export default function AdminDashboard() {
                     ) : (
                       <div
                         onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                        onDrop={(e) => {
+                        onDrop={async (e) => {
                           e.preventDefault();
                           e.stopPropagation();
                           const file = e.dataTransfer.files?.[0];
                           if (file && file.type.startsWith("image/")) {
-                            const reader = new FileReader();
-                            reader.onload = () => {
-                              setNewNews((prev) => ({ ...prev, imageUrl: reader.result as string }));
-                            };
-                            reader.readAsDataURL(file);
+                            const url = await uploadImageFile(file);
+                            if (url) setNewNews((prev) => ({ ...prev, imageUrl: url }));
                           }
                         }}
                         className="relative rounded-2xl border-2 border-dashed border-border hover:border-scholarly/50 p-4 text-center bg-background/50 hover:bg-border/20 transition-all cursor-pointer group"
@@ -899,14 +955,11 @@ export default function AdminDashboard() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => {
+                          onChange={async (e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              const reader = new FileReader();
-                              reader.onload = () => {
-                                setNewNews((prev) => ({ ...prev, imageUrl: reader.result as string }));
-                              };
-                              reader.readAsDataURL(file);
+                              const url = await uploadImageFile(file);
+                              if (url) setNewNews((prev) => ({ ...prev, imageUrl: url }));
                             }
                           }}
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
@@ -1198,16 +1251,13 @@ export default function AdminDashboard() {
                     ) : (
                       <div
                         onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                        onDrop={(e) => {
+                        onDrop={async (e) => {
                           e.preventDefault();
                           e.stopPropagation();
                           const file = e.dataTransfer.files?.[0];
                           if (file && file.type.startsWith("image/")) {
-                            const reader = new FileReader();
-                            reader.onload = () => {
-                              setNewGalleryPhoto((prev) => ({ ...prev, imageUrl: reader.result as string }));
-                            };
-                            reader.readAsDataURL(file);
+                            const url = await uploadImageFile(file);
+                            if (url) setNewGalleryPhoto((prev) => ({ ...prev, imageUrl: url }));
                           }
                         }}
                         className="relative rounded-2xl border-2 border-dashed border-border hover:border-scholarly/50 p-4 text-center bg-background/50 hover:bg-border/20 transition-all cursor-pointer group"
@@ -1215,14 +1265,11 @@ export default function AdminDashboard() {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={(e) => {
+                          onChange={async (e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              const reader = new FileReader();
-                              reader.onload = () => {
-                                setNewGalleryPhoto((prev) => ({ ...prev, imageUrl: reader.result as string }));
-                              };
-                              reader.readAsDataURL(file);
+                              const url = await uploadImageFile(file);
+                              if (url) setNewGalleryPhoto((prev) => ({ ...prev, imageUrl: url }));
                             }
                           }}
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
