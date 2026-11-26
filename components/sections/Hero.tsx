@@ -13,21 +13,18 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Editorial Text Block */}
           <div className="lg:col-span-7 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded border border-scholarly/20 bg-scholarly-pale/60 mb-6">
-              <span className="w-2 h-2 rounded-full bg-gold" />
-              <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-scholarly">
-                Assosa • Benishangul-Gumuz • Ethiopia
-              </span>
-            </div>
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-gold mb-4">
+              Assosa, Benishangul-Gumuz · Ethiopia
+            </p>
 
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold text-scholarly leading-[1.14] tracking-tight mb-6 text-balance">
-              Excellence in Education.{" "}
-              <span className="text-foreground">Rooted in Assosa,</span>{" "}
-              <span className="text-gold">Inspiring Ethiopia.</span>
+              Quality Secondary Education in{" "}
+              <span className="text-foreground">Assosa,</span>{" "}
+              <span className="text-gold">Built for Ethiopia&apos;s Future.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-700 leading-relaxed max-w-2xl mb-8 font-normal">
-              Pharo School Assosa is a premier secondary day school dedicated to academic rigour, character development, and scientific inquiry. We deliver the Ethiopian National Curriculum enriched with intensive STEM, English proficiency, and 70% philanthropic tuition subsidies.
+              Pharo School Assosa is a full-day secondary school offering the Ethiopian National Curriculum with strong STEM, English instruction, and a 70% tuition subsidy from Pharo Foundation.
             </p>
 
             {/* CTAs */}

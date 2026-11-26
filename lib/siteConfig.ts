@@ -50,34 +50,34 @@ export const siteConfig = {
 
   services: [
     {
-      title: "Quality Education",
+      title: "Strong Academic Foundation",
       description:
-        "A rigorous, balanced curriculum that combines the Ethiopian national curriculum with international standards — upholding high academic standards while nurturing curiosity and a love of learning.",
+        "We teach the Ethiopian national curriculum alongside international standards, building steady habits in mathematics, science, and English.",
     },
     {
-      title: "Experienced Educators",
+      title: "Dedicated Teachers",
       description:
-        "Talented, dedicated faculty who combine deep subject expertise with a genuine passion for teaching, mentorship, and the success of every individual student.",
+        "Our teachers know their students by name and stay available after class for extra tutoring, exam prep, and personal guidance.",
     },
     {
-      title: "Innovation & Technology",
+      title: "Practical Science & ICT",
       description:
-        "Modern learning tools, technology-rich classrooms, and forward-thinking pedagogy that prepare students to thrive in a rapidly changing world.",
+        "Students spend real time in physics, chemistry, biology, and computer labs rather than learning only from textbooks.",
     },
     {
-      title: "Holistic Development",
+      title: "Character & Responsibility",
       description:
-        "A whole-child approach — intellectual, social, emotional, and ethical — that helps every student discover their strengths and develop the passion to realise their future goals.",
+        "Alongside grades, we emphasise honesty, respect, teamwork, and service to the local Assosa community.",
     },
     {
-      title: "Safe Learning Environment",
+      title: "Safe, Orderly Campus",
       description:
-        "A caring, inclusive, and well-supervised campus culture where every student feels secure, respected, and free to focus on learning and healthy growth.",
+        "A calm, supervised school grounds where students feel respected, supported, and able to focus on their studies.",
     },
     {
-      title: "Community Partnership",
+      title: "Partnership With Families",
       description:
-        "A warm, connected community of students, teachers, staff, and families — united by shared values, active partnership, and a commitment to the local community.",
+        "Regular parent meetings, clear term reports, and open communication between teachers and families throughout the school year.",
     },
   ],
 } as const;

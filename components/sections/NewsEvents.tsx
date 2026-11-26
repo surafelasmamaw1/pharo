@@ -70,16 +70,12 @@ export default function NewsEvents() {
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-10 text-left">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/20 bg-gold-pale/70 mb-7">
-                <CalendarDays className="w-4 h-4 text-gold" strokeWidth={1.8} />
-                <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-gold">
-                  Latest Updates
-                </span>
-              </div>
+              <p className="text-xs font-bold tracking-[0.2em] uppercase text-gold mb-3">
+                Latest Updates
+              </p>
               <SectionHeading className="text-left">News &amp; Events</SectionHeading>
-              <p className="mt-6 text-muted leading-relaxed text-base md:text-lg">
-                Stay connected with life at Pharo Foundation — campus events,
-                announcements, student achievements, and stories from our community.
+              <p className="mt-4 text-muted leading-relaxed text-base md:text-lg">
+                Recent school announcements, academic events, and student stories from Assosa.
               </p>
             </div>
 

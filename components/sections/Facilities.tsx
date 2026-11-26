@@ -12,7 +12,6 @@ import {
   Dumbbell,
   Palette as CreativeIcon,
   ArrowRight,
-  Compass,
   ChevronLeft,
   ChevronRight,
   X,
@@ -141,15 +140,12 @@ export default function Facilities() {
           {/* Compact Header Row */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div className="text-left max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-scholarly/15 bg-scholarly-pale/70 mb-5">
-                <Compass className="w-4 h-4 text-scholarly" strokeWidth={1.8} />
-                <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-scholarly">
-                  Campus &amp; Facilities
-                </span>
-              </div>
+              <p className="text-xs font-bold tracking-[0.2em] uppercase text-gold mb-3">
+                Campus &amp; Facilities
+              </p>
               <SectionHeading className="text-left">Our Learning Environment</SectionHeading>
               <p className="mt-3 text-muted leading-relaxed text-sm md:text-base">
-                Explore the purpose-built spaces that support academic excellence and holistic growth at Pharo School Assosa.
+                The classrooms, laboratories, library, and grounds at our Assosa campus.
               </p>
             </div>
 

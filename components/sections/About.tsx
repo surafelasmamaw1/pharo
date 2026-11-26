@@ -31,15 +31,14 @@ export default function About() {
               className="lg:col-span-5"
             >
               <div className="relative">
-                <div className="relative aspect-[4/3] md:aspect-[5/4] rounded-[28px] overflow-hidden border border-border shadow-lg group">
-                  {/* Real photo */}
+                <div className="relative aspect-[4/3] md:aspect-[5/4] rounded-xl overflow-hidden border border-border shadow-md">
                   <Image
                     src="/about-photo.png"
-                    alt="Pharo Foundation"
+                    alt="Pharo School Assosa students"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-cover"
                   />
-                  {/* Overlay for caption legibility */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
                   <div className="absolute inset-x-0 bottom-0 p-6 md:p-7 text-white">
@@ -47,13 +46,10 @@ export default function About() {
                       Pharo Foundation
                     </div>
                     <div className="font-serif text-lg md:text-xl font-semibold leading-snug">
-                      A Tradition of Excellence in Education
+                      Established in Assosa, 2020
                     </div>
                   </div>
                 </div>
-
-                <div className="absolute -z-10 -top-4 -left-4 w-24 h-24 rounded-3xl bg-gold-pale dark:bg-gold-pale/60 -rotate-6" />
-                <div className="absolute -z-10 -bottom-4 -right-4 w-24 h-24 rounded-3xl bg-scholarly-pale dark:bg-scholarly-pale/60 rotate-6" />
               </div>
             </motion.div>
 
@@ -69,17 +65,14 @@ export default function About() {
 
               <div className="mt-6 md:mt-8 space-y-5 md:space-y-6 max-w-2xl">
                 <p className="text-lg md:text-xl text-foreground leading-relaxed">
-                  Pharo School Assosa, established in 2020, is located on the western
-                  edge of Ethiopia — in the capital of BGRS state. Offering primary and
-                  secondary education, the school strives to provide access to high-quality
-                  education for the local community and to become a centre of excellence
-                  across the region.
+                  Opened in 2020 in Assosa, the capital of Benishangul-Gumuz Regional State,
+                  Pharo School Assosa gives local families access to dependable, high-standard
+                  primary and secondary schooling.
                 </p>
                 <p className="text-base md:text-lg text-muted leading-relaxed">
-                  We are committed to a holistic approach to learning — fostering the
-                  intellectual, social, emotional, and ethical development of every learner.
-                  Our curriculum combines the Ethiopian national curriculum with international
-                  standards such as the British curriculum.
+                  We teach the Ethiopian national curriculum alongside international standards
+                  such as the British curriculum, helping students build strong academic habits,
+                  practical skills, and confidence for university and life.
                 </p>
               </div>
 
@@ -87,50 +80,34 @@ export default function About() {
           </div>
 
           {/* Mission & Vision cards */}
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-6xl mx-auto">
-                <motion.div
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  whileHover={{ y: -4, scale: 1.015 }}
-                  className="relative p-6 rounded-[22px] border border-border bg-gradient-to-br from-scholarly-pale/70 via-background to-background overflow-hidden shadow-sm hover:shadow-[0_0_28px_rgba(30,58,95,0.14)] dark:hover:border-scholarly/40 transition-all duration-300"
-                >
-                  <div className="w-12 h-12 rounded-2xl bg-scholarly flex items-center justify-center mb-5 shadow-md">
-                    <Target className="w-6 h-6 text-white" strokeWidth={1.8} />
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                <div className="p-6 md:p-7 rounded-xl border border-border border-t-2 border-t-scholarly bg-white shadow-sm">
+                  <div className="flex items-center gap-2.5 text-[11px] font-bold tracking-[0.18em] uppercase text-scholarly mb-3">
+                    <Target className="w-4 h-4 text-scholarly" strokeWidth={1.8} />
+                    <span>Our Mission</span>
                   </div>
-                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-scholarly mb-3">Our Mission</div>
-                  <h4 className="font-serif text-lg font-bold text-foreground leading-snug mb-3">
-                    Empowering students to grow in knowledge, character, and purpose.
+                  <h4 className="font-serif text-xl font-bold text-foreground leading-snug mb-2.5">
+                    Preparing students in knowledge, character, and purpose.
                   </h4>
                   <p className="text-muted text-sm leading-relaxed">
-                    Our mission is to provide a locally relevant and globally competitive,
-                    high-quality learning experience — empowering students to become lifelong
-                    learners and productive global citizens.
+                    To offer locally grounded, globally competitive schooling in Assosa so every
+                    student leaves prepared for higher education and active citizenship.
                   </p>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.18 }}
-                  whileHover={{ y: -4, scale: 1.015 }}
-                  className="relative p-6 rounded-[22px] border border-border bg-gradient-to-br from-gold-pale/70 via-background to-background overflow-hidden shadow-sm hover:shadow-[0_0_28px_rgba(184,137,60,0.14)] dark:hover:border-gold/40 transition-all duration-300"
-                >
-                  <div className="w-12 h-12 rounded-2xl bg-gold flex items-center justify-center mb-5 shadow-md">
-                    <Eye className="w-6 h-6 text-white" strokeWidth={1.8} />
+                <div className="p-6 md:p-7 rounded-xl border border-border border-t-2 border-t-gold bg-white shadow-sm">
+                  <div className="flex items-center gap-2.5 text-[11px] font-bold tracking-[0.18em] uppercase text-gold mb-3">
+                    <Eye className="w-4 h-4 text-gold" strokeWidth={1.8} />
+                    <span>Our Vision</span>
                   </div>
-                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-gold mb-3">Our Vision</div>
-                  <h4 className="font-serif text-lg font-bold text-foreground leading-snug mb-3">
-                    To be a community where every learner thrives.
+                  <h4 className="font-serif text-xl font-bold text-foreground leading-snug mb-2.5">
+                    A school community where every learner can thrive.
                   </h4>
                   <p className="text-muted text-sm leading-relaxed">
-                    Our vision is to be recognised as a leading educational community — known
-                    for the strength of its scholarship, the warmth of its culture, and the
-                    positive impact of its graduates on the communities they serve.
+                    To be known across Ethiopia for the strength of our teaching, the warmth of
+                    our school culture, and the difference our graduates make in their communities.
                   </p>
-                </motion.div>
+                </div>
           </div>
 
           {/* What Pharo Schools Stand For */}

@@ -29,41 +29,49 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const campuses = [
   {
-    label: "Campus 1",
-    src: "https://maps.google.com/maps?q=10.0677727,34.5528496&z=18&t=k&output=embed",
-    directions: "https://www.google.com/maps/dir/?api=1&destination=10.0677727,34.5528496",
+    label: "Main Campus",
+    subtitle: "Near St. Gabriel Church, Assosa",
+    lat: "10.0677727",
+    lng: "34.5528496",
   },
   {
-    label: "Campus 2",
-    src: "https://maps.google.com/maps?q=10.050165,34.520868&z=18&t=k&output=embed",
-    directions: "https://www.google.com/maps/dir/?api=1&destination=10.050165,34.520868",
+    label: "Secondary Campus",
+    subtitle: "Assosa, BGRS, Ethiopia",
+    lat: "10.050165",
+    lng: "34.520868",
   },
 ];
 
 function MapTabs() {
   const [active, setActive] = useState(0);
+  const campus = campuses[active];
+  const src = `https://maps.google.com/maps?q=${campus.lat},${campus.lng}&z=18&t=k&output=embed`;
+  const directions = `https://www.google.com/maps/dir/?api=1&destination=${campus.lat},${campus.lng}`;
+
   return (
-    <div className="mb-8">
-      <div className="flex gap-2 mb-3">
+    <div className="mb-8 rounded-xl border border-border bg-white p-4 shadow-sm">
+      <div className="flex flex-wrap gap-2 mb-3">
         {campuses.map((c, i) => (
           <button
             key={c.label}
+            type="button"
             onClick={() => setActive(i)}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
               active === i
-                ? "bg-scholarly text-white shadow-sm"
-                : "border border-border text-muted hover:text-foreground hover:border-scholarly/40"
+                ? "bg-scholarly text-white"
+                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
             }`}
           >
             {c.label}
           </button>
         ))}
       </div>
-      <div className="rounded-2xl overflow-hidden border border-border shadow-sm aspect-[4/3]">
+
+      <div className="rounded-lg overflow-hidden border border-border aspect-[4/3] bg-slate-100">
         <iframe
           key={active}
-          title={campuses[active].label}
-          src={campuses[active].src}
+          title={campus.label}
+          src={src}
           width="100%"
           height="100%"
           style={{ border: 0 }}
@@ -73,15 +81,21 @@ function MapTabs() {
           className="w-full h-full"
         />
       </div>
-      <a
-        href={campuses[active].directions}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-3 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-scholarly text-white text-sm font-bold hover:bg-scholarly-light transition-all duration-200 shadow-sm hover:shadow-[0_0_20px_rgba(30,58,95,0.3)]"
-      >
-        <Navigation className="w-4 h-4" strokeWidth={2} />
-        Get Directions to {campuses[active].label}
-      </a>
+
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+        <div className="text-xs text-muted">
+          <strong className="text-foreground">{campus.label}</strong> · {campus.subtitle}
+        </div>
+        <a
+          href={directions}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-scholarly text-white text-xs font-bold hover:bg-scholarly-light transition-colors"
+        >
+          <Navigation className="w-3.5 h-3.5" strokeWidth={2} />
+          Get Directions
+        </a>
+      </div>
     </div>
   );
 }

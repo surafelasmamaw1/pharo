@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import Container from "../ui/Container";
 import SectionHeading from "../ui/SectionHeading";
 import {
-  GraduationCap,
   Award,
   ChevronLeft,
   ChevronRight,
@@ -91,17 +90,14 @@ export default function FacultyLeadership() {
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-12">
             <div className="max-w-2xl text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-scholarly/20 bg-scholarly-pale/70 mb-4">
-                <GraduationCap className="w-4 h-4 text-scholarly" />
-                <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-scholarly">
-                  Academic Leadership &amp; Faculty
-                </span>
-              </div>
+              <p className="text-xs font-bold tracking-[0.2em] uppercase text-gold mb-3">
+                Academic Leadership &amp; Faculty
+              </p>
               <SectionHeading className="text-left">
                 Experienced Educators Inspiring Excellence
               </SectionHeading>
               <p className="mt-3 text-slate-600 leading-relaxed text-sm md:text-base">
-                Accomplished educators with advanced post-graduate credentials dedicated to unlocking every scholar&apos;s potential through rigour and mentorship.
+                Teachers and department heads guiding our secondary scholars in Assosa.
               </p>
             </div>
 
